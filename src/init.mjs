@@ -26,7 +26,7 @@ export default async function init() {
       finishMsg: '🎉 测试服务器部署完成'
     },
     dev: {
-      name: '测试服务器',
+      name: '研发服务器',
       host: '192.168.0.124',
       username: 'root',
       passwordEnv: 'SERVER_54_PASSWORD',
