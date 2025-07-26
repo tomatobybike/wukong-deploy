@@ -40,7 +40,6 @@
     "lint": "eslint --ext .js,.mjs src/ ",
     "lint:fix": "eslint --ext .js,.mjs src --fix",
     "pack": "npm pack",
-    "prepare": "husky && husky install",
     "prepublishOnly": "yarn lint",
     "prettierall": "npx prettier --write 'src/**/*.{js,jsx}' ",
     "publish": "git push --follow-tags origin main && yarn publish",
