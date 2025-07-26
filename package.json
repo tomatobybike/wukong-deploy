@@ -1,0 +1,97 @@
+{
+  "name": "wukong-deploy",
+  "version": "1.0.0",
+  "description": "A simple CLI to manage multi-server deployment",
+  "keywords": [
+    "cli",
+    "deploy",
+    "deployment",
+    "ssh",
+    "multi-server",
+    "automation",
+    "javascript",
+    "nodejs",
+    "command-line",
+    "script",
+    "frontend",
+    "Multi-server deployment",
+    "remote server",
+    "server management",
+    "server deployment"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomatobybike/wukong-deploy"
+  },
+  "license": "MIT",
+  "author": "Tom <tomatobybike@gmail.com>",
+  "type": "module",
+  "bin": {
+    "wukong-deploy": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/"
+  ],
+  "scripts": {
+    "deploy": "node src/deploy.mjs",
+    "dev": "node ./bin/cli.mjs",
+    "init": "node ./bin/cli.mjs init",
+    "lint": "eslint --ext .js,.mjs src/ ",
+    "lint:fix": "eslint --ext .js,.mjs src --fix",
+    "pack": "npm pack",
+    "prepare": "husky && husky install",
+    "prepublishOnly": "yarn lint",
+    "prettierall": "npx prettier --write 'src/**/*.{js,jsx}' ",
+    "publish": "git push --follow-tags origin main && yarn publish",
+    "release:major": "standard-version --release-as major",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "sort": "sort-package-json",
+    "test": "node ./bin/cli.mjs deploy test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "package.json": [
+      "sort-package-json"
+    ],
+    "src/**/*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "chalk": "5.3.0",
+    "date-fns": "2.30.0",
+    "dotenv": "^16.6.1",
+    "fs-extra": "11.3.0",
+    "inquirer": "^12.8.2",
+    "node-ssh": "^13.2.1",
+    "ora": "8.2.0",
+    "prettier": "3.5.1",
+    "strip-ansi": "7.1.0"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier-plugin-packagejson": "^2.5.8",
+    "pretty-quick": "^4.0.0",
+    "sort-package-json": "^1.57.0",
+    "standard-version": "^9.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

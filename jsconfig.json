@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "paths": {
+			"#src/*": ["src/*"],
+      "#utils/*": ["src/utils/*"],
+      "#lib/*": ["src/lib/*"],
+      "#constants/*": ["src/constants/*"],
+      "#config/*": ["src/config/*"],
+      "#command/*": ["src/command/*"]
+
+    }
+  },
+  "exclude": ["node_modules", "dist", "build"]
+}
