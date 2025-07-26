@@ -3,14 +3,14 @@ import { format } from 'date-fns'
 import fs from 'fs-extra'
 import path from 'path'
 import stripAnsi from 'strip-ansi'
-import { fileURLToPath } from 'url'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+// 使用用户当前工作目录而不是包安装目录
+const rootDir = process.cwd()
 
 // 每天一个子目录，如 logs/2025-07-26/deploy.log
 const logDir = path.resolve(
-  __dirname,
-  '../logs',
+  rootDir,
+  'logs',
   format(new Date(), 'yyyy-MM-dd')
 )
 const logPath = path.join(logDir, 'deploy.log')
