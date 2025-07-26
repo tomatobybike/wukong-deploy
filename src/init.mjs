@@ -3,10 +3,12 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const isDev = process.env.DEV_MODE === '1'
+const rootDir = isDev ? path.resolve(__dirname, '..') : process.cwd()
 
 export default async function init() {
-  const configPath = path.resolve(__dirname, '../config/config.mjs')
-  const envPath = path.resolve(__dirname, '../.env')
+  const configPath = path.resolve(rootDir, 'config/config.mjs')
+  const envPath = path.resolve(rootDir, '.env')
 
   await fs.ensureDir(path.dirname(configPath))
 
@@ -53,5 +55,5 @@ export default async function init() {
     'SERVER_53_PASSWORD="你的密码"\nSERVER_54_PASSWORD="你的密码"\n'
   )
 
-  console.log('✅ 已生成 config/config.mjs 和 .env 文件')
+  console.log(`✅ 已生成 ${configPath} 和 ${envPath} 文件`)
 }
