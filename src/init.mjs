@@ -32,7 +32,7 @@ export default async function init() {
   await fs.writeFile(
     configPath,
     `export default {
-  showCommandLog: true,
+  showCommandLog: false,
   servers: {
     test: {
       name: '测试服务器',

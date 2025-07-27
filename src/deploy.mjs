@@ -101,7 +101,7 @@ export default async function deploy(targetKey) {
     const result = await ssh.execCommand(cmd, { cwd })
     if (config.default.showCommandLog) {
       if (result.stdout) logger.info(`🟢 STDOUT:\n${result.stdout}`)
-      if (result.stderr) logger.error(`🔴 STDERR:\n${result.stderr}`)
+      if (result.stderr) logger.info(`🔴 STDERR:\n${result.stderr}`)
     }
     if (validateCommandResult(result, cmdObj, logger)) {
       ssh.dispose()
