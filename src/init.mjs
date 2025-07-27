@@ -2,15 +2,15 @@ import fs from 'fs-extra'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { devLog, isDev } from './utils/devLog.mjs'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const isDev = process.env.DEV_MODE === '1'
 const rootDir = isDev ? path.resolve(__dirname, '..') : process.cwd()
 
 // 调试信息，帮助排查Windows问题
-if (isDev) {
-  console.log(`当前工作目录: ${rootDir}`)
-  console.log(`当前模块目录: ${__dirname}`)
-}
+
+devLog(`当前工作目录: ${rootDir}`)
+devLog(`当前模块目录: ${__dirname}`)
 
 export default async function init() {
   // 使用path.join确保跨平台兼容性
@@ -18,21 +18,16 @@ export default async function init() {
   const envPath = path.resolve(rootDir, '.env')
 
   // 打印路径信息
-  if (isDev) {
-    console.log(`配置文件路径: ${configPath}`)
-    console.log(`环境文件路径: ${envPath}`)
-  }
+
+  devLog(`配置文件路径: ${configPath}`)
+  devLog(`环境文件路径: ${envPath}`)
 
   // 确保目录存在，并打印调试信息
   const configDir = path.dirname(configPath)
-  if (isDev) {
-    console.log(`创建配置目录: ${configDir}`)
-  }
+  devLog(`创建配置目录: ${configDir}`)
 
   await fs.ensureDir(configDir)
-  if (isDev) {
-    console.log(`写入配置文件: ${configPath}`)
-  }
+  devLog(`写入配置文件: ${configPath}`)
 
   await fs.writeFile(
     configPath,
@@ -46,14 +41,22 @@ export default async function init() {
       passwordEnv: 'SERVER_53_PASSWORD',
       commands: [
         {
+          // 某些命令可能返回 code=0，但 stderr 中包含关键错误
           cmd: 'git pull',
           cwd: '/your/project',
-          description: '拉取最新代码'
+          description: '拉取最新代码',
+          // 如果命令输出了 stderr（标准错误），就视为执行失败
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
         },
         {
           cmd: 'npm run build',
           cwd: '/your/project',
-          description: '构建项目'
+          description: '构建项目',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
         }
       ],
       finishMsg: '🎉 测试服务器部署完成'
@@ -67,12 +70,18 @@ export default async function init() {
         {
           cmd: 'git pull',
           cwd: '/your/project',
-          description: '拉取最新代码'
+          description: '拉取最新代码',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
         },
         {
           cmd: 'npm run build',
           cwd: '/your/project',
-          description: '构建项目'
+          description: '构建项目',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
         }
       ],
       finishMsg: '✅ 构建完成'
@@ -86,17 +95,26 @@ export default async function init() {
         {
           cmd: 'git pull',
           cwd: '/home/ubuntu/app',
-          description: '拉取最新代码'
+          description: '拉取最新代码',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
         },
         {
           cmd: 'npm install --production',
           cwd: '/home/ubuntu/app',
-          description: '安装生产依赖'
+          description: '安装生产依赖',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
         },
         {
           cmd: 'pm2 restart app',
           cwd: '/home/ubuntu/app',
-          description: '重启应用'
+          description: '重启应用',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
         }
       ],
       finishMsg: '✅ 构建完成'
@@ -106,9 +124,7 @@ export default async function init() {
 `
   )
 
-  if (isDev) {
-    console.log(`写入环境文件: ${envPath}`)
-  }
+  devLog(`写入环境文件: ${envPath}`)
 
   await fs.writeFile(
     envPath,
@@ -119,10 +135,8 @@ export default async function init() {
   const configExists = await fs.pathExists(configPath)
   const envExists = await fs.pathExists(envPath)
 
-  if (isDev) {
-    console.log(`配置文件创建状态: ${configExists ? '成功' : '失败'}`)
-    console.log(`环境文件创建状态: ${envExists ? '成功' : '失败'}`)
+  devLog(`配置文件创建状态: ${configExists ? '成功' : '失败'}`)
+  devLog(`环境文件创建状态: ${envExists ? '成功' : '失败'}`)
 
-    console.log(`✅ 已生成 ${configPath} 和 ${envPath} 文件`)
-  }
+  devLog(`✅ 已生成 ${configPath} 和 ${envPath} 文件`)
 }
