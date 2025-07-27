@@ -1,9 +1,9 @@
+import chalk from 'chalk'
 import fs from 'fs-extra'
 import path from 'node:path'
 
-import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 import { devLog } from './utils/devLog.mjs'
-import chalk from 'chalk'
+import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 
 const rootDir = process.cwd()
 // 使用path.join确保跨平台兼容性
