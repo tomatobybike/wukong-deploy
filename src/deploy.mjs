@@ -7,15 +7,18 @@ import logger from './logger.mjs'
 import { exitWithTime } from './utils/exitWithTime.mjs'
 import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 
+const isDev = process.env.DEV_MODE === '1'
 const rootDir = process.cwd()
 // 使用path.join确保跨平台兼容性
 const configFile = path.resolve(rootDir, path.join('config', 'config.mjs'))
 const envFile = path.resolve(rootDir, '.env')
 
 // 调试信息
-console.log(`部署模块 - 工作目录: ${rootDir}`)
-console.log(`部署模块 - 配置文件路径: ${configFile}`)
-console.log(`部署模块 - 环境文件路径: ${envFile}`)
+if (isDev) {
+  console.log(`部署模块 - 工作目录: ${rootDir}`)
+  console.log(`部署模块 - 配置文件路径: ${configFile}`)
+  console.log(`部署模块 - 环境文件路径: ${envFile}`)
+}
 
 // 检查文件是否存在
 if (!fs.existsSync(configFile)) {
@@ -36,10 +39,16 @@ export default async function deploy(targetKey) {
   // 动态导入配置文件
   let config
   try {
-    console.log(`尝试导入配置文件: ${configFile}`)
+    if (isDev) {
+      console.log(`尝试导入配置文件: ${configFile}`)
+    }
+
     // 将路径转换为URL格式，确保Windows兼容性
     const configFileUrl = pathToFileUrl(configFile)
-    console.log(`配置文件URL: ${configFileUrl}`)
+    if (isDev) {
+      console.log(`配置文件URL: ${configFileUrl}`)
+    }
+
     config = await import(configFileUrl)
 
     if (!config.default || !config.default.servers) {
@@ -90,21 +99,19 @@ export default async function deploy(targetKey) {
 
   for (const cmdObj of server.commands) {
     const { cmd, cwd, description } = cmdObj
-    logger.info(`💻 执行命令：${cmd}`)
+    logger.info(`💻 执行命令：${cmd} ${description}`)
     // eslint-disable-next-line no-await-in-loop
     const result = await ssh.execCommand(cmd, { cwd })
     if (config.default.showCommandLog) {
       if (result.stdout) logger.info(`🟢 STDOUT:\n${result.stdout}`)
       if (result.stderr) logger.error(`🔴 STDERR:\n${result.stderr}`)
     }
-    if (result.code !== 0 || result.stderr) {
+    if (result.code !== 0) {
       logger.error(
         `❌ 命令执行失败，退出部署。命令：${cmd}，退出码：${result.code}`
       )
       ssh.dispose()
       exitWithTime(start, 1)
-    } else if (description) {
-      logger.info(`🚀  ${description || '命令执行成功'}`)
     }
   }
 

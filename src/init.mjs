@@ -7,8 +7,10 @@ const isDev = process.env.DEV_MODE === '1'
 const rootDir = isDev ? path.resolve(__dirname, '..') : process.cwd()
 
 // 调试信息，帮助排查Windows问题
-console.log(`当前工作目录: ${rootDir}`)
-console.log(`当前模块目录: ${__dirname}`)
+if (isDev) {
+  console.log(`当前工作目录: ${rootDir}`)
+  console.log(`当前模块目录: ${__dirname}`)
+}
 
 export default async function init() {
   // 使用path.join确保跨平台兼容性
@@ -16,15 +18,22 @@ export default async function init() {
   const envPath = path.resolve(rootDir, '.env')
 
   // 打印路径信息
-  console.log(`配置文件路径: ${configPath}`)
-  console.log(`环境文件路径: ${envPath}`)
+  if (isDev) {
+    console.log(`配置文件路径: ${configPath}`)
+    console.log(`环境文件路径: ${envPath}`)
+  }
 
   // 确保目录存在，并打印调试信息
   const configDir = path.dirname(configPath)
-  console.log(`创建配置目录: ${configDir}`)
-  await fs.ensureDir(configDir)
+  if (isDev) {
+    console.log(`创建配置目录: ${configDir}`)
+  }
 
-  console.log(`写入配置文件: ${configPath}`)
+  await fs.ensureDir(configDir)
+  if (isDev) {
+    console.log(`写入配置文件: ${configPath}`)
+  }
+
   await fs.writeFile(
     configPath,
     `export default {
@@ -97,7 +106,10 @@ export default async function init() {
 `
   )
 
-  console.log(`写入环境文件: ${envPath}`)
+  if (isDev) {
+    console.log(`写入环境文件: ${envPath}`)
+  }
+
   await fs.writeFile(
     envPath,
     'SERVER_53_PASSWORD="你的密码"\nSERVER_54_PASSWORD="你的密码"\n'
@@ -107,8 +119,10 @@ export default async function init() {
   const configExists = await fs.pathExists(configPath)
   const envExists = await fs.pathExists(envPath)
 
-  console.log(`配置文件创建状态: ${configExists ? '成功' : '失败'}`)
-  console.log(`环境文件创建状态: ${envExists ? '成功' : '失败'}`)
+  if (isDev) {
+    console.log(`配置文件创建状态: ${configExists ? '成功' : '失败'}`)
+    console.log(`环境文件创建状态: ${envExists ? '成功' : '失败'}`)
 
-  console.log(`✅ 已生成 ${configPath} 和 ${envPath} 文件`)
+    console.log(`✅ 已生成 ${configPath} 和 ${envPath} 文件`)
+  }
 }

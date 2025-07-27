@@ -1,22 +1,14 @@
 #!/usr/bin/env node
-import { argv, exit } from 'node:process'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import fs from 'node:fs'
-import ora from 'ora'
 import inquirer from 'inquirer'
+import fs from 'node:fs'
+import path from 'node:path'
+import { argv, exit } from 'node:process'
+import { fileURLToPath } from 'node:url'
+import ora from 'ora'
+
 import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
 
-/* // 辅助函数：将路径转换为ESM兼容的URL格式
-// 解决Windows下绝对路径必须是有效file:// URL的问题
-function pathToFileUrl(filePath) {
-  if (process.platform === 'win32') {
-    // Windows路径处理：转换反斜杠，处理驱动器号
-    return `file://${filePath.replace(/\\/g, '/').replace(/^([a-zA-Z]):\\/, '/$1:/')}`
-  }
-  // 非Windows系统
-  return `file://${filePath}`
-} */
+const isDev = process.env.DEV_MODE === '1'
 
 process.on('uncaughtException', (error) => {
   if (error.name === 'ExitPromptError') {
@@ -57,7 +49,10 @@ if (command === '-v' || command === '--version') {
   // 使用 import.meta.url 获取当前模块的 URL
   const currentModulePath = fileURLToPath(import.meta.url)
   // 从当前模块路径推导出包的根目录
-  const packagePath = path.resolve(path.dirname(currentModulePath), '../package.json')
+  const packagePath = path.resolve(
+    path.dirname(currentModulePath),
+    '../package.json'
+  )
 
   try {
     // 尝试读取 package.json
@@ -78,10 +73,12 @@ if (command === '-v' || command === '--version') {
 }
 
 // 打印系统信息，帮助排查Windows问题
-console.log(`操作系统: ${process.platform}`)
-console.log(`Node.js版本: ${process.version}`)
-console.log(`CLI目录: ${__dirname}`)
-console.log(`工作目录: ${rootDir}`)
+if (isDev) {
+  console.log(`操作系统: ${process.platform}`)
+  console.log(`Node.js版本: ${process.version}`)
+  console.log(`CLI目录: ${__dirname}`)
+  console.log(`工作目录: ${rootDir}`)
+}
 
 switch (command) {
   case 'init': {
@@ -90,17 +87,21 @@ switch (command) {
       // 使用URL格式导入模块，确保Windows兼容性
       // Windows下绝对路径必须是有效的file:// URL
       const initPath = path.resolve(__dirname, '../src/init.mjs')
-      console.log(`加载初始化模块: ${initPath}`)
+      if (isDev) {
+        console.log(`加载初始化模块: ${initPath}`)
+      }
 
       // 将路径转换为URL格式
-       const initUrl = pathToFileUrl(initPath)
-       console.log(`模块URL: ${initUrl}`)
+      const initUrl = pathToFileUrl(initPath)
+      if (isDev) {
+        console.log(`模块URL: ${initUrl}`)
+      }
 
-      const init = await import(initUrl).then(
-        (m) => m.default
-      )
+      const init = await import(initUrl).then((m) => m.default)
+      if (isDev) {
+        console.log('初始化模块加载成功，开始执行初始化...')
+      }
 
-      console.log('初始化模块加载成功，开始执行初始化...')
       await init()
       spinner.succeed('初始化完成 ✅')
     } catch (error) {
@@ -116,56 +117,75 @@ switch (command) {
     ensureInitialized()
 
     try {
-      const configLoaderPath = path.resolve(__dirname, '../src/config-loader.mjs')
-      console.log(`加载配置加载器模块: ${configLoaderPath}`)
+      const configLoaderPath = path.resolve(
+        __dirname,
+        '../src/config-loader.mjs'
+      )
+      if (isDev) {
+        console.log(`加载配置加载器模块: ${configLoaderPath}`)
+      }
 
       // 将路径转换为URL格式，确保Windows兼容性
-       const configLoaderUrl = pathToFileUrl(configLoaderPath)
-       console.log(`配置加载器URL: ${configLoaderUrl}`)
+      const configLoaderUrl = pathToFileUrl(configLoaderPath)
+      if (isDev) {
+        console.log(`配置加载器URL: ${configLoaderUrl}`)
+      }
 
       const { getServerList } = await import(configLoaderUrl)
       const serverList = await getServerList()
 
-      console.log(`成功获取服务器列表，共${serverList.length}个服务器配置`)
+      if (isDev) {
+        console.log(`成功获取服务器列表，共${serverList.length}个服务器配置`)
+      }
 
       if (!serverList.length) {
-        console.warn('⚠️ 未找到任何服务器配置，请先执行 wukong-deploy init 初始化')
+        console.warn(
+          '⚠️ 未找到任何服务器配置，请先执行 wukong-deploy init 初始化'
+        )
         process.exit(1)
       }
 
-    let selectedTarget = target
+      let selectedTarget = target
 
-    if (!target) {
-      const answer = await inquirer.prompt([
-        {
-          type: 'list',
-          name: 'target',
-          message: '请选择要部署的服务器',
-          choices: [
-            ...serverList.map((s) => ({ name: s.name, value: s.key })),
-            new inquirer.Separator(),
-            { name: '❌ 退出部署', value: '__exit' }
-          ]
+      if (!target) {
+        const answer = await inquirer.prompt([
+          {
+            type: 'list',
+            name: 'target',
+            message: '请选择要部署的服务器',
+            choices: [
+              ...serverList.map((s) => ({ name: s.name, value: s.key })),
+              new inquirer.Separator(),
+              { name: '❌ 退出部署', value: '__exit' }
+            ]
+          }
+        ])
+
+        selectedTarget = answer.target
+        if (selectedTarget === '__exit') {
+          console.log('🚪 已取消部署。')
+          process.exit(0)
         }
-      ])
-
-      selectedTarget = answer.target
-      if (selectedTarget === '__exit') {
-        console.log('🚪 已取消部署。')
-        process.exit(0)
       }
-    }
 
       const deployPath = path.resolve(__dirname, '../src/deploy.mjs')
-      console.log(`加载部署模块: ${deployPath}`)
+      if (isDev) {
+        console.log(`加载部署模块: ${deployPath}`)
+      }
 
       // 将路径转换为URL格式，确保Windows兼容性
-       const deployUrl = pathToFileUrl(deployPath)
-       console.log(`部署模块URL: ${deployUrl}`)
+      const deployUrl = pathToFileUrl(deployPath)
+      if (isDev) {
+        console.log(`部署模块URL: ${deployUrl}`)
+      }
 
       const deploy = await import(deployUrl).then((m) => m.default)
       await deploy(selectedTarget)
     } catch (error) {
+      if (error.name === 'ExitPromptError') {
+        console.log('🚪 用户取消了部署（Ctrl+C）')
+        process.exit(0)
+      }
       console.error(`❌ 部署过程中出错: ${error.message}`)
       console.error(error.stack)
       process.exit(1)

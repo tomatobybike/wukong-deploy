@@ -34,8 +34,9 @@
     "src/"
   ],
   "scripts": {
-    "deploy": "node src/deploy.mjs",
     "dev": "node ./bin/cli.mjs",
+    "dev-mac": "DEV_MODE=1 node ./bin/cli.mjs",
+    "dev-win": "set DEV_MODE=1&& node ./bin/cli.mjs",
     "init": "node ./bin/cli.mjs init",
     "lint": "eslint --ext .js,.mjs src/ ",
     "lint:fix": "eslint --ext .js,.mjs src --fix",
