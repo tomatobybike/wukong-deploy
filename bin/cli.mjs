@@ -5,6 +5,18 @@ import { fileURLToPath } from 'node:url'
 import fs from 'node:fs'
 import ora from 'ora'
 import inquirer from 'inquirer'
+import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
+
+/* // 辅助函数：将路径转换为ESM兼容的URL格式
+// 解决Windows下绝对路径必须是有效file:// URL的问题
+function pathToFileUrl(filePath) {
+  if (process.platform === 'win32') {
+    // Windows路径处理：转换反斜杠，处理驱动器号
+    return `file://${filePath.replace(/\\/g, '/').replace(/^([a-zA-Z]):\\/, '/$1:/')}`
+  }
+  // 非Windows系统
+  return `file://${filePath}`
+} */
 
 process.on('uncaughtException', (error) => {
   if (error.name === 'ExitPromptError') {
@@ -40,29 +52,86 @@ const ensureInitialized = () => {
   }
 }
 
+// 显示版本号
+if (command === '-v' || command === '--version') {
+  // 使用 import.meta.url 获取当前模块的 URL
+  const currentModulePath = fileURLToPath(import.meta.url)
+  // 从当前模块路径推导出包的根目录
+  const packagePath = path.resolve(path.dirname(currentModulePath), '../package.json')
+
+  try {
+    // 尝试读取 package.json
+    const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'))
+    console.log(`wukong-deploy v${packageJson.version}`)
+  } catch (err) {
+    // 如果读取失败，尝试从 __dirname 获取
+    try {
+      const altPackagePath = path.resolve(__dirname, '../package.json')
+      const packageJson = JSON.parse(fs.readFileSync(altPackagePath, 'utf8'))
+      console.log(`wukong-deploy v${packageJson.version}`)
+    } catch (e) {
+      // 如果都失败了，显示固定版本信息
+      console.log('wukong-deploy unknow') // 硬编码当前版本作为后备
+    }
+  }
+  process.exit(0)
+}
+
+// 打印系统信息，帮助排查Windows问题
+console.log(`操作系统: ${process.platform}`)
+console.log(`Node.js版本: ${process.version}`)
+console.log(`CLI目录: ${__dirname}`)
+console.log(`工作目录: ${rootDir}`)
+
 switch (command) {
   case 'init': {
     const spinner = ora('正在初始化配置...').start()
-    const init = await import(path.resolve(__dirname, '../src/init.mjs')).then(
-      (m) => m.default
-    )
-    await init()
-    spinner.succeed('初始化完成 ✅')
+    try {
+      // 使用URL格式导入模块，确保Windows兼容性
+      // Windows下绝对路径必须是有效的file:// URL
+      const initPath = path.resolve(__dirname, '../src/init.mjs')
+      console.log(`加载初始化模块: ${initPath}`)
+
+      // 将路径转换为URL格式
+       const initUrl = pathToFileUrl(initPath)
+       console.log(`模块URL: ${initUrl}`)
+
+      const init = await import(initUrl).then(
+        (m) => m.default
+      )
+
+      console.log('初始化模块加载成功，开始执行初始化...')
+      await init()
+      spinner.succeed('初始化完成 ✅')
+    } catch (error) {
+      spinner.fail('初始化失败')
+      console.error(`初始化错误: ${error.message}`)
+      console.error(error.stack)
+      process.exit(1)
+    }
     break
   }
 
   case 'deploy': {
     ensureInitialized()
 
-    const { getServerList } = await import(
-      path.resolve(__dirname, '../src/config-loader.mjs')
-    )
-    const serverList = await getServerList()
+    try {
+      const configLoaderPath = path.resolve(__dirname, '../src/config-loader.mjs')
+      console.log(`加载配置加载器模块: ${configLoaderPath}`)
 
-    if (!serverList.length) {
-      console.warn('⚠️ 未找到任何服务器配置，请先执行 wukong-deploy init 初始化')
-      process.exit(1)
-    }
+      // 将路径转换为URL格式，确保Windows兼容性
+       const configLoaderUrl = pathToFileUrl(configLoaderPath)
+       console.log(`配置加载器URL: ${configLoaderUrl}`)
+
+      const { getServerList } = await import(configLoaderUrl)
+      const serverList = await getServerList()
+
+      console.log(`成功获取服务器列表，共${serverList.length}个服务器配置`)
+
+      if (!serverList.length) {
+        console.warn('⚠️ 未找到任何服务器配置，请先执行 wukong-deploy init 初始化')
+        process.exit(1)
+      }
 
     let selectedTarget = target
 
@@ -87,10 +156,20 @@ switch (command) {
       }
     }
 
-    const deploy = await import(
-      path.resolve(__dirname, '../src/deploy.mjs')
-    ).then((m) => m.default)
-    await deploy(selectedTarget)
+      const deployPath = path.resolve(__dirname, '../src/deploy.mjs')
+      console.log(`加载部署模块: ${deployPath}`)
+
+      // 将路径转换为URL格式，确保Windows兼容性
+       const deployUrl = pathToFileUrl(deployPath)
+       console.log(`部署模块URL: ${deployUrl}`)
+
+      const deploy = await import(deployUrl).then((m) => m.default)
+      await deploy(selectedTarget)
+    } catch (error) {
+      console.error(`❌ 部署过程中出错: ${error.message}`)
+      console.error(error.stack)
+      process.exit(1)
+    }
     break
   }
 
@@ -100,6 +179,7 @@ switch (command) {
   wukong-deploy init               初始化配置
   wukong-deploy deploy             根据提示选择服务器进行部署
   wukong-deploy deploy [server]    部署指定服务器
-  wukong-deploy -h             显示帮助信息
+  wukong-deploy -v, --version      显示版本号
+  wukong-deploy -h                 显示帮助信息
 `)
 }

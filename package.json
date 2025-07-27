@@ -1,6 +1,6 @@
 {
   "name": "wukong-deploy",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A simple CLI to manage multi-server deployment",
   "keywords": [
     "cli",
