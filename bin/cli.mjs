@@ -135,7 +135,10 @@ const main = async () => {
               name: 'target',
               message: '请选择要部署的服务器',
               choices: [
-                ...serverList.map((s) => ({ name: s.name, value: s.key })),
+                ...serverList.map((s) => ({
+                  name: `${s.name} ${s.host}`,
+                  value: s.key
+                })),
                 new inquirer.Separator(),
                 { name: '❌ 退出部署', value: '__exit' }
               ]
