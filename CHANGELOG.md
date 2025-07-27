@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.9](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.8...v1.0.9) (2025-07-27)
+
+
+### Features
+
+* 🎸 server name and host ([2dd233c](https://github.com/tomatobybike/wukong-deploy/commit/2dd233c3ce42e9facb51b3aa82674e3c0c7c95ba))
+
 ### [1.0.8](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.5...v1.0.8) (2025-07-27)
 
 
