@@ -55,7 +55,26 @@ export default {
       host: '192.168.0.123',
       username: 'root',
       passwordEnv: 'SERVER_53_PASSWORD',
-      commands: ['cd /your/project', 'git pull', 'npm run build'],
+      commands: [
+        {
+          // 某些命令可能返回 code=0，但 stderr 中包含关键错误
+          cmd: 'git pull',
+          cwd: '/your/project',
+          description: '拉取最新代码',
+          // 如果命令输出了 stderr（标准错误），就视为执行失败
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
+        },
+        {
+          cmd: 'npm run build',
+          cwd: '/your/project',
+          description: '构建项目',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
+        }
+      ],
       finishMsg: '🎉 生产服务器部署完成'
     },
     prod: {
@@ -64,9 +83,22 @@ export default {
       username: 'ubuntu',
       privateKey: '~/.ssh/id_rsa',
       commands: [
-        'cd /home/ubuntu/app',
-        'git pull origin main',
-        'pm2 restart app'
+        {
+          cmd: 'git pull',
+          cwd: '/your/project',
+          description: '拉取最新代码',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
+        },
+        {
+          cmd: 'npm run build',
+          cwd: '/your/project',
+          description: '构建项目',
+          exitOnStdErr: false,
+          // 如果 stderr 匹配这个正则，也视为执行失败
+          errorMatch: /Permission denied/
+        }
       ],
       finishMsg: '✅ 构建完成'
     }

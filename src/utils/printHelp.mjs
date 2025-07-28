@@ -9,6 +9,7 @@ Usage:
 
 Commands:
   init               初始化配置
+  list               显示所有可部署的服务器及其部署命令
   deploy             根据提示选择服务器进行部署
   deploy [server]    部署指定服务器
 
@@ -18,6 +19,7 @@ Options:
 
 示例:
   wukong-deploy init
+  wukong-deploy list
   wukong-deploy deploy
   wukong-deploy deploy prod
   wukong-deploy -v

@@ -74,6 +74,34 @@ const main = async () => {
   devLog(`工作目录: ${rootDir}`)
 
   switch (command) {
+    case 'list': {
+      ensureInitialized()
+      try {
+        const configLoaderPath = path.resolve(__dirname, '../src/config-loader.mjs')
+        const configLoaderUrl = pathToFileUrl(configLoaderPath)
+        const { getServerList } = await import(configLoaderUrl)
+        const serverList = await getServerList()
+
+        if (!serverList.length) {
+          console.warn('⚠️ 未找到任何服务器配置，请先执行 wukong-deploy init 初始化')
+          process.exit(1)
+        }
+
+        console.log('\n📋 服务器列表：')
+        for (const server of serverList) {
+          console.log(`\n🖥️  ${server.name} (${server.host})\n   部署命令：`)
+          server.commands?.forEach((cmd, index) => {
+            console.log(`   ${index + 1}. ${cmd.description}: ${cmd.cmd}`)
+          })
+        }
+        console.log()
+      } catch (error) {
+        console.error(`❌ 获取服务器列表失败: ${error.message}`)
+        process.exit(1)
+      }
+      break
+    }
+
     case 'init': {
       const spinner = ora('正在初始化配置...').start()
       try {
@@ -160,6 +188,28 @@ const main = async () => {
         devLog(`部署模块URL: ${deployUrl}`)
 
         const deploy = await import(deployUrl).then((m) => m.default)
+
+        // 显示将要执行的命令并确认
+        const selectedServer = serverList.find(s => s.key === selectedTarget)
+        console.log(`\n📋 即将在 ${selectedServer.name} (${selectedServer.host}) 执行以下命令：`)
+        selectedServer.commands?.forEach((cmd, index) => {
+          console.log(`${index + 1}. ${cmd.description}: ${cmd.cmd}`)
+        })
+
+        const confirmation = await inquirer.prompt([
+          {
+            type: 'confirm',
+            name: 'proceed',
+            message: '确认要执行这些命令吗？',
+            default: false
+          }
+        ])
+
+        if (!confirmation.proceed) {
+          console.log('🚪 已取消部署。')
+          process.exit(0)
+        }
+
         await deploy(selectedTarget)
       } catch (error) {
         if (error.name === 'ExitPromptError') {
