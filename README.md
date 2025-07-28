@@ -57,25 +57,25 @@ export default {
       passwordEnv: 'SERVER_53_PASSWORD',
       commands: [
         {
-          // 某些命令可能返回 code=0，但 stderr 中包含关键错误
+          // Some commands may return code=0, but the standard error contains a critical error
           cmd: 'git pull',
           cwd: '/your/project',
-          description: '拉取最新代码',
-          // 如果命令输出了 stderr（标准错误），就视为执行失败
+          description: 'Pull the latest code',
+          // If the command outputs standard error (std err), it is considered to have failed execution
           exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
+          // If the standard error matches this rule, it is also considered a execution failure
           errorMatch: /Permission denied/
         },
         {
           cmd: 'npm run build',
           cwd: '/your/project',
-          description: '构建项目',
+          description: 'Build Project',
           exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
+          // If the standard error matches this rule, it is also considered a execution failure
           errorMatch: /Permission denied/
         }
       ],
-      finishMsg: '🎉 生产服务器部署完成'
+      finishMsg: '🎉 Deployment completed'
     },
     prod: {
       name: 'Production Server',
@@ -86,21 +86,21 @@ export default {
         {
           cmd: 'git pull',
           cwd: '/your/project',
-          description: '拉取最新代码',
+          description: 'Pull the latest code',
           exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
+          //  If the standard error matches this rule, it is also considered a execution failure
           errorMatch: /Permission denied/
         },
         {
           cmd: 'pm2 restart app',
           cwd: '/your/project',
-          description: '重启服务',
+          description: 'restart server',
           exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
+          //  If the standard error matches this rule, it is also considered a execution failure
           errorMatch: /Permission denied/
         }
       ],
-      finishMsg: '✅ 构建完成'
+      finishMsg: '✅ Build completed'
     }
   }
 }

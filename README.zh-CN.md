@@ -81,7 +81,7 @@ export default {
           errorMatch: /Permission denied/
         }
       ],
-      finishMsg: '🎉 生产服务器部署完成'
+      finishMsg: '🎉 测试服务器部署完成'
     },
     prod: {
       name: '生产服务器',
