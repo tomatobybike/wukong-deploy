@@ -1,0 +1,62 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "globals": {
+    "GLOBAL": "writable",
+    "$": "readonly",
+    "cd": "readonly",
+    "fetch": "readonly",
+    "question": "readonly",
+    "chalk": "readonly",
+    "argv": "readonly"
+  },
+  "plugins": ["prettier"],
+  "rules": {
+    "array-callback-return": "off",
+    "consistent-return": "off",
+    "no-await-in-loop": "warn",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "no-plusplus": "off",
+    "no-unresolved": "off",
+    "import/no-unresolved": "off",
+    "import/no-named-as-default": "off",
+    "no-restricted-syntax": "off",
+    "no-underscore-dangle": "off",
+    "no-unused-expressions": "off",
+    "no-useless-constructor": "warn",
+    "no-useless-escape": "off",
+    "prettier/prettier": "off",
+    "import/prefer-default-export": "off",
+    "import/no-named-as-default-member": "off",
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": [
+      "off",
+      {
+        "devDependencies": true,
+        "peerDependencies": true
+        // optionalDependencies: true,
+        // bundledDependencies: true
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": [["@", "./src"]]
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.mjs"]
+      // ... 其他规则配置
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "bracketSpacing": true,
+  "importOrder": [
+    "^./conf(.*)(?<!.css)$",
+    "^(#|#company|#command|#ui|components|#utils|#constants||#lib|utils|config|vendored-lib)(/(.*)(?<!.css)$)",
+    "^(src|@)/(.*)(?<!.css)$",
+    "^[./]",
+    "^api/(.*)(?<!.css)$",
+    "^.+\\.s?css$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "jsxBracketSameLine": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "printWidth": 80,
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "none",
+  "useTabs": false
+}
