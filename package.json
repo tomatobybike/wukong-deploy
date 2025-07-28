@@ -93,5 +93,6 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "logo": "https://raw.githubusercontent.com/tomatobybike/wukong-deploy/main/images/logo.svg"
 }
