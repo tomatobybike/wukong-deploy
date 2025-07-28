@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.11](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.10...v1.0.11) (2025-07-28)
+
+
+### Features
+
+* 🎸 add list command ([01d5cba](https://github.com/tomatobybike/wukong-deploy/commit/01d5cba8f7c98a95b717773f8c07b865243be5e1))
+* 🎸 lock package version ([216d43d](https://github.com/tomatobybike/wukong-deploy/commit/216d43d3bf844a049e83998dc4f02cf1ea889331))
+* 🎸 logo beauty ([b5f7c4c](https://github.com/tomatobybike/wukong-deploy/commit/b5f7c4cace1c3d53fffc62144b3aa45613b32a78))
+* 🎸 some conf ([9d42bec](https://github.com/tomatobybike/wukong-deploy/commit/9d42beceb6de799b0881fb5d018757cef7b6a408))
+
 ### [1.0.10](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.9...v1.0.10) (2025-07-28)
 
 
