@@ -1,9 +1,15 @@
+<div align="center">
+  <img src="https://raw.githubusercontent.com/tomatobybike/wukong-deploy/main/images/logo.svg" width="200" alt="wukong-dev Logo">
+</div>
+
 # wukong-deploy
+
 [![npm version](https://img.shields.io/npm/v/wukong-deploy.svg)](https://www.npmjs.com/package/wukong-deploy)
 [![npm downloads](https://img.shields.io/npm/dm/wukong-deploy.svg)](https://www.npmjs.com/package/wukong-deploy)
 [![GitHub license](https://img.shields.io/github/license/tomatobybike/wukong-deploy.svg)](https://github.com/tomatobybike/wukong-deploy/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/tomatobybike/wukong-deploy.svg?style=social)](https://github.com/tomatobybike/wukong-deploy)
 [![GitHub issues](https://img.shields.io/github/issues/tomatobybike/wukong-deploy.svg)](https://github.com/tomatobybike/wukong-deploy/issues)
+
 一个轻量的基于 Node.js 的远程多服务器部署 CLI 工具。
 
 ## 安装
