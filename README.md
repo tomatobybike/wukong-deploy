@@ -92,9 +92,9 @@ export default {
           errorMatch: /Permission denied/
         },
         {
-          cmd: 'npm run build',
+          cmd: 'pm2 restart app',
           cwd: '/your/project',
-          description: '构建项目',
+          description: '重启服务',
           exitOnStdErr: false,
           // 如果 stderr 匹配这个正则，也视为执行失败
           errorMatch: /Permission denied/
