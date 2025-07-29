@@ -7,9 +7,11 @@ import { fileURLToPath } from 'node:url'
 import ora from 'ora'
 
 import { devLog, isDev } from '../src/utils/devLog.mjs'
+import { showHelp } from '../src/utils/help.mjs'
 import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
-import { printHelp } from '../src/utils/printHelp.mjs'
+import { printHelp, printHelp2 } from '../src/utils/printHelp.mjs'
 import { getVersion } from '../src/utils/version.mjs'
+import { getLang } from '../src/utils/langDetect.mjs'
 
 const getPackagePaths = () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -237,7 +239,33 @@ const main = async () => {
     }
 
     default: {
-      await printHelp(version)
+      const lang = getLang()
+
+      await showHelp(lang)
+      // await printHelp2(version)
+      // await printHelp({
+      //   version: version,
+      //   description: 'A tool for deploying applications to remote servers.',
+      //   commands: [
+      //     { name: 'init', desc: '初始化配置' },
+      //     { name: 'list', desc: '显示所有可部署的服务器及其部署命令' },
+      //     { name: 'deploy', desc: '根据提示选择服务器进行部署' },
+      //     { name: 'deploy [server]', desc: '部署指定服务器' }
+      //   ],
+      //   options: [
+      //     { flags: '-v, --version', desc: '显示版本号' },
+      //     { flags: '-h, --help', desc: '显示帮助信息' },
+      //     { flags: '-f, --force', desc: '在 init 时强制覆盖已有配置文件' }
+      //   ],
+      //   examples: [
+      //     'wukong-deploy init',
+      //     'wukong-deploy init --force',
+      //     'wukong-deploy list',
+      //     'wukong-deploy deploy',
+      //     'wukong-deploy deploy prod',
+      //     'wukong-deploy -v',
+      //   ]
+      // })
     }
   }
 }
