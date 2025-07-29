@@ -5,6 +5,7 @@ export function printAuthorInfo(lang = 'en') {
     title: 'wukong-deploy 信息',
     desc: '一个部署工具，用于快速部署项目到远程服务器。',
     author: '杨琼',
+    Email: 'tomatojacky@126.com',
     github: 'https://www.npmjs.com/package/wukong-deploy',
     license: 'MIT'
   }
@@ -13,6 +14,7 @@ export function printAuthorInfo(lang = 'en') {
     title: 'wukong-deploy Info',
     desc: 'A deployment tool for quickly pushing projects to remote servers.',
     author: 'Yang Qiong',
+    Email: 'tomatojacky@126.com',
     github: 'https://github.com/yourname/wukong-deploy',
     license: 'MIT'
   }

@@ -19,7 +19,6 @@
     "wukong-deploy list",
     "wukong-deploy deploy",
     "wukong-deploy deploy prod",
-    "wukong-deploy -v",
-    "wukong-deploy info"
+    "wukong-deploy -v"
   ]
 }
