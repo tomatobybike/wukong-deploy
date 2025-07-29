@@ -77,13 +77,18 @@ const main = async () => {
     case 'list': {
       ensureInitialized()
       try {
-        const configLoaderPath = path.resolve(__dirname, '../src/config-loader.mjs')
+        const configLoaderPath = path.resolve(
+          __dirname,
+          '../src/config-loader.mjs'
+        )
         const configLoaderUrl = pathToFileUrl(configLoaderPath)
         const { getServerList } = await import(configLoaderUrl)
         const serverList = await getServerList()
 
         if (!serverList.length) {
-          console.warn('⚠️ 未找到任何服务器配置，请先执行 wukong-deploy init 初始化')
+          console.warn(
+            '⚠️ 未找到任何服务器配置，请先执行 wukong-deploy init 初始化'
+          )
           process.exit(1)
         }
 
@@ -117,7 +122,7 @@ const main = async () => {
         const init = await import(initUrl).then((m) => m.default)
         devLog('初始化模块加载成功，开始执行初始化...')
 
-        await init()
+        await init(spinner)
         spinner.succeed('初始化完成 ✅')
       } catch (error) {
         spinner.fail('初始化失败')
@@ -190,8 +195,16 @@ const main = async () => {
         const deploy = await import(deployUrl).then((m) => m.default)
 
         // 显示将要执行的命令并确认
-        const selectedServer = serverList.find(s => s.key === selectedTarget)
-        console.log(`\n📋 即将在 ${selectedServer.name} (${selectedServer.host}) 执行以下命令：`)
+        const selectedServer = serverList.find((s) => s.key === selectedTarget)
+        if (!selectedServer) {
+          console.error(
+            '❌ 未找到指定的服务器配置,请检查配置文件是否正确 \n use: wukong-deploy list \n 查看所有服务器配置'
+          )
+          process.exit(1)
+        }
+        console.log(
+          `\n📋 即将在 ${selectedServer.name} (${selectedServer.host}) 执行以下命令：`
+        )
         selectedServer.commands?.forEach((cmd, index) => {
           console.log(`${index + 1}. ${cmd.description}: ${cmd.cmd}`)
         })

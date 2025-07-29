@@ -16,6 +16,7 @@ Commands:
 Options:
   -v, --version      显示版本号
   -h, --help         显示帮助信息
+  -f, --force        在 init 时强制覆盖已有配置文件
 
 示例:
   wukong-deploy init

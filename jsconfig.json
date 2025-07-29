@@ -1,16 +1,20 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "experimentalDecorators": true,
-    "paths": {
-			"#src/*": ["src/*"],
-      "#utils/*": ["src/utils/*"],
-      "#lib/*": ["src/lib/*"],
-      "#constants/*": ["src/constants/*"],
-      "#config/*": ["src/config/*"],
-      "#command/*": ["src/command/*"]
+    "checkJs": true,
+    "allowJs": true,
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "Node",
 
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "#src/*": ["src/*"],
+      "#utils/*": ["src/utils/*"]
     }
   },
-  "exclude": ["node_modules", "dist", "build"]
+
+  "include": ["src", "bin"],
+
+  "exclude": ["node_modules", "dist", "build", "**/*.test.js"]
 }
