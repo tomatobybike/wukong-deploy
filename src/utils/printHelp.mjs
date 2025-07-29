@@ -6,6 +6,7 @@ export function printHelp({
   commands = [],
   options = [],
   examples = [],
+  lang,
   cliName = 'wukong-deploy' // 新增默认参数
 }) {
   const pad = (str, len) => str + ' '.repeat(Math.max(0, len - str.length))
@@ -20,7 +21,10 @@ export function printHelp({
 
   console.log(colors.header('Usage:'))
   console.log(
-    `  ${colors.command(cliName)} ${colors.desc('[command] [options]')}\n`
+    `  ${colors.command(cliName)} ${colors.desc('[command] [options]')}`
+  )
+  console.log(
+    `  ${colors.command(cliName)} ${colors.desc(lang === 'en' ? '--help  Show help information' : '--help  显示帮助信息')}\n`
   )
 
   if (commands.length) {
@@ -53,7 +57,8 @@ export function printHelp({
   }
 
   if (examples.length) {
-    console.log(colors.header('示例:'))
+    const headerLable = lang === 'en' ? 'Examples:' : '示例:'
+    console.log(colors.header(headerLable))
     for (const ex of examples) {
       // 这里把示例中的默认命令名替换成cliName，方便灵活
       const exampleLine = ex.replace(/wukong-deploy/g, cliName)

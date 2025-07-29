@@ -25,6 +25,7 @@ export async function showHelp(lang = 'en') {
 
   await printHelp({
     ...helpData,
+    lang,
     cliName: 'wukong-deploy' // 可以改成动态
   })
 }

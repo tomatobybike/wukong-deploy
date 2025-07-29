@@ -11,7 +11,10 @@
   "options": [
     { "flags": "-v, --version", "desc": "Show version number" },
     { "flags": "-h, --help", "desc": "Show help information" },
-    { "flags": "-f, --force", "desc": "Force overwrite existing config on init" }
+    {
+      "flags": "-f, --force",
+      "desc": "Force overwrite existing config on init"
+    }
   ],
   "examples": [
     "wukong-deploy init",
@@ -19,6 +22,7 @@
     "wukong-deploy list",
     "wukong-deploy deploy",
     "wukong-deploy deploy prod",
-    "wukong-deploy -v"
+    "wukong-deploy -v",
+    "wukong-deploy info"
   ]
 }
