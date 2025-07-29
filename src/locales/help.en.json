@@ -5,7 +5,8 @@
     { "name": "init", "desc": "Initialize configuration" },
     { "name": "list", "desc": "List all deployable servers" },
     { "name": "deploy", "desc": "Deploy by choosing server" },
-    { "name": "deploy [server]", "desc": "Deploy specified server" }
+    { "name": "deploy [server]", "desc": "Deploy specified server" },
+    { "name": "info", "desc": "Show author and project information" }
   ],
   "options": [
     { "flags": "-v, --version", "desc": "Show version number" },

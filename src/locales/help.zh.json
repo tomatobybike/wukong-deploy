@@ -5,7 +5,8 @@
     { "name": "init", "desc": "初始化配置" },
     { "name": "list", "desc": "显示所有可部署的服务器及其部署命令" },
     { "name": "deploy", "desc": "根据提示选择服务器进行部署" },
-    { "name": "deploy [server]", "desc": "部署指定服务器" }
+    { "name": "deploy [server]", "desc": "部署指定服务器" },
+    { "name": "info", "desc": "显示作者和项目信息" }
   ],
   "options": [
     { "flags": "-v, --version", "desc": "显示版本号" },
