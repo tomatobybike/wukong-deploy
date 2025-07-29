@@ -11,7 +11,6 @@ import { showHelp } from '../src/utils/help.mjs'
 import { printAuthorInfo } from '../src/utils/info.mjs'
 import { getLang } from '../src/utils/langDetect.mjs'
 import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
-import { printHelp, printHelp2 } from '../src/utils/printHelp.mjs'
 import { getVersion } from '../src/utils/version.mjs'
 
 const getPackagePaths = () => {
@@ -24,6 +23,12 @@ const getPackagePaths = () => {
     path.resolve(__dirname, '../package.json')
   ]
   return pathsToTry
+}
+
+const getMyVersion = async () => {
+  const packagePaths = getPackagePaths()
+  const version = await getVersion(packagePaths)
+  return version
 }
 
 const main = async () => {
@@ -54,8 +59,7 @@ const main = async () => {
   const configPath = path.join(rootDir, 'config', 'config.mjs')
   const envPath = path.join(rootDir, '.env')
 
-  const packagePaths = getPackagePaths()
-  const version = await getVersion(packagePaths)
+  const version = await getMyVersion()
 
   const ensureInitialized = () => {
     if (!fs.existsSync(configPath) || !fs.existsSync(envPath)) {
@@ -241,8 +245,9 @@ const main = async () => {
     case 'info':
     case '--about':
     case '--info': {
+      const version = await getMyVersion()
       const lang = getLang()
-      printAuthorInfo(lang)
+      printAuthorInfo({ lang, version })
       process.exit(0)
     }
 
@@ -250,30 +255,6 @@ const main = async () => {
       const lang = getLang()
 
       await showHelp(lang)
-      // await printHelp2(version)
-      // await printHelp({
-      //   version: version,
-      //   description: 'A tool for deploying applications to remote servers.',
-      //   commands: [
-      //     { name: 'init', desc: '初始化配置' },
-      //     { name: 'list', desc: '显示所有可部署的服务器及其部署命令' },
-      //     { name: 'deploy', desc: '根据提示选择服务器进行部署' },
-      //     { name: 'deploy [server]', desc: '部署指定服务器' }
-      //   ],
-      //   options: [
-      //     { flags: '-v, --version', desc: '显示版本号' },
-      //     { flags: '-h, --help', desc: '显示帮助信息' },
-      //     { flags: '-f, --force', desc: '在 init 时强制覆盖已有配置文件' }
-      //   ],
-      //   examples: [
-      //     'wukong-deploy init',
-      //     'wukong-deploy init --force',
-      //     'wukong-deploy list',
-      //     'wukong-deploy deploy',
-      //     'wukong-deploy deploy prod',
-      //     'wukong-deploy -v',
-      //   ]
-      // })
     }
   }
 }
