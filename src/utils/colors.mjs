@@ -35,3 +35,13 @@ export const colors = {
   // 可用更柔和的调暗白色，替代 dim gray
   dim: chalk.white.dim
 }
+
+export const c = {
+  title: chalk.bold.cyan,
+  label: chalk.yellow,
+  value: chalk.white,
+  dim: chalk.hex('#BBBBBB'),
+  success: chalk.green,
+  error: chalk.red,
+  link: chalk.blue.underline
+}

@@ -8,10 +8,11 @@ import ora from 'ora'
 
 import { devLog, isDev } from '../src/utils/devLog.mjs'
 import { showHelp } from '../src/utils/help.mjs'
+import { printAuthorInfo } from '../src/utils/info.mjs'
+import { getLang } from '../src/utils/langDetect.mjs'
 import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
 import { printHelp, printHelp2 } from '../src/utils/printHelp.mjs'
 import { getVersion } from '../src/utils/version.mjs'
-import { getLang } from '../src/utils/langDetect.mjs'
 
 const getPackagePaths = () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -236,6 +237,13 @@ const main = async () => {
         process.exit(1)
       }
       break
+    }
+    case 'info':
+    case '--about':
+    case '--info': {
+      const lang = getLang()
+      printAuthorInfo(lang)
+      process.exit(0)
     }
 
     default: {
