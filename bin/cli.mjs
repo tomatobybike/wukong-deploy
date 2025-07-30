@@ -253,8 +253,8 @@ const main = async () => {
 
     default: {
       const lang = getLang()
-
-      await showHelp(lang)
+      const version = await getMyVersion()
+      await showHelp({ lang, version })
     }
   }
 }

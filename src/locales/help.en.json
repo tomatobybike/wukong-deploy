@@ -1,5 +1,4 @@
 {
-  "version": "1.0.0",
   "description": "A tool for deploying applications to remote servers.",
   "commands": [
     { "name": "init", "desc": "Initialize configuration" },

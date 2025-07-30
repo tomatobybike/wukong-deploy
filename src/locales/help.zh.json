@@ -1,5 +1,4 @@
 {
-  "version": "1.0.0",
   "description": "一个用于远程服务器部署的工具。",
   "commands": [
     { "name": "init", "desc": "初始化配置" },

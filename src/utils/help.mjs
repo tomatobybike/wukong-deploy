@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url'
 
 import { printHelp } from './printHelp.mjs'
 
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -19,12 +18,12 @@ export async function loadHelp(lang = 'en') {
   }
 }
 
-export async function showHelp(lang = 'en') {
-
+export async function showHelp({ lang = 'en', version }) {
   const helpData = await loadHelp(lang)
 
   await printHelp({
     ...helpData,
+    version,
     lang,
     cliName: 'wukong-deploy' // 可以改成动态
   })
