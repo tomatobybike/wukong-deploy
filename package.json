@@ -14,7 +14,6 @@
     "command-line",
     "script",
     "frontend",
-    "Multi-server deployment",
     "remote server",
     "server management",
     "server deployment"
@@ -38,17 +37,19 @@
     "dev-mac": "DEV_MODE=1 node ./bin/cli.mjs",
     "dev-win": "set DEV_MODE=1&& node ./bin/cli.mjs",
     "init": "node ./bin/cli.mjs init",
-    "lint": "eslint --ext .js,.mjs src/ ",
+    "lint": "eslint --ext .js,.mjs src/",
     "lint:fix": "eslint --ext .js,.mjs src --fix",
     "pack": "npm pack",
-    "prepublishOnly": "yarn lint",
-    "prettierall": "npx prettier --write 'src/**/*.{js,jsx}' ",
-    "publish": "git push --follow-tags origin main && yarn publish",
-    "release:major": "standard-version --release-as major",
-    "release:minor": "standard-version --release-as minor",
-    "release:patch": "standard-version --release-as patch",
+    "prettierall": "npx prettier --write 'src/**/*.{js,jsx}'",
+    "publish": "yarn release:patch && yarn push:tags && yarn publish:npm",
+    "publish:npm": "npm publish",
+    "push:tags": "git push origin main --follow-tags",
+    "release:major": "yarn lint && standard-version --release-as major",
+    "release:minor": "yarn lint && standard-version --release-as minor",
+    "release:patch": "yarn lint && standard-version --release-as patch",
     "sort": "sort-package-json",
-    "test": "node ./bin/cli.mjs deploy test"
+    "test": "node ./bin/cli.mjs deploy test",
+    "size:test": "npm pack && mkdir -p .tmp && cd .tmp && npm init -y && npm install ../wukong-deploy-*.tgz && du -sh node_modules"
   },
   "husky": {
     "hooks": {
@@ -72,7 +73,6 @@
     "inquirer": "12.8.2",
     "node-ssh": "13.2.1",
     "ora": "8.2.0",
-    "prettier": "3.5.1",
     "strip-ansi": "7.1.0"
   },
   "devDependencies": {
@@ -86,11 +86,12 @@
     "eslint-plugin-simple-import-sort": "12.1.1",
     "husky": "9.1.7",
     "lint-staged": "15.5.2",
+    "prettier": "3.5.1",
     "prettier-plugin-packagejson": "2.5.19",
-    "pretty-quick": "4.2.2",
     "sort-package-json": "1.57.0",
     "standard-version": "9.5.0"
   },
+  "packageManager": "yarn@1.22.22",
   "engines": {
     "node": ">=18.0.0"
   },

@@ -30,7 +30,7 @@ yarn-error.log*
 dist/
 build/
 
-
+.history
 
 # Husky and lint-staged config directories
 .husky/
