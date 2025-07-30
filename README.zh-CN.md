@@ -139,6 +139,8 @@ SERVER_53_PASSWORD=your_password_here
 
 ```
 
+[changelog](./CHANGELOG.md)
+
 ## npm publish 前检查包
 
 ```bash

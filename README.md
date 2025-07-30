@@ -15,6 +15,7 @@
 
 English | [简体中文](./README.zh-CN.md)
 
+
 A lightweight CLI tool for remote server deployment based on Node.js.
 
 ## Installation
@@ -124,6 +125,8 @@ export default {
 ```env
 SERVER_53_PASSWORD=your_password_here
 ```
+
+[changelog](./CHANGELOG.md)
 
 ## License
 
