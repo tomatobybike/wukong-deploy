@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.12](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.11...v1.0.12) (2025-07-30)
+
+
+### Features
+
+* 🎸 防止配置项，被overwrite ([3879a4e](https://github.com/tomatobybike/wukong-deploy/commit/3879a4edc77363d744aad37219934f07c857e7f3))
+* 🎸 add into cmd ([07e5298](https://github.com/tomatobybike/wukong-deploy/commit/07e52986860248ae9331acb533a827d1d9d24be0))
+* 🎸 add version ([a906d47](https://github.com/tomatobybike/wukong-deploy/commit/a906d47bfa247c7057d21eb1292b3594f6df3054))
+* 🎸 example del info ([f1a0c21](https://github.com/tomatobybike/wukong-deploy/commit/f1a0c21a82173570def07a17d1e60d9782f7270d))
+* 🎸 language auto change ([93245a8](https://github.com/tomatobybike/wukong-deploy/commit/93245a85ae3ff5d2346134bfe75323cd843ed80c))
+* 🎸 language show ([cd4aaea](https://github.com/tomatobybike/wukong-deploy/commit/cd4aaea3cd133447cac5ff0470c93d3036a42c3c))
+* 🎸 logo ([ed7ef91](https://github.com/tomatobybike/wukong-deploy/commit/ed7ef9198e0f9469b338da3c47954d1d221c27e3))
+* 🎸 package script ([3163f55](https://github.com/tomatobybike/wukong-deploy/commit/3163f5537ee4c119ef244b686d0a6859fa358591))
+* 🎸 printHelp ([f225221](https://github.com/tomatobybike/wukong-deploy/commit/f22522175bcd2f649123e90576fa83518bd62afe))
+* 🎸 some language and info ([e3bfbf0](https://github.com/tomatobybike/wukong-deploy/commit/e3bfbf0f928355e1de95631a632c799474813e2f))
+
 ### [1.0.11](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.10...v1.0.11) (2025-07-28)
 
 
