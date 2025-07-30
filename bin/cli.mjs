@@ -6,7 +6,7 @@ import { argv, exit } from 'node:process'
 import { fileURLToPath } from 'node:url'
 import ora from 'ora'
 
-import { devLog, isDev } from '../src/utils/devLog.mjs'
+import { devLog } from '../src/utils/devLog.mjs'
 import { showHelp } from '../src/utils/help.mjs'
 import { printAuthorInfo } from '../src/utils/info.mjs'
 import { getLang } from '../src/utils/langDetect.mjs'

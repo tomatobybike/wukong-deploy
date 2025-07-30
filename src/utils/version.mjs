@@ -28,7 +28,7 @@ export const getVersionSync = (packagePaths) => {
 /**
  * 异步读取 package.json 版本号
  * 兼容 Windows 和各种路径
- * @returns {string} 版本号字符串，读取失败返回 'unknow'
+ * @returns string 版本号字符串，读取失败返回 'unknow'
  */
 export const getVersion = async (packagePaths) => {
   for (const pkgPath of packagePaths) {
