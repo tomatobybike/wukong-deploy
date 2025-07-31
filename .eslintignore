@@ -3,4 +3,5 @@
 /dist
 /Doc
 /bin/
+/src/lib
 #/src/**/*.zx.mjs

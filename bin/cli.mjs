@@ -7,15 +7,13 @@ import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import ora from 'ora'
 
+import { sendTelemetry } from '../src/lib/telemetry.wukong.mjs'
 import { devLog } from '../src/utils/devLog.mjs'
 import { showHelp } from '../src/utils/help.mjs'
 import { printAuthorInfo } from '../src/utils/info.mjs'
 import { getLang } from '../src/utils/langDetect.mjs'
 import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
-import { sendTelemetry } from '../src/utils/telemetry.fetch.mjs'
 import { getVersion } from '../src/utils/version.mjs'
-
-
 
 const getPackagePaths = () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -32,11 +30,14 @@ const getPackagePaths = () => {
 const getMyVersion = async () => {
   const packagePaths = getPackagePaths()
   const version = await getVersion(packagePaths)
-  return version
+  return version || 'unknown'
 }
 
+let VERSION = ''
+
 const main = async () => {
-  sendTelemetry('cli_start').catch(() => {})
+  VERSION = await getMyVersion()
+  sendTelemetry('start', { version: VERSION }).catch(() => {})
   process.on('uncaughtException', (error) => {
     if (error.name === 'ExitPromptError') {
       console.log('\n🚪 用户取消了部署（Ctrl+C）')
@@ -64,7 +65,7 @@ const main = async () => {
   const configPath = path.join(rootDir, 'config', 'config.mjs')
   const envPath = path.join(rootDir, '.env')
 
-  const version = await getMyVersion()
+
 
   const ensureInitialized = () => {
     if (!fs.existsSync(configPath) || !fs.existsSync(envPath)) {
@@ -75,6 +76,7 @@ const main = async () => {
 
   // 显示版本号
   if (command === '-v' || command === '--version') {
+    sendTelemetry('version', { version: VERSION }).catch(() => {})
     console.log(`wukong-deploy v${version}`)
     process.exit(0)
   }
@@ -87,6 +89,7 @@ const main = async () => {
 
   switch (command) {
     case 'list': {
+      sendTelemetry('list', { version: VERSION }).catch(() => {})
       ensureInitialized()
       try {
         const configLoaderPath = path.resolve(
@@ -120,6 +123,7 @@ const main = async () => {
     }
 
     case 'init': {
+      sendTelemetry('init', { version: VERSION }).catch(() => {})
       const spinner = ora('正在初始化配置...').start()
       try {
         // 使用URL格式导入模块，确保Windows兼容性
@@ -146,6 +150,7 @@ const main = async () => {
     }
 
     case 'deploy': {
+      sendTelemetry('deploy', { version: VERSION }).catch(() => {})
       ensureInitialized()
 
       try {
@@ -250,6 +255,7 @@ const main = async () => {
     case 'info':
     case '--about':
     case '--info': {
+      sendTelemetry('info', { version: VERSION }).catch(() => {})
       const version = await getMyVersion()
       const lang = getLang()
       printAuthorInfo({ lang, version })
@@ -265,6 +271,11 @@ const main = async () => {
 }
 
 main().catch((err) => {
+  sendTelemetry('error', {
+    version: VERSION,
+    message: err.message,
+    stack: err.stack
+  }).catch(() => {})
   console.error('主函数异常:', err)
   process.exit(1)
 })

@@ -7,7 +7,9 @@
 import { createHash } from 'node:crypto'
 import os from 'node:os'
 
-const TELEMETRY_ENDPOINT = 'https://your-server.com/api/track' // 请替换成你自己的接口
+import { getLang } from './langDetect.mjs'
+
+const TELEMETRY_ENDPOINT = 'https://api.hisread.com/api/track/wukong'
 
 const getAnonymousId = () => {
   const raw = `${os.hostname()}|${os.arch()}`
@@ -23,6 +25,7 @@ const getAnonymousId = () => {
 export const sendTelemetry = async (eventType, extraData = {}) => {
   if (process.env.WUKONG_NO_TELEMETRY === '1') return
 
+  const lang = getLang()
   const payload = {
     event: eventType,
     time: new Date().toISOString(),
@@ -30,6 +33,8 @@ export const sendTelemetry = async (eventType, extraData = {}) => {
     platform: process.platform,
     arch: process.arch,
     node: process.version,
+    lang,
+    cli: 'wukong-deploy',
     id: getAnonymousId(),
     ...extraData
   }

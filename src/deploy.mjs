@@ -35,7 +35,7 @@ dotenv.config({ path: envFile })
 
 export default async function deploy(targetKey) {
   const start = performance.now()
-
+  logger.info('start deploy', { ...logCache, newline: true })
   // 动态导入配置文件
   let config
   try {

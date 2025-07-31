@@ -11,3 +11,4 @@ package-lock.json
 # Misc
 dist
 public
+src/lib

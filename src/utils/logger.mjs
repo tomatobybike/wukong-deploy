@@ -37,7 +37,7 @@ const shortTimestamp = () =>
 const fullTimestamp = () => format(new Date(), 'yyyy-MM-dd HH:mm:ss')
 
 // 默认日志路径：项目根目录 logs/yyyy-mm-dd.log
-const getLogFilePath = async () => {
+const getLogFilePath = () => {
   const day = format(new Date(), 'yyyy-MM-dd')
   // 缓存起来文件的日志路径
   const shouldRecreate =
@@ -51,35 +51,44 @@ const getLogFilePath = async () => {
     cachedPath = logPath
     return logPath
   }
+  return cachedPath
 }
 
 // 写入日志（同步 + 追加）
-const writeToFile = async (level, msg) => {
-  const logPath = await getLogFilePath()
-  const line = `[${fullTimestamp()}] [${level.toUpperCase()}] ${stripAnsi(msg)}\n`
+const writeToFile = (level, msg, newline) => {
+  const logPath = getLogFilePath()
+  if (!logPath) {
+    console.error('❌ 日志路径未生成，终止写入')
+    return
+  }
+  const newLineString = newline ? '\n' : ''
+  const line = `${newLineString}[${fullTimestamp()}] [${level.toUpperCase()}] ${stripAnsi(msg)}\n`
   fs.appendFileSync(logPath, line, 'utf-8')
 }
 
 // 主函数工厂，支持 { write: true } 控制是否写文件
 function createLogger(level, colorFn, outFn = console.log) {
   return (...args) => {
-    // 检查最后一个参数是否是写文件选项对象 { write: true }
-    let writeFile = false
+    let options = {}
     if (
       args.length &&
       typeof args[args.length - 1] === 'object' &&
       args[args.length - 1] !== null &&
-      'write' in args[args.length - 1]
+      ('write' in args[args.length - 1] || 'newline' in args[args.length - 1])
     ) {
-      writeFile = args.pop().write === true
+      options = args.pop()
     }
 
     const msg = args.map(String).join(' ')
     const line = `${shortTimestamp()} ${colorFn(prefix[level])} ${msg}`
+
+    if (options.newline) {
+      outFn('')
+    }
     outFn(line)
 
-    if (writeFile) {
-      writeToFile(level, msg)
+    if (options.write) {
+      writeToFile(level, msg, options.newline)
     }
   }
 }
@@ -92,6 +101,7 @@ export const logger = {
   debug: (msg, options = {}) => {
     if (process.env.DEBUG || process.env.WUKONG_DEBUG) {
       const line = `${shortTimestamp()} ${chalk.gray(prefix.debug)} ${msg}`
+      if (options.newline) console.log('')
       console.log(line)
       if (options.write) {
         writeToFile('debug', [msg])
