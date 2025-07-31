@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.13](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.12...v1.0.13) (2025-07-31)
+
+
+### Features
+
+* 🎸 report event ([6677101](https://github.com/tomatobybike/wukong-deploy/commit/6677101feac71880da2ac2297816edc34a34f8b9))
+* 🎸 script preinstall ([223a064](https://github.com/tomatobybike/wukong-deploy/commit/223a0642ff9ee5f276b9a4b998ceb3ce4cfd1a0a))
+* 🎸 ver1.0.12 and language,and --force ([a3ef9f8](https://github.com/tomatobybike/wukong-deploy/commit/a3ef9f88e51ebf49856a4fbb90b0fb9d262ace54))
+
+
+### Bug Fixes
+
+* 🐛 windows pc ,some gitbash don't show chalk color ([79d7a3e](https://github.com/tomatobybike/wukong-deploy/commit/79d7a3ec194d2fe47ee7f13cd1f7c32d5a54e46c))
+
 ### [1.0.12](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.11...v1.0.12) (2025-07-30)
 
 ### Features
