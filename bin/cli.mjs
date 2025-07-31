@@ -77,7 +77,7 @@ const main = async () => {
   // 显示版本号
   if (command === '-v' || command === '--version') {
     sendTelemetry('version', { version: VERSION }).catch(() => {})
-    console.log(`wukong-deploy v${version}`)
+    console.log(`wukong-deploy v${VERSION}`)
     process.exit(0)
   }
 

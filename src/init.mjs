@@ -1,5 +1,4 @@
 import fs from 'fs-extra'
-import inquirer from 'inquirer'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
