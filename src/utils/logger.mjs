@@ -1,6 +1,7 @@
 // scripts/logger.mjs
 import { Chalk } from 'chalk'
-import fs from 'node:fs'
+import { format } from 'date-fns'
+import fs from 'fs-extra'
 import path from 'node:path'
 import process from 'node:process'
 import stripAnsi from 'strip-ansi'
@@ -13,6 +14,11 @@ if (!process.stdout.isTTY || chalk.level === 0) {
   chalk.level = 3
 }
  */
+
+// 缓存起来文件的日志路径
+let cachedDay = ''
+let cachedPath = ''
+
 // 彩色前缀
 const prefix = {
   info: chalk.cyan('ℹ'),
@@ -23,22 +29,35 @@ const prefix = {
 }
 
 // 时间戳 [HH:mm:ss]
+// 短时间戳用于终端输出
 const shortTimestamp = () =>
   chalk.dim(`[${new Date().toTimeString().slice(0, 8)}]`)
-const isoTimestamp = () => new Date().toISOString()
+
+// 日志文件中用本地完整时间
+const fullTimestamp = () => format(new Date(), 'yyyy-MM-dd HH:mm:ss')
 
 // 默认日志路径：项目根目录 logs/yyyy-mm-dd.log
-const getLogFilePath = () => {
-  const date = new Date().toISOString().slice(0, 10)
-  const logDir = path.resolve(process.cwd(), 'logs')
-  if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true })
-  return path.join(logDir, `${date}.log`)
+const getLogFilePath = async () => {
+  const day = format(new Date(), 'yyyy-MM-dd')
+  // 缓存起来文件的日志路径
+  const shouldRecreate =
+    cachedDay !== day || !cachedPath || !fs.existsSync(cachedPath)
+  if (shouldRecreate) {
+    cachedDay = day
+    const logDir = path.resolve(process.cwd(), 'logs', day)
+    const logPath = path.join(logDir, 'wukong.log')
+    fs.ensureDirSync(logDir)
+    fs.ensureFileSync(logPath)
+    cachedPath = logPath
+    return logPath
+  }
 }
 
-const writeToFile = (level, args) => {
-  const logPath = getLogFilePath()
-  const cleanLine = `[${isoTimestamp()}] [${level.toUpperCase()}] ${stripAnsi(args.join(' '))}\n`
-  fs.appendFile(logPath, cleanLine, () => {})
+// 写入日志（同步 + 追加）
+const writeToFile = async (level, msg) => {
+  const logPath = await getLogFilePath()
+  const line = `[${fullTimestamp()}] [${level.toUpperCase()}] ${stripAnsi(msg)}\n`
+  fs.appendFileSync(logPath, line, 'utf-8')
 }
 
 // 主函数工厂，支持 { write: true } 控制是否写文件
@@ -46,7 +65,12 @@ function createLogger(level, colorFn, outFn = console.log) {
   return (...args) => {
     // 检查最后一个参数是否是写文件选项对象 { write: true }
     let writeFile = false
-    if (args.length && typeof args[args.length -1] === 'object' && args[args.length -1] !== null && 'write' in args[args.length -1]) {
+    if (
+      args.length &&
+      typeof args[args.length - 1] === 'object' &&
+      args[args.length - 1] !== null &&
+      'write' in args[args.length - 1]
+    ) {
       writeFile = args.pop().write === true
     }
 

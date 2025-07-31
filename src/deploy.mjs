@@ -9,11 +9,11 @@ import logger from './utils/logger.mjs'
 import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 import { validateCommandResult } from './utils/validateCommandResult.mjs'
 
-
 const rootDir = process.cwd()
 // 使用path.join确保跨平台兼容性
 const configFile = path.resolve(rootDir, path.join('config', 'config.mjs'))
 const envFile = path.resolve(rootDir, '.env')
+const logCache = { write: true }
 
 // 调试信息
 devLog(`部署模块 - 工作目录: ${rootDir}`)
@@ -85,25 +85,25 @@ export default async function deploy(targetKey) {
     process.exit(1)
   }
 
-  logger.info(`🔗 Connecting to ${server.name} (${server.host})...`)
+  logger.info(`🔗 Connecting to ${server.name} (${server.host})...`, logCache)
   try {
     await ssh.connect(connectConfig)
-    logger.success('✅ SSH 连接成功')
+    logger.success('✅ SSH 连接成功', logCache)
   } catch (err) {
-    logger.error(`❌ SSH 连接失败：${err.message}`)
+    logger.error(`❌ SSH 连接失败：${err.message}`, logCache)
     process.exit(1)
   }
 
   for (const cmdObj of server.commands) {
     const { cmd, cwd, description } = cmdObj
-    logger.info(`💻 执行命令：${cmd} ${description}`)
+    logger.info(`💻 执行命令：${cmd} ${description}`, logCache)
     // eslint-disable-next-line no-await-in-loop
     const result = await ssh.execCommand(cmd, { cwd })
     if (config.default.showCommandLog) {
-      if (result.stdout) logger.info(`🟢 STDOUT:\n${result.stdout}`)
-      if (result.stderr) logger.info(`🔴 STDERR:\n${result.stderr}`)
+      if (result.stdout) logger.info(`🟢 STDOUT:\n${result.stdout}`, logCache)
+      if (result.stderr) logger.info(`🔴 STDERR:\n${result.stderr}`, logCache)
     }
-    if (validateCommandResult(result, cmdObj, logger)) {
+    if (validateCommandResult(result, cmdObj)) {
       ssh.dispose()
       return exitWithTime(start, 1)
     }
@@ -112,6 +112,6 @@ export default async function deploy(targetKey) {
   ssh.dispose()
   const finishMsg =
     `${server.finishMsg} ${targetKey}` || `🚀 部署 ${targetKey} 完成`
-  logger.success(finishMsg)
+  logger.success(finishMsg, logCache)
   exitWithTime(start, 0) // 正常完成时调用，统一退出
 }
