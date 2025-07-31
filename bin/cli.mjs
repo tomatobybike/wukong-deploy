@@ -3,6 +3,7 @@ import inquirer from 'inquirer'
 import fs from 'node:fs'
 import path from 'node:path'
 import { argv, exit } from 'node:process'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import ora from 'ora'
 
@@ -11,7 +12,10 @@ import { showHelp } from '../src/utils/help.mjs'
 import { printAuthorInfo } from '../src/utils/info.mjs'
 import { getLang } from '../src/utils/langDetect.mjs'
 import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
+import { sendTelemetry } from '../src/utils/telemetry.fetch.mjs'
 import { getVersion } from '../src/utils/version.mjs'
+
+
 
 const getPackagePaths = () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -32,6 +36,7 @@ const getMyVersion = async () => {
 }
 
 const main = async () => {
+  sendTelemetry('cli_start').catch(() => {})
   process.on('uncaughtException', (error) => {
     if (error.name === 'ExitPromptError') {
       console.log('\n🚪 用户取消了部署（Ctrl+C）')

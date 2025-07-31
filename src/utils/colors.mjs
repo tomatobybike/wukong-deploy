@@ -1,5 +1,6 @@
-import chalk from 'chalk'
+import { Chalk } from 'chalk'
 
+const chalk = new Chalk({ level: 3 }) // 强制开启 truecolor chalk v5
 // 自定义灰色，适合透明和深色背景，避免看不清
 const betterGray = chalk.hex('#BBBBBB')
 

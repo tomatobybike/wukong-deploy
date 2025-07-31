@@ -1,6 +1,9 @@
-import chalk from 'chalk'
+import { Chalk } from 'chalk'
 
+// 强制开启 truecolor chalk v5
 import { getLang } from './langDetect.mjs'
+
+const chalk = new Chalk({ level: 3 }) // 强制开启 truecolor chalk v5
 
 const messages = {
   zh: {
