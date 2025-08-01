@@ -7,6 +7,7 @@ export const isDev = process.env.DEV_MODE === '1'
  * 推荐用于局部调试
  */
 export function devLog(...args) {
+  // console.log(process.env.DEV_MODE,isDev)
   if (isDev) {
     logger.debug(args.join(' '))
   }

@@ -1,5 +1,7 @@
 import inquirer from 'inquirer'
 
+import { i18nLogNative } from './i18n.mjs'
+
 /**
  * 在交互前自动停止 spinner 的 prompt 包装函数
  * @param {ora.Ora} spinner - ora 实例
@@ -16,11 +18,21 @@ export async function promptWithSpinnerStop(spinner, questions, options = {}) {
     spinner.stop()
   }
 
-  const answers = await inquirer.prompt(questions)
+  try {
+    const answers = await inquirer.prompt(questions)
 
-  if (restartSpinner && typeof spinner.start === 'function') {
-    spinner.start(restartMessage || '继续执行中...')
+    if (restartSpinner && typeof spinner.start === 'function') {
+      spinner.start(restartMessage || 'Continuing...')
+    }
+
+    return answers
+  } catch (err) {
+    // 捕获 Ctrl+C / SIGINT 等
+    if (err?.isTtyError || err?.name === 'ExitPromptError') {
+      i18nLogNative('prompt.cancelInit')
+      process.exit(0)
+    }
+
+    throw err
   }
-
-  return answers
 }

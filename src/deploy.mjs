@@ -1,6 +1,6 @@
 /**
  * @file: deploy.mjs
- * @description: 
+ * @description:
  * @author: King Monkey
  * @created: 2025-08-01 15:00
  */
@@ -9,38 +9,49 @@ import fs from 'fs-extra'
 import { NodeSSH } from 'node-ssh'
 import path from 'path'
 
-
 import { devLog } from './utils/devLog.mjs'
 import { exitWithTime } from './utils/exitWithTime.mjs'
+import {
+  i18nError,
+  i18nGetRaw,
+  i18nInfo,
+  i18nLogNative,
+  i18nSuccess
+} from './utils/i18n.mjs'
 import logger from './utils/logger.mjs'
 import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 import { validateCommandResult } from './utils/validateCommandResult.mjs'
 
-const rootDir = process.cwd()
-// 使用path.join确保跨平台兼容性
-const configFile = path.resolve(rootDir, path.join('config', 'config.mjs'))
-const envFile = path.resolve(rootDir, '.env')
-const logCache = { write: true }
+const handleCheckEnv = () => {
+  const rootDir = process.cwd()
+  // 使用path.join确保跨平台兼容性
+  const configFile = path.resolve(rootDir, path.join('config', 'config.mjs'))
+  const envFile = path.resolve(rootDir, '.env')
 
-// 调试信息
-devLog(`部署模块 - 工作目录: ${rootDir}`)
-devLog(`部署模块 - 配置文件路径: ${configFile}`)
-devLog(`部署模块 - 环境文件路径: ${envFile}`)
+  // 调试信息
+  devLog(`部署模块 - 工作目录: ${rootDir}`)
+  devLog(`部署模块 - 配置文件路径: ${configFile}`)
+  devLog(`部署模块 - 环境文件路径: ${envFile}`)
 
-// 检查文件是否存在
-if (!fs.existsSync(configFile)) {
-  console.error(`配置文件不存在: ${configFile}`)
-  process.exit(1)
+  // 检查文件是否存在
+  if (!fs.existsSync(configFile)) {
+    i18nLogNative('configFileNotExist', { file: configFile })
+    process.exit(1)
+  }
+
+  if (!fs.existsSync(envFile)) {
+    i18nLogNative('envFileNotExist', { file: envFile })
+
+    process.exit(1)
+  }
+
+  dotenv.config({ path: envFile })
+  return configFile
 }
-
-if (!fs.existsSync(envFile)) {
-  console.error(`环境文件不存在: ${envFile}`)
-  process.exit(1)
-}
-
-dotenv.config({ path: envFile })
 
 export default async function deploy(targetKey) {
+  const configFile = handleCheckEnv()
+  const logCache = { write: true }
   const start = performance.now()
   logger.info('start deploy', { ...logCache, newline: true })
   // 动态导入配置文件
@@ -56,22 +67,24 @@ export default async function deploy(targetKey) {
     config = await import(configFileUrl)
 
     if (!config.default || !config.default.servers) {
-      console.error('❌ 配置文件格式错误，缺少 default.servers 对象')
+      i18nLogNative('configFormatError')
+
       process.exit(1)
     }
   } catch (error) {
-    console.error(`❌ 导入配置文件失败: ${error.message}`)
+    i18nError('importConfigFail', { msg: error.message })
     console.error(error.stack)
     process.exit(1)
   }
 
   const server = config.default.servers[targetKey]
   if (!server) {
-    console.error(`❌ 配置中找不到服务器 key: ${targetKey}`)
+    i18nLogNative('configKeyNotFound', { key: targetKey })
+
     process.exit(1)
   }
 
-  console.log(`找到服务器配置: ${server.name}`)
+  i18nLogNative('foundServer', { name: server.name })
 
   const ssh = new NodeSSH()
   const connectConfig = {
@@ -88,22 +101,24 @@ export default async function deploy(targetKey) {
   } else if (server.passwordEnv) {
     connectConfig.password = process.env[server.passwordEnv]
   } else {
-    console.error('❌ 请配置私钥或密码环境变量')
+    i18nLogNative('needKeyOrPwd')
     process.exit(1)
   }
 
   logger.info(`🔗 Connecting to ${server.name} (${server.host})...`, logCache)
   try {
     await ssh.connect(connectConfig)
-    logger.success('✅ SSH 连接成功', logCache)
+
+    i18nSuccess('sshConnectSuccess')
   } catch (err) {
-    logger.error(`❌ SSH 连接失败：${err.message}`, logCache)
+    i18nError('sshConnectFail', { msg: err.message })
+
     process.exit(1)
   }
 
   for (const cmdObj of server.commands) {
     const { cmd, cwd, description } = cmdObj
-    logger.info(`💻 执行命令：${cmd} ${description}`, logCache)
+    i18nInfo('execCommand', { cmd, desc: description })
     // eslint-disable-next-line no-await-in-loop
     const result = await ssh.execCommand(cmd, { cwd })
     if (config.default.showCommandLog) {
@@ -118,7 +133,8 @@ export default async function deploy(targetKey) {
 
   ssh.dispose()
   const finishMsg =
-    `${server.finishMsg} ${targetKey}` || `🚀 部署 ${targetKey} 完成`
+    `${server.finishMsg} ${targetKey}` ||
+    i18nGetRaw('deployComplete', { msg: targetKey })
   logger.success(finishMsg, logCache)
   exitWithTime(start, 0) // 正常完成时调用，统一退出
 }

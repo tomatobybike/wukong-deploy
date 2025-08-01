@@ -1,16 +1,31 @@
+/**
+ * @file: wukong-deploy/src/init.mjs
+ * @description:
+ * @author: King Monkey
+ * @created: 2025-08-02 01:49
+ */
+
 import fs from 'fs-extra'
 import path from 'path'
 
+import {
+  generateConfigContent,
+  generateConfigPasswordContent
+} from './generateConfig.mjs'
 import { devLog } from './utils/devLog.mjs'
-import { getProjectRoot } from './utils/getBaseDir.mjs'
+import { i18nLogNative ,i18nGetRaw} from './utils/i18n.mjs'
+import { getLang } from './utils/langDetect.mjs'
 import { promptWithSpinnerStop } from './utils/promptWithSpinnerStop.mjs'
 
-const rootDir = getProjectRoot()
+const rootDir = process.cwd()
+
 
 const forceOverwrite =
   process.argv.includes('--force') || process.argv.includes('-f')
 
 export default async function init(spinner) {
+
+  const lang = getLang()
   // 调试信息，帮助排查Windows问题
 
   devLog(`当前工作目录: ${rootDir}`)
@@ -33,19 +48,21 @@ export default async function init(spinner) {
     if (configExists) existingFiles.push('config/config.mjs')
     if (envExists) existingFiles.push('.env')
     spinner.stop()
-    console.log(`\n⚠️  以下文件已存在：${existingFiles.join(', ')}`)
+
+
+    i18nLogNative('filesExist', { files: existingFiles.join(', ') })
 
     const { overwrite } = await promptWithSpinnerStop(spinner, [
       {
         type: 'confirm',
         name: 'overwrite',
-        message: '是否要覆盖现有文件？',
+        message: i18nGetRaw('file.confirmOverwrite'),
         default: false
       }
     ])
 
     if (!overwrite) {
-      console.log('🚪 已取消初始化。')
+      i18nLogNative('cancelInit')
       process.exit(1)
       return
     }
@@ -58,107 +75,15 @@ export default async function init(spinner) {
   await fs.ensureDir(configDir)
   devLog(`写入配置文件: ${configPath}`)
 
-  await fs.writeFile(
-    configPath,
-    `export default {
-  showCommandLog: true,
-  servers: {
-    test: {
-      name: '测试服务器',
-      host: '192.168.0.123',
-      username: 'root',
-      passwordEnv: 'SERVER_53_PASSWORD',
-      commands: [
-        {
-          // 某些命令可能返回 code=0，但 stderr 中包含关键错误
-          cmd: 'git pull',
-          cwd: '/your/project',
-          description: '拉取最新代码',
-          // 如果命令输出了 stderr（标准错误），就视为执行失败
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        },
-        {
-          cmd: 'npm run build',
-          cwd: '/your/project',
-          description: '构建项目',
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        }
-      ],
-      finishMsg: '🎉 测试服务器部署完成'
-    },
-    dev: {
-      name: '研发服务器',
-      host: '192.168.0.124',
-      username: 'root',
-      passwordEnv: 'SERVER_54_PASSWORD',
-      commands: [
-        {
-          cmd: 'git pull',
-          cwd: '/your/project',
-          description: '拉取最新代码',
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        },
-        {
-          cmd: 'npm run build',
-          cwd: '/your/project',
-          description: '构建项目',
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        }
-      ],
-      finishMsg: '✅ 构建完成'
-    },
-    prod: {
-      name: '生产服务器',
-      host: 'your.prod.ip',
-      username: 'ubuntu',
-      privateKey: '~/.ssh/id_rsa',
-      commands: [
-        {
-          cmd: 'git pull',
-          cwd: '/home/ubuntu/app',
-          description: '拉取最新代码',
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        },
-        {
-          cmd: 'npm install --production',
-          cwd: '/home/ubuntu/app',
-          description: '安装生产依赖',
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        },
-        {
-          cmd: 'pm2 restart app',
-          cwd: '/home/ubuntu/app',
-          description: '重启应用',
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        }
-      ],
-      finishMsg: '✅ 构建完成'
-    }
-  }
-}
-`
-  )
+  const configContent = generateConfigContent(lang)
+
+  await fs.writeFile(configPath, configContent)
 
   devLog(`写入环境文件: ${envPath}`)
 
-  await fs.writeFile(
-    envPath,
-    'SERVER_53_PASSWORD="你的密码"\nSERVER_54_PASSWORD="你的密码"\n'
-  )
+  const configPasswordContent = generateConfigPasswordContent(lang)
+
+  await fs.writeFile(envPath, configPasswordContent)
 
   // 验证文件是否成功创建
   const configCreated = await fs.pathExists(configPath)
