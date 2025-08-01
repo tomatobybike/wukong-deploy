@@ -26,11 +26,11 @@
   "author": "Tom <tomatobybike@gmail.com>",
   "type": "module",
   "bin": {
-    "wukong-deploy": "./bin/cli.mjs"
+    "wukong-deploy": "./bin/wukong-deploy.cjs"
   },
   "files": [
-    "bin/",
-    "src/"
+    "bin",
+    "locales"
   ],
   "scripts": {
     "dev": "node ./bin/cli.mjs",
@@ -40,6 +40,8 @@
     "lint": "eslint --ext .js,.mjs src/",
     "lint:fix": "eslint --ext .js,.mjs src --fix",
     "pack": "npm pack",
+    "build": "node scripts/esbuild.config.mjs",
+    "prepublishOnly": "yarn build",
     "prettierall": "npx prettier --write 'src/**/*.{js,jsx}'",
     "release": "yarn release:patch && yarn push:tags && npm publish",
     "push:tags": "git push origin main --follow-tags",
@@ -76,6 +78,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "esbuild": "^0.25.8",
     "eslint": "8.57.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "9.1.2",

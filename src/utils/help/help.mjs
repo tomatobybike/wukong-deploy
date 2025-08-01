@@ -1,14 +1,22 @@
+/**
+ * @file: \src\utils\help\help.mjs
+ * @description:
+ * @author: King Monkey
+ * @created: 2025-08-01 17:04
+ */
 import fs from 'fs/promises'
 import path from 'path'
-import { fileURLToPath } from 'url'
 
+import { getProjectRoot } from '../getBaseDir.mjs'
 import { printExample, printHelp } from './helpPrinter.mjs'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+
 
 export async function loadHelp(lang = 'en') {
-  const filePath = path.resolve(__dirname, '../locales', `help.${lang}.json`)
+  const projectRoot = getProjectRoot()
+  console.log('loadHelp projectRoot:', projectRoot)
+  // locales 在项目根目录的 locales 文件夹中
+  const filePath = path.resolve(projectRoot, 'locales', `help.${lang}.json`)
   try {
     const content = await fs.readFile(filePath, 'utf-8')
     return JSON.parse(content)

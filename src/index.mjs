@@ -1,36 +1,28 @@
-#!/usr/bin/env node
+/**
+ * @file: /src/index.mjs
+ * @description:
+ * @author: King Monkey
+ * @created: 2025-08-01 15:11
+ */
 import inquirer from 'inquirer'
 import fs from 'node:fs'
 import path from 'node:path'
-import { argv, exit } from 'node:process'
-import process from 'node:process'
-import { fileURLToPath } from 'node:url'
+import process, { argv, exit } from 'node:process'
 import ora from 'ora'
 
-import { sendTelemetry } from '../src/lib/telemetry.wukong.mjs'
-import { devLog } from '../src/utils/devLog.mjs'
-import { showHelp,showExample } from '../src/utils/help/help.mjs'
-import { printAuthorInfo } from '../src/utils/info.mjs'
-import { getLang } from '../src/utils/langDetect.mjs'
-import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
-import { getVersion } from '../src/utils/version.mjs'
-
-const getPackagePaths = () => {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url))
-  // 使用 import.meta.url 获取当前模块的 URL
-  const currentModulePath = fileURLToPath(import.meta.url)
-  // 从当前模块路径推导出包的根目录
-  const pathsToTry = [
-    path.resolve(path.dirname(currentModulePath), '../package.json'),
-    path.resolve(__dirname, '../package.json')
-  ]
-  return pathsToTry
-}
+import { sendTelemetry } from './lib/telemetry.wukong.mjs'
+import { devLog } from './utils/devLog.mjs'
+import { getProjectRoot } from './utils/getBaseDir.mjs'
+import { showExample, showHelp } from './utils/help/help.mjs'
+import { printAuthorInfo } from './utils/info.mjs'
+import { getLang } from './utils/langDetect.mjs'
+import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
+import init from './init.mjs'
 
 const getMyVersion = async () => {
-  const packagePaths = getPackagePaths()
-  const version = await getVersion(packagePaths)
-  return version || 'unknown'
+  // @ts-ignore
+  // eslint-disable-next-line no-undef
+  return typeof __VERSION__ !== 'undefined' ? __VERSION__ : 'unknown'
 }
 
 let VERSION = ''
@@ -48,6 +40,7 @@ const main = async () => {
   })
 
   process.on('unhandledRejection', (reason) => {
+    // @ts-ignore
     if (reason?.name === 'ExitPromptError') {
       console.log('\n🚪 用户取消了部署（Ctrl+C）')
       process.exit(0)
@@ -59,13 +52,11 @@ const main = async () => {
   const command = argv[2]
   const target = argv[3]
 
-  const __dirname = path.dirname(fileURLToPath(import.meta.url))
+  const __dirname = getProjectRoot()
   const rootDir = process.cwd()
 
   const configPath = path.join(rootDir, 'config', 'config.mjs')
   const envPath = path.join(rootDir, '.env')
-
-
 
   const ensureInitialized = () => {
     if (!fs.existsSync(configPath) || !fs.existsSync(envPath)) {
@@ -80,8 +71,6 @@ const main = async () => {
     console.log(`wukong-deploy v${VERSION}`)
     process.exit(0)
   }
-
-
 
   // 打印系统信息，帮助排查Windows问题
   devLog(`操作系统: ${process.platform}`)
@@ -128,18 +117,6 @@ const main = async () => {
       sendTelemetry('init', { version: VERSION }).catch(() => {})
       const spinner = ora('正在初始化配置...').start()
       try {
-        // 使用URL格式导入模块，确保Windows兼容性
-        // Windows下绝对路径必须是有效的file:// URL
-        const initPath = path.resolve(__dirname, '../src/init.mjs')
-        devLog(`加载初始化模块: ${initPath}`)
-
-        // 将路径转换为URL格式
-        const initUrl = pathToFileUrl(initPath)
-        devLog(`模块URL: ${initUrl}`)
-
-        const init = await import(initUrl).then((m) => m.default)
-        devLog('初始化模块加载成功，开始执行初始化...')
-
         await init(spinner)
         spinner.succeed('初始化完成 ✅')
       } catch (error) {
@@ -262,6 +239,8 @@ const main = async () => {
       const lang = getLang()
       printAuthorInfo({ lang, version })
       process.exit(0)
+      // @ts-ignore
+      break
     }
     case 'example':
     case '--example':
@@ -270,6 +249,8 @@ const main = async () => {
       const lang = getLang()
       await showExample({ lang })
       process.exit(0)
+      // @ts-ignore
+      break
     }
     default: {
       const lang = getLang()

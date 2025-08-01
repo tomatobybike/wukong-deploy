@@ -1,0 +1,26 @@
+{
+  "description": "A tool for deploying applications to remote servers.",
+  "commands": [
+    { "name": "init", "desc": "Initialize configuration" },
+    { "name": "list", "desc": "List all deployable servers" },
+    { "name": "deploy", "desc": "Deploy by choosing server" },
+    { "name": "deploy [server]", "desc": "Deploy specified server" },
+    { "name": "info", "desc": "Show author and project information" }
+  ],
+  "options": [
+    { "flags": "-v, --version", "desc": "Show version number" },
+    { "flags": "-h, --help", "desc": "Show help information" },
+    {
+      "flags": "-f, --force",
+      "desc": "Force overwrite existing config on init"
+    }
+  ],
+  "examples": [
+    "wukong-deploy init",
+    "wukong-deploy init --force",
+    "wukong-deploy list",
+    "wukong-deploy deploy",
+    "wukong-deploy deploy prod",
+    "wukong-deploy -v"
+  ]
+}

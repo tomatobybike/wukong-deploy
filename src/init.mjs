@@ -1,22 +1,20 @@
 import fs from 'fs-extra'
 import path from 'path'
-import { fileURLToPath } from 'url'
 
-import { devLog, isDev } from './utils/devLog.mjs'
+import { devLog } from './utils/devLog.mjs'
+import { getProjectRoot } from './utils/getBaseDir.mjs'
 import { promptWithSpinnerStop } from './utils/promptWithSpinnerStop.mjs'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const rootDir = isDev ? path.resolve(__dirname, '..') : process.cwd()
+const rootDir = getProjectRoot()
 
 const forceOverwrite =
   process.argv.includes('--force') || process.argv.includes('-f')
 
-// 调试信息，帮助排查Windows问题
-
-devLog(`当前工作目录: ${rootDir}`)
-devLog(`当前模块目录: ${__dirname}`)
-
 export default async function init(spinner) {
+  // 调试信息，帮助排查Windows问题
+
+  devLog(`当前工作目录: ${rootDir}`)
+
   // 使用path.join确保跨平台兼容性
   const configPath = path.resolve(rootDir, path.join('config', 'config.mjs'))
   const envPath = path.resolve(rootDir, '.env')

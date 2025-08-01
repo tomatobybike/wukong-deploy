@@ -1,7 +1,14 @@
+/**
+ * @file: deploy.mjs
+ * @description: 
+ * @author: King Monkey
+ * @created: 2025-08-01 15:00
+ */
 import dotenv from 'dotenv'
 import fs from 'fs-extra'
 import { NodeSSH } from 'node-ssh'
 import path from 'path'
+
 
 import { devLog } from './utils/devLog.mjs'
 import { exitWithTime } from './utils/exitWithTime.mjs'

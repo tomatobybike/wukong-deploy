@@ -1,3 +1,10 @@
+/**
+ * @file: config-loader.mjs
+ * @description: 
+ * @author: King Monkey
+ * @created: 2025-08-01 15:00
+ */
+
 import chalk from 'chalk'
 import fs from 'fs-extra'
 import path from 'node:path'
