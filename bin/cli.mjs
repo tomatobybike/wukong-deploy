@@ -9,7 +9,7 @@ import ora from 'ora'
 
 import { sendTelemetry } from '../src/lib/telemetry.wukong.mjs'
 import { devLog } from '../src/utils/devLog.mjs'
-import { showHelp } from '../src/utils/help.mjs'
+import { showHelp,showExample } from '../src/utils/help/help.mjs'
 import { printAuthorInfo } from '../src/utils/info.mjs'
 import { getLang } from '../src/utils/langDetect.mjs'
 import { pathToFileUrl } from '../src/utils/pathToFileUrl.mjs'
@@ -80,6 +80,8 @@ const main = async () => {
     console.log(`wukong-deploy v${VERSION}`)
     process.exit(0)
   }
+
+
 
   // 打印系统信息，帮助排查Windows问题
   devLog(`操作系统: ${process.platform}`)
@@ -261,11 +263,19 @@ const main = async () => {
       printAuthorInfo({ lang, version })
       process.exit(0)
     }
-
+    case 'example':
+    case '--example':
+    case '-e': {
+      sendTelemetry('example', { version: VERSION }).catch(() => {})
+      const lang = getLang()
+      await showExample({ lang })
+      process.exit(0)
+    }
     default: {
       const lang = getLang()
       const version = await getMyVersion()
       await showHelp({ lang, version })
+      process.exit(0)
     }
   }
 }

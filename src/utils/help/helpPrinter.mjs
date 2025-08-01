@@ -1,13 +1,13 @@
-import { colors } from './colors.mjs'
+import { CLI_NAME } from '../../constants/index.mjs'
+import { colors } from '../colors.mjs'
 
 export function printHelp({
   version,
   description,
   commands = [],
   options = [],
-  examples = [],
   lang,
-  cliName = 'wukong-deploy' // 新增默认参数
+  cliName = CLI_NAME // 新增默认参数
 }) {
   const pad = (str, len) => str + ' '.repeat(Math.max(0, len - str.length))
   const getMaxLength = (items, key) =>
@@ -55,21 +55,22 @@ export function printHelp({
     }
     console.log()
   }
+}
 
-  if (examples.length) {
-    const headerLable = lang === 'en' ? 'Examples:' : '示例:'
-    console.log(colors.header(headerLable))
-    for (const ex of examples) {
-      // 这里把示例中的默认命令名替换成cliName，方便灵活
-      const exampleLine = ex.replace(/wukong-deploy/g, cliName)
-      console.log(`  ${colors.example(exampleLine)}`)
-    }
-    console.log()
+export function printExample({ examples, lang, cliName = CLI_NAME }) {
+  const headerLable = lang === 'en' ? 'Examples:' : '示例:'
+  console.log(colors.header(headerLable))
+  const nameRegex = new RegExp(CLI_NAME, 'g') // ✅ 仅构造一次正则
+  for (const ex of examples) {
+    // 这里把示例中的默认命令名替换成cliName，方便灵活
+    const exampleLine = ex.replace(nameRegex, cliName)
+    console.log(`  ${colors.example(exampleLine)}`)
   }
+  console.log()
 }
 
 // 无参打印帮助
-export const printHelp2 = async (version) => {
+export const printHelpSource = async (version) => {
   console.log(`
 wukong-deploy v${version}
   A tool for deploying applications to remote servers.
