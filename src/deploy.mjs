@@ -11,6 +11,7 @@ import path from 'path'
 
 import { devLog } from './utils/devLog.mjs'
 import { exitWithTime } from './utils/exitWithTime.mjs'
+import { e } from './utils/emoji.mjs'
 import {
   i18nError,
   i18nGetRaw,
@@ -105,7 +106,7 @@ export default async function deploy(targetKey) {
     process.exit(1)
   }
 
-  logger.info(`🔗 Connecting to ${server.name} (${server.host})...`, logCache)
+  logger.info(`${e('🔗')} Connecting to ${server.name} (${server.host})...`, logCache)
   try {
     await ssh.connect(connectConfig)
 
@@ -122,8 +123,8 @@ export default async function deploy(targetKey) {
     // eslint-disable-next-line no-await-in-loop
     const result = await ssh.execCommand(cmd, { cwd })
     if (config.default.showCommandLog) {
-      if (result.stdout) logger.info(`🟢 STDOUT:\n${result.stdout}`, logCache)
-      if (result.stderr) logger.info(`🔴 STDERR:\n${result.stderr}`, logCache)
+      if (result.stdout) logger.info(`${e('🟢')} STDOUT:\n${result.stdout}`, logCache)
+      if (result.stderr) logger.info(`${e('🔴')}  STDERR:\n${result.stderr}`, logCache)
     }
     if (validateCommandResult(result, cmdObj)) {
       ssh.dispose()

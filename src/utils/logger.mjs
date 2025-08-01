@@ -47,7 +47,18 @@ const getLogFilePath = () => {
     const logDir = path.resolve(process.cwd(), 'logs', day)
     const logPath = path.join(logDir, 'wukong.log')
     fs.ensureDirSync(logDir)
-    fs.ensureFileSync(logPath)
+    /*
+    在日志文件首次创建时：
+
+    写入了 UTF-8 的 BOM（Byte Order Mark）
+
+    让 Windows 系统（尤其是旧版记事本）自动识别为 UTF-8 编码
+    */
+    if (!fs.existsSync(logPath)) {
+      fs.ensureFileSync(logPath)
+      fs.writeFileSync(logPath, '\uFEFF', { encoding: 'utf-8' }) // 添加 BOM
+    }
+
     cachedPath = logPath
     return logPath
   }

@@ -33,7 +33,7 @@
   ],
   "scripts": {
     "dev": "node ./src/index.mjs",
-    "dev-mac": "DEV_MODE=1 LANG=zh node ./src/index.mjs",
+    "dev-mac": "WUKONG_NO_EMOJI=1 DEV_MODE=1 LANG=zh node ./src/index.mjs",
     "dev-win": "set DEV_MODE=1&& node ./src/index.mjs",
     "init": "node ./bin/wukong-deploy.cjs init",
     "lint": "eslint --ext .js,.mjs src/",
@@ -65,7 +65,8 @@
       "eslint --fix"
     ]
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "chalk": "5.3.0",
     "date-fns": "2.30.0",
     "dotenv": "16.6.1",
@@ -73,9 +74,7 @@
     "inquirer": "12.8.2",
     "node-ssh": "13.2.1",
     "ora": "8.2.0",
-    "strip-ansi": "7.1.0"
-  },
-  "devDependencies": {
+    "strip-ansi": "7.1.0",
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
     "esbuild": "^0.25.8",
     "eslint": "8.57.1",

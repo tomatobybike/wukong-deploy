@@ -18,7 +18,7 @@ import { sendTelemetry } from './lib/telemetry.wukong.mjs'
 import { devLog } from './utils/devLog.mjs'
 import { getProjectRoot } from './utils/getBaseDir.mjs'
 import { showExample, showHelp } from './utils/help/help.mjs'
-import { i18nGetRaw, i18nLogNative } from './utils/i18n.mjs'
+import { i18nGetRaw, i18nInfo, i18nLogNative } from './utils/i18n.mjs'
 import { printAuthorInfo } from './utils/info.mjs'
 import { getLang } from './utils/langDetect.mjs'
 
@@ -63,7 +63,7 @@ const main = async () => {
 
   const ensureInitialized = () => {
     if (!fs.existsSync(configPath) || !fs.existsSync(envPath)) {
-      console.error('❌ 项目未初始化，请先执行：wukong-deploy init')
+      i18nInfo(`notInitialized`)
       exit(1)
     }
   }
