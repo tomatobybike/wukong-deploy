@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.15...v1.1.0) (2025-08-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* 🧨 esbuild version
+
+* 🤖 esbuild version ([39385bd](https://github.com/tomatobybike/wukong-deploy/commit/39385bdd87bcfac4ac0dac36df612bc7e668d036))
+
 ### [1.0.14](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.13...v1.0.14) (2025-07-31)
 
 ### [1.0.13](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.12...v1.0.13) (2025-07-31)

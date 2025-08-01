@@ -1,6 +1,6 @@
 {
   "name": "wukong-deploy",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "description": "A simple CLI to manage multi-server deployment",
   "keywords": [
     "cli",
@@ -42,7 +42,7 @@
     "build": "node scripts/esbuild.config.mjs",
     "prepublishOnly": "yarn build",
     "prettierall": "npx prettier --write 'src/**/*.{js,jsx}'",
-    "release": "yarn release:patch && yarn push:tags && npm publish",
+    "release": "yarn release:minor && yarn push:tags && npm publish",
     "push:tags": "git push origin main --follow-tags",
     "release:major": "yarn lint && standard-version --release-as major",
     "release:minor": "yarn lint && standard-version --release-as minor",
