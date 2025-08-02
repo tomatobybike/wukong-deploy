@@ -4,6 +4,7 @@ import { colors } from '../colors.mjs'
 export function printHelp({
   version,
   description,
+  github,
   commands = [],
   options = [],
   lang,
@@ -18,6 +19,8 @@ export function printHelp({
 
   console.log(colors.title(`\n${cliName} v${version}`))
   if (description) console.log(`  ${colors.desc(description)}\n`)
+    console.log(colors.header('Github:'))
+  if (github) console.log(`  ${colors.desc(github)}\n`)
 
   console.log(colors.header('Usage:'))
   console.log(

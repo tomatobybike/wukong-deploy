@@ -16,15 +16,40 @@
 English | [简体中文](./README.zh-CN.md)
 
 
-A lightweight CLI tool for remote server deployment based on Node.js.
+> ⚡️ A lightweight CLI tool for remote server deployment based on Node.js.
 
-## Installation
+## 🧠 Features
+
+- 🚀 One-command deployment to remote servers
+- 🔐 Secure SSH + SCP support
+- 📁 Custom file/folder inclusion
+- 📦 Easily configurable with `config.mjs`
+
+## 📦 Installation
+
 
 ```bash
 npm install -g wukong-deploy
 ```
 
+## 🚀 Quick Start
+
+```bash
+wukong-deploy init     # Generate config file
+wukong-deploy deploy   # Deploy to remote server
+```
+
+
+
+## 📷 Example Screenshot
+
+
+
+✅ Deployed ./dist to root@your.server.com:/var/www/html/project
+
 ## Usage
+
+
 
 ### Initialize Configuration
 
@@ -131,3 +156,5 @@ SERVER_53_PASSWORD=your_password_here
 ## License
 
 MIT
+
+<!-- 中文关键词：部署工具, 自动部署, 前端发布, Node.js上线工具, wukong-deploy, 发布到服务器 -->

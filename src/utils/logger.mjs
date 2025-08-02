@@ -1,3 +1,17 @@
+/**
+ * @file: logger.mjs
+ * @description:
+ *  避免了 Windows 上查看日志文件中文乱码
+ *  使用 stripAnsi(msg) 过滤终端颜色代码
+ *  prefix 使用 emoji，也兼容终端彩色输出
+ *
+ *  在日志文件首次创建时：
+    写入了 UTF-8 的 BOM（Byte Order Mark）
+    让 Windows 系统（尤其是旧版记事本）自动识别为 UTF-8 编码
+ * @author: King Monkey
+ * @created: 2025-08-02 11:59
+ */
+
 // scripts/logger.mjs
 import { Chalk } from 'chalk'
 import { format } from 'date-fns'

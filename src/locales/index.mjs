@@ -2,6 +2,7 @@
 export const locales = {
   zh: {
     description: '一个用于远程服务器部署的工具。',
+    github: 'https://github.com/tomatobybike/wukong-deploy',
     commands: [
       { name: 'init', desc: '初始化配置' },
       { name: 'list', desc: '显示所有可部署的服务器及其部署命令' },
@@ -26,6 +27,7 @@ export const locales = {
   },
   en: {
     description: 'A tool for deploying applications to remote servers.',
+    github: 'https://github.com/tomatobybike/wukong-deploy',
     commands: [
       { name: 'init', desc: 'Initialize configuration' },
       { name: 'list', desc: 'List all deployable servers' },

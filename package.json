@@ -16,7 +16,11 @@
     "frontend",
     "remote server",
     "server management",
-    "server deployment"
+    "server deployment",
+    "自动部署",
+    "部署工具",
+    "前端上线",
+    "远程发布"
   ],
   "repository": {
     "type": "git",
