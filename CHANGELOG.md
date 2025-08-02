@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.0...v1.2.1) (2025-08-02)
+
+
+### Features
+
+* 🎸 patch ver ([1013679](https://github.com/tomatobybike/wukong-deploy/commit/10136790de94fddc4d9488bb4a808611c9257d18))
+
+
+### Bug Fixes
+
+* 🐛 logo.svg ([38282b4](https://github.com/tomatobybike/wukong-deploy/commit/38282b4d2b68a42c1ebfb6d6e1ff6942267a083a))
+* 🐛 Windows or some terminals do not support Emoji character ([223c000](https://github.com/tomatobybike/wukong-deploy/commit/223c0001a0d8b084bd74a8ecdb12a0345267a31e))
+
 ## [1.2.0](https://github.com/tomatobybike/wukong-deploy/compare/v1.1.0...v1.2.0) (2025-08-02)
 
 
