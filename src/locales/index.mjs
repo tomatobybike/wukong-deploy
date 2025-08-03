@@ -14,6 +14,7 @@ export const locales = {
       { flags: '-v, --version', desc: '显示版本号' },
       { flags: '-h, --help', desc: '显示帮助信息' },
       { flags: '-e, --example', desc: '显示示例' },
+      { flags: '--lang=en', desc: '使用中文' },
       { flags: '-f, --force', desc: '在 init 时强制覆盖已有配置文件' }
     ],
     examples: [
@@ -39,6 +40,7 @@ export const locales = {
       { flags: '-v, --version', desc: 'Show version number' },
       { flags: '-h, --help', desc: 'Show help information' },
       { flags: '-e, --example', desc: 'Show examples' },
+      { flags: '--lang=zh', desc: 'use chinese' },
       {
         flags: '-f, --force',
         desc: 'Force overwrite existing config on init'

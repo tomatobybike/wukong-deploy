@@ -1,14 +1,9 @@
-/**
- * @file: wukong-deploy/src/index.mjs
- * @description:
- * @author: King Monkey
- * @created: 2025-08-01 15:11
- */
+// @file: wukong-deploy/src/index.mjs
 import dotenv from 'dotenv'
 import inquirer from 'inquirer'
 import fs from 'node:fs'
 import path from 'node:path'
-import process, { argv, exit } from 'node:process'
+import process from 'node:process'
 import ora from 'ora'
 
 import { getServerList } from './config-loader.mjs'
@@ -38,6 +33,49 @@ let VERSION = ''
 
 const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
 
+function parseValue(value) {
+  if (value === 'true') return true
+  if (value === 'false') return false
+  if (!value.isNaN) return Number(value)
+  return value
+}
+
+/** 参数解析器 */
+function parseArgs(argv) {
+  const flags = {}
+  const args = []
+
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i]
+
+    if (arg.startsWith('--')) {
+      if (arg.includes('=')) {
+        const [key, value] = arg.slice(2).split('=')
+        flags[key] = parseValue(value)
+      } else if (arg.startsWith('--no-')) {
+        flags[arg.slice(5)] = false
+      } else {
+        const key = arg.slice(2)
+        const next = argv[i + 1]
+        if (!next || next.startsWith('--')) {
+          flags[key] = true
+        } else {
+          flags[key] = parseValue(next)
+          i++
+        }
+      }
+    } else {
+      args.push(arg)
+    }
+  }
+
+  return {
+    command: args[0],
+    target: args[1],
+    flags
+  }
+}
+
 const main = async () => {
   process.on('uncaughtException', (error) => {
     if (error.name === 'ExitPromptError') {
@@ -49,7 +87,6 @@ const main = async () => {
   })
 
   process.on('unhandledRejection', (reason) => {
-    // @ts-ignore
     if (reason?.name === 'ExitPromptError') {
       i18nLogNative('uncaughtException')
       process.exit(0)
@@ -57,14 +94,14 @@ const main = async () => {
       process.exit(1)
     }
   })
+
   VERSION = getMyVersion()
+  const { command, target } = parseArgs(process.argv.slice(2))
+
   sendTelemetry('start', { version: VERSION }).catch(() => {})
 
-  const command = argv[2]
-  const target = argv[3]
-
-  const __dirname = getProjectRoot() // 用于 CLI 自身路径
-  const rootDir = process.cwd() // 用于用户目录
+  const __dirname = getProjectRoot()
+  const rootDir = process.cwd()
 
   const configPath = path.join(rootDir, 'config', 'config.mjs')
   const envPath = path.join(rootDir, '.env')
@@ -72,7 +109,7 @@ const main = async () => {
   const ensureInitialized = () => {
     if (!fs.existsSync(configPath) || !fs.existsSync(envPath)) {
       i18nInfo(`notInitialized`)
-      exit(1)
+      process.exit(1)
     }
   }
 
@@ -83,7 +120,7 @@ const main = async () => {
     process.exit(0)
   }
 
-  // 打印系统信息，帮助排查Windows问题
+  // 打印系统信息
   devLog(`操作系统: ${process.platform}`)
   devLog(`Node.js版本: ${process.version}`)
   devLog(`CLI目录: ${__dirname}`)
@@ -104,7 +141,6 @@ const main = async () => {
 
         i18nLogNative('serverList')
         for (const server of serverList) {
-          // console.log(`\n🖥️  ${server.name} (${server.host})\n   部署命令：`)
           const serversNames = {
             name: server.name,
             host: isHideHost ? '***.**.**.**' : server.host
@@ -134,7 +170,6 @@ const main = async () => {
       } catch (error) {
         spinner.fail(i18nGetRaw('init.failure'))
         console.error(i18nGetRaw('init.errorMessage', { msg: error.message }))
-
         console.error(error.stack)
         process.exit(1)
       }
@@ -147,12 +182,10 @@ const main = async () => {
 
       try {
         const serverList = await getServerList()
-
         devLog(`成功获取服务器列表，共${serverList.length}个服务器配置`)
 
         if (!serverList.length) {
           i18nLogNative('noServers')
-
           process.exit(1)
         }
 
@@ -187,7 +220,6 @@ const main = async () => {
           }
         }
 
-        // 显示将要执行的命令并确认
         const selectedServer = serverList.find((s) => s.key === selectedTarget)
         if (!selectedServer) {
           i18nLogNative('deploy.notFound')
@@ -199,6 +231,7 @@ const main = async () => {
           name: selectedServer.name,
           host: isHideHost ? '' : selectedServer.host
         })
+
         selectedServer.commands?.forEach((cmd, index) => {
           console.log(`${index + 1}. ${cmd.description}: ${cmd.cmd}`)
         })
@@ -230,17 +263,17 @@ const main = async () => {
       }
       break
     }
+
     case 'info':
     case '--about':
     case '--info': {
       sendTelemetry('info', { version: VERSION }).catch(() => {})
-      const version = getMyVersion()
       const lang = getLang()
-      printAuthorInfo({ lang, version })
+      printAuthorInfo({ lang, version: VERSION })
       process.exit(0)
-      // @ts-ignore
       break
     }
+
     case 'example':
     case '--example':
     case '-e': {
@@ -248,13 +281,12 @@ const main = async () => {
       const lang = getLang()
       await showExample({ lang })
       process.exit(0)
-      // @ts-ignore
       break
     }
+
     default: {
       const lang = getLang()
-      const version = getMyVersion()
-      await showHelp({ lang, version })
+      await showHelp({ lang, version: VERSION })
       process.exit(0)
     }
   }
