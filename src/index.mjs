@@ -4,6 +4,7 @@
  * @author: King Monkey
  * @created: 2025-08-01 15:11
  */
+import dotenv from 'dotenv'
 import inquirer from 'inquirer'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -21,14 +22,21 @@ import { showExample, showHelp } from './utils/help/help.mjs'
 import { i18nGetRaw, i18nInfo, i18nLogNative } from './utils/i18n.mjs'
 import { printAuthorInfo } from './utils/info.mjs'
 import { getLang } from './utils/langDetect.mjs'
+import { showEnv } from './utils/showEnv.mjs'
 
-const getMyVersion = async () => {
+dotenv.config()
+
+showEnv()
+
+const getMyVersion = () => {
   // @ts-ignore
   // eslint-disable-next-line no-undef
   return typeof __VERSION__ !== 'undefined' ? __VERSION__ : 'unknown'
 }
 
 let VERSION = ''
+
+const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
 
 const main = async () => {
   process.on('uncaughtException', (error) => {
@@ -49,7 +57,7 @@ const main = async () => {
       process.exit(1)
     }
   })
-  VERSION = await getMyVersion()
+  VERSION = getMyVersion()
   sendTelemetry('start', { version: VERSION }).catch(() => {})
 
   const command = argv[2]
@@ -85,6 +93,7 @@ const main = async () => {
     case 'list': {
       sendTelemetry('list', { version: VERSION }).catch(() => {})
       ensureInitialized()
+
       try {
         const serverList = await getServerList()
 
@@ -96,12 +105,18 @@ const main = async () => {
         i18nLogNative('serverList')
         for (const server of serverList) {
           // console.log(`\n🖥️  ${server.name} (${server.host})\n   部署命令：`)
-          i18nLogNative('serverFound', { name: server.name, host: server.host })
+          const serversNames = {
+            name: server.name,
+            host: isHideHost ? '***.**.**.**' : server.host
+          }
+
+          i18nLogNative('serverFound', serversNames)
           server.commands?.forEach((cmd, index) => {
             console.log(`   ${index + 1}. ${cmd.description}: ${cmd.cmd}`)
           })
         }
         console.log()
+        process.exit(0)
       } catch (error) {
         i18nLogNative('getServerListFail', { msg: error.message })
         process.exit(1)
@@ -150,10 +165,15 @@ const main = async () => {
               name: 'target',
               message: i18nGetRaw('deploy.selectTarget'),
               choices: [
-                ...serverList.map((s) => ({
-                  name: `${s.name} ${s.host}`,
-                  value: s.key
-                })),
+                ...serverList.map((s) => {
+                  const nameString = isHideHost
+                    ? `${s.name}`
+                    : `${s.name} ${s.host}`
+                  return {
+                    name: nameString,
+                    value: s.key
+                  }
+                }),
                 new inquirer.Separator(),
                 { name: i18nGetRaw('deploy.cancelOption'), value: '__exit' }
               ]
@@ -177,7 +197,7 @@ const main = async () => {
 
         i18nLogNative('deploy.executingOnServer', {
           name: selectedServer.name,
-          host: selectedServer.host
+          host: isHideHost ? '' : selectedServer.host
         })
         selectedServer.commands?.forEach((cmd, index) => {
           console.log(`${index + 1}. ${cmd.description}: ${cmd.cmd}`)
@@ -214,7 +234,7 @@ const main = async () => {
     case '--about':
     case '--info': {
       sendTelemetry('info', { version: VERSION }).catch(() => {})
-      const version = await getMyVersion()
+      const version = getMyVersion()
       const lang = getLang()
       printAuthorInfo({ lang, version })
       process.exit(0)
@@ -233,7 +253,7 @@ const main = async () => {
     }
     default: {
       const lang = getLang()
-      const version = await getMyVersion()
+      const version = getMyVersion()
       await showHelp({ lang, version })
       process.exit(0)
     }

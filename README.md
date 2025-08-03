@@ -15,8 +15,13 @@
 
 English | [简体中文](./README.zh-CN.md)
 
-
 > ⚡️ A lightweight CLI tool for remote server deployment based on Node.js.
+
+## Demo
+
+![Demo](./images/demo.svg)
+
+
 
 ## 🧠 Features
 
@@ -26,7 +31,6 @@ English | [简体中文](./README.zh-CN.md)
 - 📦 Easily configurable with `config.mjs`
 
 ## 📦 Installation
-
 
 ```bash
 npm install -g wukong-deploy
@@ -39,17 +43,11 @@ wukong-deploy init     # Generate config file
 wukong-deploy deploy   # Deploy to remote server
 ```
 
-
-
 ## 📷 Example Screenshot
-
-
 
 ✅ Deployed ./dist to root@your.server.com:/var/www/html/project
 
 ## Usage
-
-
 
 ### Initialize Configuration
 
@@ -152,6 +150,55 @@ SERVER_53_PASSWORD=your_password_here
 ```
 
 [changelog](./CHANGELOG.md)
+
+---
+
+## ⚙️ Environment Variables
+
+You can customize the behavior of `wukong-deploy` by setting the following environment variables:
+
+| Variable Name     | Description                                                | Example      |
+| ----------------- | ---------------------------------------------------------- | ------------ |
+| `DEV_MODE`        | Enables development mode with additional debug output      | `true` / `1` |
+| `WUKONG_NO_EMOJI` | Disables emoji output (useful in unsupported terminals)    | `true` / `1` |
+| `LANG`            | Sets the CLI language (`zh` for Chinese, `en` for English) | `zh` / `en`  |
+| `WUKONG_DEBUG`    | Enables internal debug logs for troubleshooting            | `true` / `1` |
+
+### 🧪 Example Usage
+
+Set variables temporarily:
+
+```bash
+WUKONG_NO_EMOJI=1 LANG=en WUKONG_DEBUG=1 wukong-deploy deploy
+```
+
+Or permanently in .env, .bashrc, or .zshrc:
+
+```bash
+export LANG=zh
+export WUKONG_NO_EMOJI=true
+export DEV_MODE=true
+```
+
+---
+
+### 📝 `.env.example` 文件内容：
+
+```env
+# Enable development logs
+DEV_MODE=1
+
+# Disable emoji output
+WUKONG_NO_EMOJI=1
+
+# CLI language (zh or en)
+LANG=zh
+
+# Enable debug mode
+WUKONG_DEBUG=1
+```
+
+---
 
 ## License
 

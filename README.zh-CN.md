@@ -21,7 +21,9 @@
 
 一个轻量的基于 Node.js 的远程多服务器部署 CLI 工具。
 
+## 使用效果预览
 
+![使用示例](./images/demo.svg)
 
 ### 🌟 功能亮点：
 
@@ -158,5 +160,43 @@ SERVER_53_PASSWORD=your_password_here
 npm pack
 
 ```
+
+---
+
+## ⚙️ 环境变量配置
+
+你可以通过设置以下环境变量，来定制 `wukong-deploy` 的行为：
+
+| 环境变量名        | 描述                                                 | 示例值       |
+| ----------------- | ---------------------------------------------------- | ------------ |
+| `DEV_MODE`        | 开启开发模式，输出额外的调试信息                     | `true` / `1` |
+| `WUKONG_NO_EMOJI` | 禁用 emoji 表情符号，适用于不支持 emoji 的终端环境   | `true` / `1` |
+| `LANG`            | 设置 CLI 输出语言（当前支持 `zh` 中文 和 `en` 英文） | `zh` / `en`  |
+| `WUKONG_DEBUG`    | 启用调试日志，显示内部 CLI 行为用于排查问题          | `true` / `1` |
+
+### 🧪 使用示例
+
+临时设置：
+
+```bash
+WUKONG_NO_EMOJI=1 LANG=zh WUKONG_DEBUG=1 wukong-deploy deploy
+```
+
+永久设置（推荐写入 .env 或 .bashrc 文件）：
+
+```bash
+export LANG=zh
+export WUKONG_NO_EMOJI=1
+export DEV_MODE=1
+```
+
+🎯 使用场景推荐
+
+| 使用场景          | 建议配置                         |
+| ----------------- | -------------------------------- |
+| 终端不支持 emoji  | `WUKONG_NO_EMOJI=1`              |
+| 部署排查问题      | `WUKONG_DEBUG=1` 或 `DEV_MODE=1` |
+| 脚本 / 自动化环境 | `LANG=zh`，`WUKONG_NO_EMOJI=1`   |
+| 本地 CLI 开发     | `DEV_MODE=1`, `WUKONG_DEBUG=1`   |
 
 <!-- 部署工具、自动部署、前端部署、Node.js上线、wukong、wukong-deploy、发布工具、远程部署、SSH部署、项目发布、构建上线、DevOps 工具、发布脚本 -->

@@ -11,7 +11,6 @@
  * @author: King Monkey
  * @created: 2025-08-02 11:59
  */
-
 // scripts/logger.mjs
 import { Chalk } from 'chalk'
 import { format } from 'date-fns'
@@ -19,6 +18,8 @@ import fs from 'fs-extra'
 import path from 'node:path'
 import process from 'node:process'
 import stripAnsi from 'strip-ansi'
+
+import { e } from './emoji.mjs'
 
 const chalk = new Chalk({ level: 3 }) // 强制开启 truecolor chalk v5
 
@@ -33,13 +34,22 @@ if (!process.stdout.isTTY || chalk.level === 0) {
 let cachedDay = ''
 let cachedPath = ''
 
-// 彩色前缀
+// // 彩色前缀
+// const prefix = {
+//   info: chalk.cyan('ℹ'),
+//   success: chalk.green('✔'),
+//   error: chalk.red('✖'),
+//   warn: chalk.yellow('⚠'),
+//   debug: chalk.gray('➤')
+// }
+
+// 🔧 1. 修改 prefix：只保留 emoji，不带颜色
 const prefix = {
-  info: chalk.cyan('ℹ'),
-  success: chalk.green('✔'),
-  error: chalk.red('✖'),
-  warn: chalk.yellow('⚠'),
-  debug: chalk.gray('➤')
+  info: e('➤', '[i]'),
+  success: e('✔', '[✓]'),
+  error: e('✖', '[x]'),
+  warn: e('⚠', '[!]'),
+  debug: e('➤', '->')
 }
 
 // 时间戳 [HH:mm:ss]
@@ -94,6 +104,10 @@ const writeToFile = (level, msg, newline) => {
 // 主函数工厂，支持 { write: true } 控制是否写文件
 function createLogger(level, colorFn, outFn = console.log) {
   return (...args) => {
+    if (level === 'debug' && !(process.env.DEBUG || process.env.WUKONG_DEBUG)) {
+      return
+    }
+
     let options = {}
     if (
       args.length &&
@@ -104,8 +118,14 @@ function createLogger(level, colorFn, outFn = console.log) {
       options = args.pop()
     }
 
-    const msg = args.map(String).join(' ')
-    const line = `${shortTimestamp()} ${colorFn(prefix[level])} ${msg}`
+    const msg = args
+      .map((arg) =>
+        typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+      )
+      .join(' ')
+
+    // 🔧 2. 修改拼接方式，colorFn 统一处理 prefix + msg
+    const line = `${shortTimestamp()} ${colorFn(`${prefix[level]} ${msg}`)}`
 
     if (options.newline) {
       outFn('')
@@ -123,16 +143,7 @@ export const logger = {
   success: createLogger('success', chalk.green),
   error: createLogger('error', chalk.red, console.error),
   warn: createLogger('warn', chalk.yellow, console.warn),
-  debug: (msg, options = {}) => {
-    if (process.env.DEBUG || process.env.WUKONG_DEBUG) {
-      const line = `${shortTimestamp()} ${chalk.gray(prefix.debug)} ${msg}`
-      if (options.newline) console.log('')
-      console.log(line)
-      if (options.write) {
-        writeToFile('debug', [msg])
-      }
-    }
-  }
+  debug: createLogger('debug', chalk.white)
 }
 
 export default logger

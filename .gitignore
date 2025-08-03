@@ -29,6 +29,7 @@ yarn-error.log*
 # Dependency directories
 dist/
 build/
+bin/
 
 .history
 

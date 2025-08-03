@@ -10,8 +10,8 @@ import { NodeSSH } from 'node-ssh'
 import path from 'path'
 
 import { devLog } from './utils/devLog.mjs'
-import { exitWithTime } from './utils/exitWithTime.mjs'
 import { e } from './utils/emoji.mjs'
+import { exitWithTime } from './utils/exitWithTime.mjs'
 import {
   i18nError,
   i18nGetRaw,
@@ -51,6 +51,7 @@ const handleCheckEnv = () => {
 }
 
 export default async function deploy(targetKey) {
+  const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
   const configFile = handleCheckEnv()
   const logCache = { write: true }
   const start = performance.now()
@@ -106,7 +107,14 @@ export default async function deploy(targetKey) {
     process.exit(1)
   }
 
-  logger.info(`${e('🔗')} Connecting to ${server.name} (${server.host})...`, logCache)
+  if (isHideHost) {
+    logger.info(`${e('🔗')} Connecting to ${server.name} ...`, logCache)
+  } else {
+    logger.info(
+      `${e('🔗')} Connecting to ${server.name} (${server.host})...`,
+      logCache
+    )
+  }
   try {
     await ssh.connect(connectConfig)
 
@@ -123,8 +131,10 @@ export default async function deploy(targetKey) {
     // eslint-disable-next-line no-await-in-loop
     const result = await ssh.execCommand(cmd, { cwd })
     if (config.default.showCommandLog) {
-      if (result.stdout) logger.info(`${e('🟢')} STDOUT:\n${result.stdout}`, logCache)
-      if (result.stderr) logger.info(`${e('🔴')}  STDERR:\n${result.stderr}`, logCache)
+      if (result.stdout)
+        logger.info(`${e('🟢')} STDOUT:\n${result.stdout}`, logCache)
+      if (result.stderr)
+        logger.info(`${e('🔴')}  STDERR:\n${result.stderr}`, logCache)
     }
     if (validateCommandResult(result, cmdObj)) {
       ssh.dispose()
