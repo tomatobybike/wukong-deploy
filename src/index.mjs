@@ -41,7 +41,7 @@ const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
 const main = async () => {
   process.on('uncaughtException', (error) => {
     if (error.name === 'ExitPromptError') {
-      console.log('\n🚪 用户取消了部署（Ctrl+C）')
+      i18nLogNative('uncaughtException')
       process.exit(0)
     }
 
@@ -51,7 +51,7 @@ const main = async () => {
   process.on('unhandledRejection', (reason) => {
     // @ts-ignore
     if (reason?.name === 'ExitPromptError') {
-      console.log('\n🚪 用户取消了部署（Ctrl+C）')
+      i18nLogNative('uncaughtException')
       process.exit(0)
     } else {
       process.exit(1)
@@ -266,6 +266,6 @@ main().catch((err) => {
     message: err.message,
     stack: err.stack
   }).catch(() => {})
-  console.error('主函数异常:', err)
+  console.error('main function error:', err)
   process.exit(1)
 })

@@ -67,7 +67,8 @@ export default async function init(spinner) {
       return
     }
   }
-  spinner.start('正在覆盖文件...')
+  const startString = i18nGetRaw('file.overwriting')
+  spinner.start(startString)
   // 确保目录存在，并打印调试信息
   const configDir = path.dirname(configPath)
   devLog(`创建配置目录: ${configDir}`)

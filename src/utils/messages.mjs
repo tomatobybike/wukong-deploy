@@ -15,7 +15,7 @@ const messages = {
     configFileNotExist: (file) => `配置文件不存在: ${file}`,
     configNoServers: '配置文件中没有servers对象',
     configLoadFail: (msg) => `加载配置文件失败: ${msg}`,
-    checkConfig: '\n请检查配置文件config.mjs\n',
+    checkConfig: '请检查配置文件/config/config.mjs\n',
     envFileNotExist: (file) => `环境文件不存在: ${file}`,
     configFormatError: `${e('❌', '[错误]')} 配置文件格式错误，缺少 default.servers 对象`,
     configKeyNotFound: (key) => `${e('❌', '[错误]')} 配置中找不到服务器 key: ${key}`,
@@ -23,6 +23,7 @@ const messages = {
     foundServer: (name) => `找到服务器配置: ${name}`,
     buildFinished: `${e('✅', '[完成]')} Build finished`,
     userCancel: `\n${e('🚪', '[退出]')} 用户取消了部署（Ctrl+C）`,
+    uncaughtException: `\n🚪 用户取消了部署（Ctrl+C）`,
     filesExist: (files) => `\n${e('⚠️', '[提示]')} 以下文件已存在：${files}`,
     file: {
       confirmOverwrite: '是否要覆盖现有文件？',
@@ -73,7 +74,7 @@ const messages = {
     configFileNotExist: (file) => `Config file not found: ${file}`,
     configNoServers: 'No servers object in config file',
     configLoadFail: (msg) => `Failed to load config: ${msg}`,
-    checkConfig: '\nPlease check config.mjs\n',
+    checkConfig: 'Please check /config/config.mjs\n',
     envFileNotExist: (file) => `Env file not found: ${file}`,
     configFormatError: `${e('❌', '[Error]')} Config file format error, missing default.servers`,
     configKeyNotFound: (key) => `${e('❌', '[Error]')} Server key not found in config: ${key}`,
@@ -81,6 +82,7 @@ const messages = {
     foundServer: (name) => `Found server config: ${name}`,
     buildFinished: `${e('✅', '[Done]')} Build finished`,
     userCancel: `\n${e('🚪', '[Exit]')} User cancelled deploy (Ctrl+C)`,
+    uncaughtException: `\n🚪 User cancelled deploy (Ctrl+C)`,
     filesExist: (files) => `\n${e('⚠️', '[Notice]')} The following files already exist: ${files}`,
     file: {
       confirmOverwrite: 'Do you want to overwrite the existing file?',
