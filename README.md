@@ -17,11 +17,9 @@ English | [简体中文](./README.zh-CN.md)
 
 > ⚡️ A lightweight CLI tool for remote server deployment based on Node.js.
 
-## Demo
+## 📷 Example preview
 
 ![Demo](./images/demo.svg)
-
-
 
 ## 🧠 Features
 
@@ -42,10 +40,6 @@ npm install -g wukong-deploy
 wukong-deploy init     # Generate config file
 wukong-deploy deploy   # Deploy to remote server
 ```
-
-## 📷 Example Screenshot
-
-✅ Deployed ./dist to root@your.server.com:/var/www/html/project
 
 ## Usage
 
