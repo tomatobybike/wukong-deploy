@@ -12,23 +12,23 @@ export const generateConfigContent = (lang = 'zh') => {
       commands: [
         {
           cmd: 'git pull',
-          ${isZh ?
-            `// 这条服务器命令的执行目录`
-            :
-            `// The directory where this command is executed`
+          ${
+            isZh
+              ? `// 这条服务器命令的执行目录`
+              : `// The directory where this command is executed`
           }
           cwd: '/your/project',
           description: '${isZh ? '拉取最新代码' : 'Pull latest code'}',
-          ${isZh ?
-            `// 如果命令输出了 stderr（标准错误），就视为执行失败`
-            :
-            `// If the command outputs stderr (standard error), it is considered failed`
+          ${
+            isZh
+              ? `// 如果命令输出了 stderr（标准错误），就视为执行失败`
+              : `// If the command outputs stderr (standard error), it is considered failed`
           }
           exitOnStdErr: false,
-          ${isZh ?
-            `// 如果 stderr 匹配这个正则，也视为执行失败`
-            :
-            `// The directory where this command is executed`
+          ${
+            isZh
+              ? `// 如果 stderr 匹配这个正则，也视为执行失败`
+              : `// The directory where this command is executed`
           }
           errorMatch: /Permission denied/
         },
@@ -101,8 +101,37 @@ export const generateConfigContent = (lang = 'zh') => {
 `
 }
 
-export const generateConfigPasswordContent = (lang = 'zh') => {
-  const isZh = lang === 'zh'
+const configTemplates = {
+  zh: {
+    password: '你的密码',
+    lang: 'zh',
+    comments: {
+      header: '# 🌏 这是环境配置',
+      server53: '# 53号服务器密码',
+      server54: '# 54号服务器密码',
+      lang: '# 终端语言设置'
+    }
+  },
+  en: {
+    password: 'PASSWORD',
+    lang: 'en',
+    comments: {
+      header: '# 🌍 This is English environment configuration',
+      server53: '# Password for server 53',
+      server54: '# Password for server 54',
+      lang: '# Language setting for CLI/API'
+    }
+  }
+}
 
-  return `${isZh ? 'SERVER_53_PASSWORD="你的密码"\nSERVER_54_PASSWORD="你的密码"' : 'SERVER_53_PASSWORD="PASSWORD"\nSERVER_54_PASSWORD="PASSWORD"'}`
+export const generateConfigPasswordContent = (lang = 'zh') => {
+  const template = configTemplates[lang] || configTemplates.en
+  const { password, lang: langCode, comments } = template
+
+  return [
+    comments.header,
+    `${comments.server53}\nSERVER_53_PASSWORD="${password}"`,
+    `${comments.server54}\nSERVER_54_PASSWORD="${password}"`,
+    `${comments.lang}\nWUKONG_LANG=${langCode}`
+  ].join('\n\n')
 }
