@@ -155,7 +155,7 @@ You can customize the behavior of `wukong-deploy` by setting the following envir
 | ----------------- | ---------------------------------------------------------- | ------------ |
 | `DEV_MODE`        | Enables development mode with additional debug output      | `true` / `1` |
 | `WUKONG_NO_EMOJI` | Disables emoji output (useful in unsupported terminals)    | `true` / `1` |
-| `LANG`            | Sets the CLI language (`zh` for Chinese, `en` for English) | `zh` / `en`  |
+| `WUKONG_LANG`            | Sets the CLI language (`zh` for Chinese, `en` for English) | `zh` / `en`  |
 | `WUKONG_DEBUG`    | Enables internal debug logs for troubleshooting            | `true` / `1` |
 
 ### 🧪 Example Usage
@@ -163,13 +163,13 @@ You can customize the behavior of `wukong-deploy` by setting the following envir
 Set variables temporarily:
 
 ```bash
-WUKONG_NO_EMOJI=1 LANG=en WUKONG_DEBUG=1 wukong-deploy deploy
+WUKONG_NO_EMOJI=1 WUKONG_LANG=en WUKONG_DEBUG=1 wukong-deploy deploy
 ```
 
 Or permanently in .env, .bashrc, or .zshrc:
 
 ```bash
-export LANG=zh
+export WUKONG_LANG=zh
 export WUKONG_NO_EMOJI=true
 export DEV_MODE=true
 ```
@@ -186,7 +186,7 @@ DEV_MODE=1
 WUKONG_NO_EMOJI=1
 
 # CLI language (zh or en)
-LANG=zh
+WUKONG_LANG=zh
 
 # Enable debug mode
 WUKONG_DEBUG=1
