@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.5](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.4...v1.2.5) (2025-08-03)
+
+
+### Features
+
+* 🎸 add env language config ([7f52389](https://github.com/tomatobybike/wukong-deploy/commit/7f5238902910ab9e3826c96d8545e2e5082c77e9))
+* 🎸 default .env language ([83624a3](https://github.com/tomatobybike/wukong-deploy/commit/83624a3a66ad23973620e5d82afab72268133c8b))
+
 ### [1.2.4](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.3...v1.2.4) (2025-08-03)
 
 ### [1.2.3](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.2...v1.2.3) (2025-08-03)
