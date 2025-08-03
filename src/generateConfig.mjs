@@ -132,6 +132,6 @@ export const generateConfigPasswordContent = (lang = 'zh') => {
     comments.header,
     `${comments.server53}\nSERVER_53_PASSWORD="${password}"`,
     `${comments.server54}\nSERVER_54_PASSWORD="${password}"`,
-    `${comments.lang}\nWUKONG_LANG=${langCode}`
+    `${comments.lang}\n#WUKONG_LANG=${langCode}`
   ].join('\n\n')
 }
