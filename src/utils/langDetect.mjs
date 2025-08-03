@@ -1,35 +1,49 @@
 // langDetect.mjs
 
-// 从环境变量中检测语言
-export function detectLangFromEnv() {
-  const envLang =
-    process.env.WUKONG_LANG ||  // 用户显式指定
-    process.env.LANG ||         // 系统默认
-    process.env.LC_ALL ||
-    process.env.LANGUAGE ||
-    ''
-
-  return /^zh/i.test(envLang) ? 'zh' : 'en'
+/**
+ * 归一化语言，只识别 zh 和 en，默认 en
+ */
+function normalizeLang(input = '') {
+  if (/^zh/i.test(input)) return 'zh'
+  if (/^en/i.test(input)) return 'en'
+  return 'en'
 }
 
-// 从命令行参数中解析语言，例如 --lang=zh
+/**
+ * 从命令行参数解析语言，如 --lang=zh
+ */
 export function parseLangArg() {
   const langArg = process.argv.find((arg) => arg.startsWith('--lang='))
   if (langArg) {
-    const lang = langArg.split('=')[1]?.toLowerCase()
-    if (['zh', 'en'].includes(lang)) {
-      return lang
-    }
+    const lang = langArg.split('=')[1]
+    return normalizeLang(lang)
   }
   return null
 }
 
-// 最终语言获取函数：优先参数，其次环境变量
+/**
+ * 从环境变量中检测语言
+ */
+export function detectLangFromEnv() {
+  const envLang =
+    process.env.WUKONG_LANG ||
+    process.env.LC_ALL ||
+    process.env.LANGUAGE ||
+    process.env.LANG ||
+    ''
+  return normalizeLang(envLang)
+}
+
+/**
+ * 最终语言获取函数：优先级为 命令行 > 环境变量
+ */
 export function getLang() {
   return parseLangArg() || detectLangFromEnv()
 }
 
-// 是否中文
+/**
+ * 是否为中文
+ */
 export function isZh() {
   return getLang() === 'zh'
 }
