@@ -29,7 +29,7 @@ dotenv.config()
 
 // @ts-ignore
 // eslint-disable-next-line no-undef
-const VERSION = typeof __VERSION__ !== 'undefined' ? __VERSION__ : 'unknown'
+const VERSION = __VERSION__ || 'unknown'
 const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
 
 // const getMyVersion = () => {
@@ -280,7 +280,7 @@ const handlers = {
   },
 
   version() {
-    showVersionInfo()
+    showVersionInfo(VERSION)
     process.exit(0)
   },
 
