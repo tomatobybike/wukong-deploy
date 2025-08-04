@@ -1,11 +1,20 @@
-import { logger } from './logger.mjs'
+/**
+ * @file: showEnv.mjs
+ * @description:
+ * @author: King Monkey
+ * @created: 2025-08-04 17:17
+ */
+
+import { colors } from './colors.mjs'
 
 export const showEnv = () => {
-  logger.debug('env', {
-    WUKONG_NO_EMOJI: process.env.WUKONG_NO_EMOJI,
-    DEV_MODE: process.env.DEV_MODE,
-    LANG: process.env.LANG,
-    WUKONG_LANG: process.env.WUKONG_LANG,
-    WUKONG_HIDE_HOST: process.env.WUKONG_HIDE_HOST
-  })
+  const { env } = process
+  console.log(colors.boldBlue('\n🧪  .env'))
+  console.log(colors.gray('----------------------------------------'))
+  console.log(`${colors.bold('WUKONG_NO_EMOJI')}: ${env.WUKONG_NO_EMOJI}`)
+  console.log(`${colors.bold('WUKONG_DEV_MODE')}: ${env.WUKONG_DEV_MODE}`)
+  console.log(`${colors.bold('LANG')}: ${env.LANG}`)
+  console.log(`${colors.bold('WUKONG_LANG')}: ${env.WUKONG_LANG}`)
+  console.log(`${colors.bold('WUKONG_HIDE_HOST')}: ${env.WUKONG_HIDE_HOST}`)
+  console.log(colors.gray('----------------------------------------\n'))
 }

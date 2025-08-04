@@ -12,16 +12,15 @@ import deploy from './deploy.mjs'
 import init from './init.mjs'
 import { sendTelemetry } from './lib/telemetry.wukong.mjs'
 import { devLog } from './utils/devLog.mjs'
-import { getProjectRoot } from './utils/getBaseDir.mjs'
+import { doctor } from './utils/doctor.mjs'
 import { showExample, showHelp } from './utils/help/help.mjs'
 import { i18nGetRaw, i18nInfo, i18nLogNative } from './utils/i18n.mjs'
 import { printAuthorInfo } from './utils/info.mjs'
 import { getLang } from './utils/langDetect.mjs'
 import { showEnv } from './utils/showEnv.mjs'
+import { showVersionInfo } from './utils/showVersionInfo.mjs'
 
 dotenv.config()
-
-showEnv()
 
 const getMyVersion = () => {
   // @ts-ignore
@@ -87,6 +86,7 @@ const main = async () => {
   })
 
   process.on('unhandledRejection', (reason) => {
+    // @ts-ignore
     if (reason?.name === 'ExitPromptError') {
       i18nLogNative('uncaughtException')
       process.exit(0)
@@ -100,7 +100,7 @@ const main = async () => {
 
   sendTelemetry('start', { version: VERSION }).catch(() => {})
 
-  const __dirname = getProjectRoot()
+  // const __dirname = getProjectRoot()
   const rootDir = process.cwd()
 
   const configPath = path.join(rootDir, 'config', 'config.mjs')
@@ -116,15 +116,13 @@ const main = async () => {
   // 显示版本号
   if (command === '-v' || command === '--version') {
     sendTelemetry('version', { version: VERSION }).catch(() => {})
-    console.log(`wukong-deploy v${VERSION}`)
+    showVersionInfo()
     process.exit(0)
   }
 
   // 打印系统信息
   devLog(`操作系统: ${process.platform}`)
   devLog(`Node.js版本: ${process.version}`)
-  devLog(`CLI目录: ${__dirname}`)
-  devLog(`工作目录: ${rootDir}`)
 
   switch (command) {
     case 'list': {
@@ -264,6 +262,20 @@ const main = async () => {
       break
     }
 
+    case 'env': {
+      showEnv()
+      process.exit(0)
+      break
+    }
+    case 'doctor': {
+      doctor()
+      const { flags } = parseArgs(process.argv.slice(2))
+      if (flags.env) {
+        console.log()
+        showEnv()
+      }
+      break
+    }
     case 'info':
     case '--about':
     case '--info': {
@@ -286,7 +298,7 @@ const main = async () => {
 
     default: {
       const lang = getLang()
-      await showHelp({ lang, version: VERSION })
+      showHelp({ lang, version: VERSION })
       process.exit(0)
     }
   }

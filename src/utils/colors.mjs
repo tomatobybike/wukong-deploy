@@ -34,7 +34,10 @@ export const colors = {
   info: chalk.blue,
 
   // 可用更柔和的调暗白色，替代 dim gray
-  dim: chalk.white.dim
+  dim: chalk.white.dim,
+  bold: chalk.bold,
+  boldBlue: chalk.bold.blue,
+  gray: chalk.bold.blue
 }
 
 export const c = {

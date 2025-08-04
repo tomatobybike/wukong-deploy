@@ -119,7 +119,7 @@ const configTemplates = {
       header: '# 🌍 This is English environment configuration',
       server53: '# Password for server 53',
       server54: '# Password for server 54',
-      lang: '# Language setting for CLI/API'
+      lang: '# Language setting for CLI/API 中文请设置WUKONG_LANG=zh'
     }
   }
 }
