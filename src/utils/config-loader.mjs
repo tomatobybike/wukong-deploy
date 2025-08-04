@@ -7,19 +7,17 @@
 import fs from 'fs-extra'
 import path from 'node:path'
 
-import { devLog } from './utils/devLog.mjs'
-import { i18nError } from './utils/i18n.mjs'
-import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
+import { devLog } from './devLog.mjs'
+import { i18nError } from './i18n.mjs'
+import { pathToFileUrl } from './pathToFileUrl.mjs'
 
 const rootDir = process.cwd()
 // 使用path.join确保跨平台兼容性
 const configFile = path.resolve(rootDir, path.join('config', 'config.mjs'))
-const configEnvFile = path.resolve(rootDir, path.join('.env'))
 
 // 调试信息
-devLog(`工作目录: ${rootDir}`)
-devLog(`配置文件路径: ${configFile}`)
-devLog(`配置文件路径.env: ${configEnvFile}`)
+devLog(`配置加载器 - 工作目录: ${rootDir}`)
+devLog(`配置加载器 - 配置文件路径: ${configFile}`)
 
 export async function getServerList() {
   // 检查配置文件是否存在

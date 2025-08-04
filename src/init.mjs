@@ -4,27 +4,25 @@
  * @author: King Monkey
  * @created: 2025-08-02 01:49
  */
-
 import fs from 'fs-extra'
 import path from 'path'
 
+import { backupFiles } from './utils/backupFiles.mjs'
+import { devLog } from './utils/devLog.mjs'
 import {
   generateConfigContent,
   generateConfigPasswordContent
-} from './generateConfig.mjs'
-import { devLog } from './utils/devLog.mjs'
-import { i18nLogNative ,i18nGetRaw} from './utils/i18n.mjs'
+} from './utils/generateConfig.mjs'
+import { i18nGetRaw, i18nLogNative } from './utils/i18n.mjs'
 import { getLang } from './utils/langDetect.mjs'
 import { promptWithSpinnerStop } from './utils/promptWithSpinnerStop.mjs'
 
 const rootDir = process.cwd()
 
-
 const forceOverwrite =
   process.argv.includes('--force') || process.argv.includes('-f')
 
 export default async function init(spinner) {
-
   const lang = getLang()
   // 调试信息，帮助排查Windows问题
 
@@ -49,7 +47,6 @@ export default async function init(spinner) {
     if (envExists) existingFiles.push('.env')
     spinner.stop()
 
-
     i18nLogNative('filesExist', { files: existingFiles.join(', ') })
 
     const { overwrite } = await promptWithSpinnerStop(spinner, [
@@ -66,6 +63,8 @@ export default async function init(spinner) {
       process.exit(1)
       return
     }
+    await backupFiles(configPath, envPath)
+    spinner.start(i18nGetRaw('file.overwriting'))
   }
   const startString = i18nGetRaw('file.overwriting')
   spinner.start(startString)

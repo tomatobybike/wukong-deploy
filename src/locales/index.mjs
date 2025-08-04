@@ -9,7 +9,9 @@ const examples = [
   'wukong-deploy info',
   'wukong-deploy env',
   'wukong-deploy doctor',
-  'wukong-deploy doctor --env'
+  'wukong-deploy doctor --env',
+  'wukong-deploy backup',
+  'wukong-deploy clear'
 ]
 export const locales = {
   zh: {
@@ -20,9 +22,12 @@ export const locales = {
       { name: 'list', desc: '显示所有可部署的服务器及其部署命令' },
       { name: 'deploy', desc: '根据提示选择服务器进行部署' },
       { name: 'deploy [server]', desc: '部署指定服务器' },
+      { name: '', desc: '' },
       { name: 'info', desc: '显示作者和项目信息' },
       { name: 'doctor', desc: '显示系统和运行环境信息' },
-      { name: 'env', desc: '显示 .env 环境变量信息' }
+      { name: 'env', desc: '显示 .env 环境变量信息' },
+      { name: 'backup', desc: '备份配置和环境文件' },
+      { name: 'clear', desc: '清空所有备份文件' }
     ],
     options: [
       { flags: '-v, --version', desc: '显示版本号' },
@@ -41,9 +46,12 @@ export const locales = {
       { name: 'list', desc: 'List all deployable servers' },
       { name: 'deploy', desc: 'Deploy by choosing server' },
       { name: 'deploy [server]', desc: 'Deploy specified server' },
+      { name: '', desc: '' },
       { name: 'info', desc: 'Show author and project information' },
       { name: 'doctor', desc: 'Show system and runtime environment info' },
-      { name: 'env', desc: 'Show .env environment variables' }
+      { name: 'env', desc: 'Show .env environment variables' },
+      { name: 'backup', desc: 'Backup config and environment files' },
+      { name: 'clear', desc: 'Clear all backup files' }
     ],
     options: [
       { flags: '-v, --version', desc: 'Show version number' },

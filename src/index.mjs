@@ -1,4 +1,9 @@
-// @file: wukong-deploy/src/index.mjs
+/**
+ * @file: wukong-deploy/src/index.mjs
+ * @description:
+ * @author: King Monkey
+ * @created: 2025-08-01 15:11
+ */
 import dotenv from 'dotenv'
 import inquirer from 'inquirer'
 import fs from 'node:fs'
@@ -6,11 +11,11 @@ import path from 'node:path'
 import process from 'node:process'
 import ora from 'ora'
 
-import { getServerList } from './config-loader.mjs'
-
 import deploy from './deploy.mjs'
 import init from './init.mjs'
 import { sendTelemetry } from './lib/telemetry.wukong.mjs'
+import { backupFiles } from './utils/backupFiles.mjs'
+import { getServerList } from './utils/config-loader.mjs'
 import { devLog } from './utils/devLog.mjs'
 import { doctor } from './utils/doctor.mjs'
 import { showExample, showHelp } from './utils/help/help.mjs'
@@ -230,7 +235,44 @@ const handlers = {
     await showExample({ lang })
     process.exit(0)
   },
+  async clear() {
+    const backupDir = path.join(process.cwd(), 'backup')
 
+    if (!fs.existsSync(backupDir)) {
+      i18nLogNative('backup.noBackupDir')
+      process.exit(0)
+    }
+
+    const { confirm } = await inquirer.prompt({
+      type: 'confirm',
+      name: 'confirm',
+      message: i18nGetRaw('backup.confirmClearBackup'),
+      default: false
+    })
+
+    if (!confirm) {
+      i18nLogNative('backup.clearCanceled')
+      process.exit(0)
+    }
+
+    try {
+      await fs.promises.rm(backupDir, { recursive: true, force: true })
+      i18nLogNative('backup.clearSuccess')
+    } catch (err) {
+      i18nLogNative('backup.clearFailed', { msg: err.message })
+      process.exit(1)
+    }
+
+    process.exit(0)
+  },
+  async backup() {
+    const rootDir = process.cwd()
+    const configPath = path.join(rootDir, 'config', 'config.mjs')
+    const envPath = path.join(rootDir, '.env')
+
+    const success = await backupFiles(configPath, envPath)
+    process.exit(success ? 0 : 1)
+  },
   info() {
     const lang = getLang()
     printAuthorInfo({ lang, version: VERSION })
@@ -287,6 +329,13 @@ async function main() {
       case '-e':
         await handlers.example()
         break
+      case 'backup':
+        await handlers.backup()
+        break
+      case 'clear':
+        await handlers.clear()
+        break
+
       default:
         handlers.help()
         break

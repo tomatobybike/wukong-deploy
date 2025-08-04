@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import { getLang } from './langDetect.mjs'
 import logger from './logger.mjs'
-import messages from './messages.mjs'
+import messages from '../locales/messages.mjs'
 
 const logCache = { write: true }
 

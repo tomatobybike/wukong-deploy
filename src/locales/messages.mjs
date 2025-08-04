@@ -1,4 +1,4 @@
-import { e } from './emoji.mjs'
+import { e } from '../utils/emoji.mjs'
 
 const messages = {
   zh: {
@@ -7,9 +7,11 @@ const messages = {
     notInitialized: `${e('❌', '[错误]')} 项目未初始化，请先执行：wukong-deploy init`,
     noServers: `${e('⚠️', '[警告]')} 未找到任何服务器配置，请先执行 wukong-deploy init 初始化`,
     serverList: `\n${e('📋', '[列表]')} 服务器列表：`,
-    serverFound: (name, host) => `\n${e('🖥️', '[服务器]')} ${name} ${host}\n   部署命令：`,
+    serverFound: (name, host) =>
+      `\n${e('🖥️', '[服务器]')} ${name} ${host}\n   部署命令：`,
     commandDesc: (idx, desc, cmd) => `   ${idx}. ${desc}: ${cmd}`,
-    getServerListFail: (msg) => `${e('❌', '[失败]')} 获取服务器列表失败: ${msg}`,
+    getServerListFail: (msg) =>
+      `${e('❌', '[失败]')} 获取服务器列表失败: ${msg}`,
     initError: (msg) => `初始化错误: ${msg}`,
     deployError: (msg) => `${e('❌', '[失败]')} 部署过程中出错: ${msg}`,
     configFileNotExist: (file) => `配置文件不存在: ${file}`,
@@ -18,7 +20,8 @@ const messages = {
     checkConfig: '请检查配置文件/config/config.mjs\n',
     envFileNotExist: (file) => `环境文件不存在: ${file}`,
     configFormatError: `${e('❌', '[错误]')} 配置文件格式错误，缺少 default.servers 对象`,
-    configKeyNotFound: (key) => `${e('❌', '[错误]')} 配置中找不到服务器 key: ${key}`,
+    configKeyNotFound: (key) =>
+      `${e('❌', '[错误]')} 配置中找不到服务器 key: ${key}`,
     needKeyOrPwd: `${e('❌', '[错误]')} 请配置私钥或密码环境变量`,
     foundServer: (name) => `找到服务器配置: ${name}`,
     buildFinished: `${e('✅', '[完成]')} Build finished`,
@@ -44,7 +47,8 @@ const messages = {
       executingOnServer: (name, host) =>
         `${e('📋', '[命令]')} 即将在 ${name} (${host}) 执行以下命令：`,
       commandConfirm: '确认要执行这些命令吗？',
-      importConfigFail: (msg) => `${e('❌', '[错误]')} 导入配置文件失败: ${msg}`,
+      importConfigFail: (msg) =>
+        `${e('❌', '[错误]')} 导入配置文件失败: ${msg}`,
       deployComplete: (msg) => `${e('🚀', '[部署]')} 部署 ${msg} 完成`
     },
     sshConnectSuccess: `${e('✅', '[连接成功]')} SSH 连接成功`,
@@ -58,6 +62,15 @@ const messages = {
       stderrTreatedAsError: `${e('🔴', '[错误]')} 命令 "\${cmd}" 输出错误信息（stderr）被视为失败`,
       matchedErrorPattern: `${e('🔴', '[错误]')} 命令 "\${cmd}" 匹配到错误模式：\${pattern}`,
       commandFailed: `${e('❌', '[失败]')} 命令失败：\${desc}`
+    },
+    backup: {
+      confirmClearBackup: '确认清空所有备份文件吗？此操作不可撤销。',
+      backupSuccess: (files, dir) => `已备份以下文件：\n${files} 到 \n${dir}`,
+      noFilesToBackup: `${e('⚠️', '[提示]')} 没有可备份的文件。`,
+      noBackupDir: `${e('⚠️', '[提示]')} 备份目录不存在，无需清理。`,
+      clearCanceled: `${e('🚪', '[取消]')} 清理备份操作已取消。`,
+      clearSuccess: `${e('✅', '[完成]')} 备份目录已清空。`,
+      clearFailed: (msg) => `${e('❌', '[错误]')} 清理备份目录失败：${msg}`
     }
   },
   en: {
@@ -66,9 +79,11 @@ const messages = {
     notInitialized: `${e('❌', '[Error]')} Project not initialized, please run: wukong-deploy init`,
     noServers: `${e('⚠️', '[Warning]')} No server config found, please run wukong-deploy init first`,
     serverList: `\n${e('📋', '[List]')} Server List:`,
-    serverFound: (name, host) => `\n${e('🖥️', '[Server]')} ${name} ${host}\n   Deploy commands:`,
+    serverFound: (name, host) =>
+      `\n${e('🖥️', '[Server]')} ${name} ${host}\n   Deploy commands:`,
     commandDesc: (idx, desc, cmd) => `   ${idx}. ${desc}: ${cmd}`,
-    getServerListFail: (msg) => `${e('❌', '[Failed]')} Failed to get server list: ${msg}`,
+    getServerListFail: (msg) =>
+      `${e('❌', '[Failed]')} Failed to get server list: ${msg}`,
     initError: (msg) => `Init error: ${msg}`,
     deployError: (msg) => `${e('❌', '[Failed]')} Deploy error: ${msg}`,
     configFileNotExist: (file) => `Config file not found: ${file}`,
@@ -77,13 +92,15 @@ const messages = {
     checkConfig: 'Please check /config/config.mjs\n',
     envFileNotExist: (file) => `Env file not found: ${file}`,
     configFormatError: `${e('❌', '[Error]')} Config file format error, missing default.servers`,
-    configKeyNotFound: (key) => `${e('❌', '[Error]')} Server key not found in config: ${key}`,
+    configKeyNotFound: (key) =>
+      `${e('❌', '[Error]')} Server key not found in config: ${key}`,
     needKeyOrPwd: `${e('❌', '[Error]')} Please configure private key or password env`,
     foundServer: (name) => `Found server config: ${name}`,
     buildFinished: `${e('✅', '[Done]')} Build finished`,
     userCancel: `\n${e('🚪', '[Exit]')} User cancelled deploy (Ctrl+C)`,
     uncaughtException: `\n🚪 User cancelled deploy (Ctrl+C)`,
-    filesExist: (files) => `\n${e('⚠️', '[Notice]')} The following files already exist: ${files}`,
+    filesExist: (files) =>
+      `\n${e('⚠️', '[Notice]')} The following files already exist: ${files}`,
     file: {
       confirmOverwrite: 'Do you want to overwrite the existing file?',
       overwriting: 'Overwriting files...'
@@ -103,12 +120,16 @@ const messages = {
       executingOnServer: (name, host) =>
         `\n${e('📋', '[Exec]')} Will execute the following commands on ${name} (${host}):`,
       commandConfirm: 'Confirm to execute these commands?',
-      importConfigFail: (msg) => `${e('❌', '[Error]')} Failed to import config file: ${msg}`,
-      deployComplete: (msg) => `${e('🚀', '[Deploy]')} Deployment to ${msg} completed`
+      importConfigFail: (msg) =>
+        `${e('❌', '[Error]')} Failed to import config file: ${msg}`,
+      deployComplete: (msg) =>
+        `${e('🚀', '[Deploy]')} Deployment to ${msg} completed`
     },
     sshConnectSuccess: `${e('✅', '[Connected]')} SSH connection successful`,
-    sshConnectFail: (msg) => `${e('❌', '[Failed]')} SSH connection failed: ${msg}`,
-    execCommand: (cmd, desc) => `${e('💻', '[Run]')} Executing command: ${cmd} ${desc}`,
+    sshConnectFail: (msg) =>
+      `${e('❌', '[Failed]')} SSH connection failed: ${msg}`,
+    execCommand: (cmd, desc) =>
+      `${e('💻', '[Run]')} Executing command: ${cmd} ${desc}`,
     prompt: {
       cancelInit: `${e('🚪', '[Exit]')} User cancelled initialization (Ctrl+C)`
     },
@@ -117,6 +138,17 @@ const messages = {
       stderrTreatedAsError: `${e('🔴', '[Error]')} Command "\${cmd}" stderr output is treated as failure`,
       matchedErrorPattern: `${e('🔴', '[Error]')} Command "\${cmd}" matched error pattern: \${pattern}`,
       commandFailed: `${e('❌', '[Failed]')} Command failed: \${desc}`
+    },
+    backup: {
+      confirmClearBackup:
+        'Are you sure you want to clear all backup files? This action cannot be undone.',
+      backupSuccess: (files, dir) => `Backed up files: \n${files} to \n${dir}`,
+      noFilesToBackup: `${e('⚠️', '[Notice]')} No files to backup.`,
+      noBackupDir: `${e('⚠️', '[Notice]')} Backup directory does not exist, nothing to clear.`,
+      clearCanceled: `${e('🚪', '[Cancel]')} Backup clear operation cancelled.`,
+      clearSuccess: `${e('✅', '[Done]')} Backup directory cleared.`,
+      clearFailed: (msg) =>
+        `${e('❌', '[Error]')} Failed to clear backup directory: ${msg}`
     }
   }
 }
