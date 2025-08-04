@@ -140,10 +140,19 @@ export default {
 ## Environment Variable Example (`.env`)
 
 ```env
-SERVER_53_PASSWORD=your_password_here
+# 🌍 This is English environment configuration
+
+# Password for server 53
+SERVER_53_PASSWORD="PASSWORD"
+
+# Password for server 54
+SERVER_54_PASSWORD="PASSWORD"
+
+# Language setting for CLI/API
+WUKONG_LANG=en
 ```
 
-[changelog](./CHANGELOG.md)
+[CHANGELOG](./CHANGELOG.md)
 
 ---
 

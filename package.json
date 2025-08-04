@@ -30,7 +30,7 @@
   "author": "Tom <tomatobybike@gmail.com>",
   "type": "module",
   "bin": {
-    "wukong-deploy": "./bin/wukong-deploy.cjs"
+    "wukong-deploy": "./bin/wukong-deploy.js"
   },
   "files": [
     "bin"
@@ -39,7 +39,7 @@
     "dev": "node ./src/index.mjs",
     "dev-mac": "WUKONG_NO_EMOJI=0 DEV_MODE=1 WUKONG_LANG=zh WUKONG_HIDE_HOST=1 WUKONG_DEBUG=1 node ./src/index.mjs",
     "dev-win": "set DEV_MODE=1&& node ./src/index.mjs",
-    "init": "node ./bin/wukong-deploy.cjs init",
+    "init": "node ./bin/wukong-deploy.js init",
     "lint": "eslint --ext .js,.mjs src/",
     "lint:fix": "eslint --ext .js,.mjs src --fix",
     "pack": "npm pack",

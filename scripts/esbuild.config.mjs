@@ -17,7 +17,7 @@ await build({
   platform: 'node',
   target: 'node18',
   format: 'cjs',
-  outfile: path.join(outdir, 'wukong-deploy.cjs'),
+  outfile: path.join(outdir, 'wukong-deploy.js'),
   banner: {
     js: '#!/usr/bin/env node'
   },

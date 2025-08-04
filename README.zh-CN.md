@@ -147,11 +147,20 @@ export default {
 
 ```env
 
-SERVER_53_PASSWORD=your_password_here
+# 🌏 这是环境配置
+
+# 53号服务器密码
+SERVER_53_PASSWORD="你的密码"
+
+# 54号服务器密码
+SERVER_54_PASSWORD="你的密码"
+
+# 终端语言设置
+WUKONG_LANG=zh
 
 ```
 
-[changelog](./CHANGELOG.md)
+[CHANGE](./CHANGELOG.md)
 
 ## npm publish 前检查包
 
