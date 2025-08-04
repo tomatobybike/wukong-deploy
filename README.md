@@ -162,7 +162,7 @@ You can customize the behavior of `wukong-deploy` by setting the following envir
 
 | Variable Name     | Description                                                | Example      |
 | ----------------- | ---------------------------------------------------------- | ------------ |
-| `DEV_MODE`        | Enables development mode with additional debug output      | `true` / `1` |
+| `WUKONG_DEV_MODE`        | Enables development mode with additional debug output      | `true` / `1` |
 | `WUKONG_NO_EMOJI` | Disables emoji output (useful in unsupported terminals)    | `true` / `1` |
 | `WUKONG_LANG`            | Sets the CLI language (`zh` for Chinese, `en` for English) | `zh` / `en`  |
 | `WUKONG_DEBUG`    | Enables internal debug logs for troubleshooting            | `true` / `1` |
@@ -180,7 +180,7 @@ Or permanently in .env, .bashrc, or .zshrc:
 ```bash
 export WUKONG_LANG=zh
 export WUKONG_NO_EMOJI=true
-export DEV_MODE=true
+export WUKONG_DEV_MODE=true
 ```
 
 ---
@@ -189,7 +189,7 @@ export DEV_MODE=true
 
 ```env
 # Enable development logs
-DEV_MODE=1
+WUKONG_DEV_MODE=1
 
 # Disable emoji output
 WUKONG_NO_EMOJI=1

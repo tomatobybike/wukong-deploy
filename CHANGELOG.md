@@ -2,21 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.2.9](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.8...v1.2.9) (2025-08-04)
-
-
 ### Features
 
-* 🎸 add backup clear ([97d527d](https://github.com/tomatobybike/wukong-deploy/commit/97d527dc4768f342a4c733fb0fb782f9f22e502a))
-* 🎸 add wukong-deploy env and wukong-deploy doctor ([c1f7f40](https://github.com/tomatobybike/wukong-deploy/commit/c1f7f40b19436e39e53c318ed7f2200c26c6bbb3))
-* 🎸 Optimize code structure ([8340085](https://github.com/tomatobybike/wukong-deploy/commit/8340085ac321d785adcc71dc5028eaf64c080cfe))
+- 🎸 add backup clear ([97d527d](https://github.com/tomatobybike/wukong-deploy/commit/97d527dc4768f342a4c733fb0fb782f9f22e502a))
+- 🎸 add wukong-deploy env and wukong-deploy doctor ([c1f7f40](https://github.com/tomatobybike/wukong-deploy/commit/c1f7f40b19436e39e53c318ed7f2200c26c6bbb3))
+- 🎸 Optimize code structure ([8340085](https://github.com/tomatobybike/wukong-deploy/commit/8340085ac321d785adcc71dc5028eaf64c080cfe))
 
 ### [1.2.8](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.7...v1.2.8) (2025-08-03)
 
-
 ### Bug Fixes
 
-* 🐛 some language zh to en ([fc8e3df](https://github.com/tomatobybike/wukong-deploy/commit/fc8e3df18d040d2f5a93ff90b960e22f498d4301))
+- 🐛 some language zh to en ([fc8e3df](https://github.com/tomatobybike/wukong-deploy/commit/fc8e3df18d040d2f5a93ff90b960e22f498d4301))
 
 ### [1.2.7](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.6...v1.2.7) (2025-08-03)
 
@@ -24,11 +20,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.2.5](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.4...v1.2.5) (2025-08-03)
 
-
 ### Features
 
-* 🎸 add env language config ([7f52389](https://github.com/tomatobybike/wukong-deploy/commit/7f5238902910ab9e3826c96d8545e2e5082c77e9))
-* 🎸 default .env language ([83624a3](https://github.com/tomatobybike/wukong-deploy/commit/83624a3a66ad23973620e5d82afab72268133c8b))
+- 🎸 add env language config ([7f52389](https://github.com/tomatobybike/wukong-deploy/commit/7f5238902910ab9e3826c96d8545e2e5082c77e9))
+- 🎸 default .env language ([83624a3](https://github.com/tomatobybike/wukong-deploy/commit/83624a3a66ad23973620e5d82afab72268133c8b))
 
 ### [1.2.4](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.3...v1.2.4) (2025-08-03)
 
@@ -38,49 +33,43 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.2.1](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.0...v1.2.1) (2025-08-02)
 
-
 ### Features
 
-* 🎸 patch ver ([1013679](https://github.com/tomatobybike/wukong-deploy/commit/10136790de94fddc4d9488bb4a808611c9257d18))
-
+- 🎸 patch ver ([1013679](https://github.com/tomatobybike/wukong-deploy/commit/10136790de94fddc4d9488bb4a808611c9257d18))
 
 ### Bug Fixes
 
-* 🐛 logo.svg ([38282b4](https://github.com/tomatobybike/wukong-deploy/commit/38282b4d2b68a42c1ebfb6d6e1ff6942267a083a))
-* 🐛 Windows or some terminals do not support Emoji character ([223c000](https://github.com/tomatobybike/wukong-deploy/commit/223c0001a0d8b084bd74a8ecdb12a0345267a31e))
+- 🐛 logo.svg ([38282b4](https://github.com/tomatobybike/wukong-deploy/commit/38282b4d2b68a42c1ebfb6d6e1ff6942267a083a))
+- 🐛 Windows or some terminals do not support Emoji character ([223c000](https://github.com/tomatobybike/wukong-deploy/commit/223c0001a0d8b084bd74a8ecdb12a0345267a31e))
 
 ## [1.2.0](https://github.com/tomatobybike/wukong-deploy/compare/v1.1.0...v1.2.0) (2025-08-02)
 
-
 ### Bug Fixes
 
-* 🐛 log red ([7c433dd](https://github.com/tomatobybike/wukong-deploy/commit/7c433dded0a4cc972885ad0610797b4d9ce462fe))
-* 🐛 window log utf8 ([416b5b5](https://github.com/tomatobybike/wukong-deploy/commit/416b5b5ddd1750d2d7bab019dcc9b5f87e49bff6))
+- 🐛 log red ([7c433dd](https://github.com/tomatobybike/wukong-deploy/commit/7c433dded0a4cc972885ad0610797b4d9ce462fe))
+- 🐛 window log utf8 ([416b5b5](https://github.com/tomatobybike/wukong-deploy/commit/416b5b5ddd1750d2d7bab019dcc9b5f87e49bff6))
 
 ## [1.1.0](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.15...v1.1.0) (2025-08-01)
 
-
 ### ⚠ BREAKING CHANGES
 
-* 🧨 esbuild version
+- 🧨 esbuild version
 
-* 🤖 esbuild version ([39385bd](https://github.com/tomatobybike/wukong-deploy/commit/39385bdd87bcfac4ac0dac36df612bc7e668d036))
+- 🤖 esbuild version ([39385bd](https://github.com/tomatobybike/wukong-deploy/commit/39385bdd87bcfac4ac0dac36df612bc7e668d036))
 
 ### [1.0.14](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.13...v1.0.14) (2025-07-31)
 
 ### [1.0.13](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.12...v1.0.13) (2025-07-31)
 
-
 ### Features
 
-* 🎸 report event ([6677101](https://github.com/tomatobybike/wukong-deploy/commit/6677101feac71880da2ac2297816edc34a34f8b9))
-* 🎸 script preinstall ([223a064](https://github.com/tomatobybike/wukong-deploy/commit/223a0642ff9ee5f276b9a4b998ceb3ce4cfd1a0a))
-* 🎸 ver1.0.12 and language,and --force ([a3ef9f8](https://github.com/tomatobybike/wukong-deploy/commit/a3ef9f88e51ebf49856a4fbb90b0fb9d262ace54))
-
+- 🎸 report event ([6677101](https://github.com/tomatobybike/wukong-deploy/commit/6677101feac71880da2ac2297816edc34a34f8b9))
+- 🎸 script preinstall ([223a064](https://github.com/tomatobybike/wukong-deploy/commit/223a0642ff9ee5f276b9a4b998ceb3ce4cfd1a0a))
+- 🎸 ver1.0.12 and language,and --force ([a3ef9f8](https://github.com/tomatobybike/wukong-deploy/commit/a3ef9f88e51ebf49856a4fbb90b0fb9d262ace54))
 
 ### Bug Fixes
 
-* 🐛 windows pc ,some gitbash don't show chalk color ([79d7a3e](https://github.com/tomatobybike/wukong-deploy/commit/79d7a3ec194d2fe47ee7f13cd1f7c32d5a54e46c))
+- 🐛 windows pc ,some gitbash don't show chalk color ([79d7a3e](https://github.com/tomatobybike/wukong-deploy/commit/79d7a3ec194d2fe47ee7f13cd1f7c32d5a54e46c))
 
 ### [1.0.12](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.11...v1.0.12) (2025-07-30)
 

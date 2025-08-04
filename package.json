@@ -1,6 +1,6 @@
 {
   "name": "wukong-deploy",
-  "version": "1.2.9",
+  "version": "1.2.8",
   "description": "A simple CLI to manage multi-server deployment",
   "keywords": [
     "cli",
@@ -37,8 +37,8 @@
   ],
   "scripts": {
     "dev": "node ./src/index.mjs",
-    "dev-mac": "WUKONG_NO_EMOJI=0 DEV_MODE=1 WUKONG_LANG=zh WUKONG_HIDE_HOST=1 WUKONG_DEBUG=1 node ./src/index.mjs",
-    "dev-win": "set DEV_MODE=1&& node ./src/index.mjs",
+    "dev-mac": "WUKONG_NO_EMOJI=0 WUKONG_DEV_MODE=1 WUKONG_LANG=zh WUKONG_HIDE_HOST=1 WUKONG_DEBUG=1 node ./src/index.mjs",
+    "dev-win": "set WUKONG_DEV_MODE=1&& node ./src/index.mjs",
     "init": "node ./bin/wukong-deploy.js init",
     "lint": "eslint --ext .js,.mjs src/",
     "lint:fix": "eslint --ext .js,.mjs src --fix",

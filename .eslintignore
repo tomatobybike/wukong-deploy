@@ -4,4 +4,5 @@
 /Doc
 /bin/
 /src/lib
+/backup
 #/src/**/*.zx.mjs
