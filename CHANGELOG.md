@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.9](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.8...v1.2.9) (2025-08-04)
+
+
+### Features
+
+* 🎸 add backup clear ([97d527d](https://github.com/tomatobybike/wukong-deploy/commit/97d527dc4768f342a4c733fb0fb782f9f22e502a))
+* 🎸 add wukong-deploy env and wukong-deploy doctor ([c1f7f40](https://github.com/tomatobybike/wukong-deploy/commit/c1f7f40b19436e39e53c318ed7f2200c26c6bbb3))
+* 🎸 Optimize code structure ([8340085](https://github.com/tomatobybike/wukong-deploy/commit/8340085ac321d785adcc71dc5028eaf64c080cfe))
+
 ### [1.2.8](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.7...v1.2.8) (2025-08-03)
 
 
