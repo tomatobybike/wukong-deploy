@@ -78,6 +78,6 @@ export function e(emoji, fallback = '') {
 // ========== 可选调试输出 ==========
 /*
 if (!emojiEnabled) {
-  console.log('⚠️ 当前终端不支持 Emoji，已自动禁用（如需强制启用请设置 WUKONG_NO_EMOJI=0）')
+  console.log('⚠️ 当前终端未启用 Emoji，已自动禁用（如需强制启用请设置 WUKONG_NO_EMOJI=0）')
 }
 */

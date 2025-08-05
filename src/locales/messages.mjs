@@ -72,7 +72,7 @@ const messages = {
       clearSuccess: `${e('✅', '[完成]')} 备份目录已清空。`,
       clearFailed: (msg) => `${e('❌', '[错误]')} 清理备份目录失败：${msg}`
     },
-    emojiWarning: `⚠️ ✅ 🚀 ❌ 🎉🖥当前终端不支持 Emoji，已自动禁用（如需强制启用请设置环境变量 WUKONG_NO_EMOJI=0）`
+    emojiWarning: `⚠️ ✅ 🚀 ❌ 🎉🖥当前终端未启用 Emoji，已自动禁用（如需强制启用请设置环境变量 WUKONG_NO_EMOJI=0）`
   },
   en: {
     cancelDeploy: `${e('🚪', '[Exit]')} Deploy cancelled.`,
