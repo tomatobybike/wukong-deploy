@@ -1,106 +1,114 @@
+## 📦 `wukong-deploy`
+
 <p align="center">
-    <img src="https://raw.githubusercontent.com/tomatobybike/wukong-deploy/main/images/logo.svg" width="200" alt="wukong-dev Logo" />
+  <img src="https://raw.githubusercontent.com/tomatobybike/wukong-deploy/main/images/logo.svg" width="200" alt="wukong-dev Logo" />
 </p>
-<br/>
+
 <p align="center">
-  <a href="https://www.npmjs.com/package/wukong-deploy"><img src="https://img.shields.io/npm/v/wukong-deploy.svg" alt="npm package"></a>
-  <a href="https://www.npmjs.com/package/wukong-deploy"><img src="https://img.shields.io/npm/dm/wukong-deploy.svg" alt="npm downloadsy"></a>
-  <a href="https://github.com/tomatobybike/wukong-deploy/blob/master/LICENSE"><img src="https://img.shields.io/github/license/tomatobybike/wukong-deploy.svg" alt="GitHub license"></a>
-  <a href="https://github.com/tomatobybike/wukong-deploy"><img src="https://img.shields.io/github/stars/tomatobybike/wukong-deploy.svg?style=social" alt="GitHub stars"></a>
-  <a href="ttps://github.com/tomatobybike/wukong-deploy/issues"><img src="https://img.shields.io/github/issues/tomatobybike/wukong-deploy.svg" alt="GitHub issues"></a>
+  <a href="https://www.npmjs.com/package/wukong-deploy"><img src="https://img.shields.io/npm/v/wukong-deploy.svg" alt="npm 版本"></a>
+  <a href="https://www.npmjs.com/package/wukong-deploy"><img src="https://img.shields.io/npm/dm/wukong-deploy.svg" alt="下载量"></a>
+  <a href="https://github.com/tomatobybike/wukong-deploy/blob/master/LICENSE"><img src="https://img.shields.io/github/license/tomatobybike/wukong-deploy.svg" alt="许可证"></a>
+  <a href="https://github.com/tomatobybike/wukong-deploy"><img src="https://img.shields.io/github/stars/tomatobybike/wukong-deploy.svg?style=social" alt="GitHub 星标数"></a>
+  <a href="https://github.com/tomatobybike/wukong-deploy/issues"><img src="https://img.shields.io/github/issues/tomatobybike/wukong-deploy.svg" alt="问题数量"></a>
 </p>
-<br/>
 
-# wukong-deploy
+> ⚡️ 基于 Node.js 的轻量级部署 CLI，支持一键执行远程服务器命令队列。
 
-[![npm version](https://img.shields.io/npm/v/wukong-deploy.svg)](https://www.npmjs.com/package/wukong-deploy)
-[![npm downloads](https://img.shields.io/npm/dm/wukong-deploy.svg)](https://www.npmjs.com/package/wukong-deploy)
-[![GitHub license](https://img.shields.io/github/license/tomatobybike/wukong-deploy.svg)](https://github.com/tomatobybike/wukong-deploy/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/tomatobybike/wukong-deploy.svg?style=social)](https://github.com/tomatobybike/wukong-deploy)
-[![GitHub issues](https://img.shields.io/github/issues/tomatobybike/wukong-deploy.svg)](https://github.com/tomatobybike/wukong-deploy/issues)
+中文 | [English](./README.md)
 
-一个轻量的基于 Node.js 的远程多服务器部署 CLI 工具。
+---
 
-## 📷 使用效果预览
+## 📚 目录
 
-![使用示例](./images/demo.svg)
+- [📦 `wukong-deploy`](#-wukong-deploy)
+- [📚 目录](#-目录)
+- [✨ 特性](#-特性)
+- [🧱 安装要求](#-安装要求)
+- [📦 安装](#-安装)
+- [🚀 使用方法](#-使用方法)
+  - [命令行命令](#命令行命令)
+- [⚙️ 配置](#️-配置)
+  - [`config/config.mjs`](#configconfigmjs)
+- [➕ 添加多台服务器](#-添加多台服务器)
+- [🌱 环境变量](#-环境变量)
+  - [示例 `.env`](#示例-env)
+- [📷 演示](#-演示)
+- [🖥 支持系统](#-支持系统)
+- [📦 升级](#-升级)
+- [🌏 多语言支持](#-多语言支持)
+- [📜 更新日志](#-更新日志)
+- [🐛 常见问题](#-常见问题)
+- [📄 许可证](#-许可证)
+- [🔍 关键词](#-关键词)
 
-### 🌟 功能亮点：
+---
 
-- 一条命令部署到服务器，支持 SSH/SCP
-- 自动生成配置文件，支持多环境部署
-- 日志输出清晰，部署过程一目了然
-- 配置简单，适合个人和团队使用
--
+## ✨ 特性
 
-## 🧩 安装使用：
+- 🚀 一条命令即可远程部署服务器
+- 🔐 支持安全 SSH 和 SCP
+- 📁 自定义文件或文件夹
+- 📦 通过 `config.mjs` 和 `.env` 轻松配置
+- 🌍 多语言支持：英文 / 简体中文
+- 🧪 强化 stderr 错误匹配
+
+---
+
+## 🧱 安装要求
+
+- Node.js >= 18.0.0
+- Linux / macOS（推荐）
+- Windows
+
+---
+
+## 📦 安装
 
 ```bash
-
 npm install -g wukong-deploy
-
+# 或者
+yarn global add wukong-deploy
 ```
 
-## 使用
+---
 
-### 初始化配置
+## 🚀 使用方法
+
+### 命令行命令
 
 ```bash
-
-wukong-deploy init
-
+wukong-deploy init       # 生成 .env 和 config/config.mjs
+wukong-deploy deploy     # 交互式部署
+wukong-deploy deploy dev # 部署指定服务器配置
 ```
 
-会在当前目录生成示例 `.env` 和 `config/config.mjs` 配置文件。
-
-### 部署
+可临时设置环境变量：
 
 ```bash
-wukong-deploy deploy
+WUKONG_LANG=en WUKONG_DEBUG=1 wukong-deploy deploy
 ```
 
-根据提示选择对应的服务器
+---
 
-或者
+## ⚙️ 配置
 
-```bash
-
-wukong-deploy deploy [serverKey]
-
-```
-
-- `[serverKey]` 为配置文件中定义的服务器名称，例如 `test`、`prod`。
-
-示例：
-
-```bash
-
-wukong-deploy deploy test
-
-```
-
-## 配置示例
-
-`config/config.mjs`:
+### `config/config.mjs`
 
 ```js
 export default {
   showCommandLog: true,
   servers: {
-    test: {
-      name: '测试服务器',
+    dev: {
+      name: '开发服务器',
       host: '192.168.0.123',
       username: 'root',
-      passwordEnv: 'SERVER_53_PASSWORD',
+      passwordEnv: 'SERVER_DEV_PASSWORD',
       commands: [
         {
-          // 某些命令可能返回 code=0，但 stderr 中包含关键错误
           cmd: 'git pull',
           cwd: '/your/project',
-          description: '拉取最新代码',
-          // 如果命令输出了 stderr（标准错误），就视为执行失败
+          description: '更新代码',
           exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
           errorMatch: /Permission denied/
         },
         {
@@ -108,120 +116,168 @@ export default {
           cwd: '/your/project',
           description: '构建项目',
           exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
           errorMatch: /Permission denied/
         }
       ],
-      finishMsg: '🎉 测试服务器部署完成'
-    },
-    prod: {
-      name: '生产服务器',
-      host: 'your.prod.ip',
-      username: 'ubuntu',
-      privateKey: '~/.ssh/id_rsa',
-      commands: [
-        {
-          cmd: 'git pull origin main',
-          cwd: '/your/project',
-          description: '拉取最新代码',
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        },
-        {
-          cmd: 'pm2 restart app',
-          cwd: '/your/project',
-          description: '重启服务',
-          exitOnStdErr: false,
-          // 如果 stderr 匹配这个正则，也视为执行失败
-          errorMatch: /Permission denied/
-        }
-      ],
-      finishMsg: '✅ 构建完成'
+      finishMsg: '🎉 部署完成'
     }
   }
 }
 ```
 
-## 环境变量示例 `.env`
+---
 
-```env
+## ➕ 添加多台服务器
 
-# 🌏 这是环境配置
+要支持更多环境，只需在 `servers` 字段中添加新的配置项：
 
-# 53号服务器密码
-SERVER_53_PASSWORD="你的密码"
-
-# 54号服务器密码
-SERVER_54_PASSWORD="你的密码"
-
-# 终端语言设置
-WUKONG_LANG=zh
-
+```js
+export default {
+  servers: {
+    dev: {
+      /* ... */
+    },
+    staging: {
+      name: '预发布服务器',
+      host: '123.45.67.89',
+      username: 'deploy',
+      passwordEnv: 'SERVER_STAGING_PASSWORD',
+      commands: [
+        {
+          cmd: 'npm run build',
+          cwd: '/srv/app',
+          description: '构建应用',
+          exitOnStdErr: false,
+          errorMatch: /Permission denied/
+        }
+      ],
+      finishMsg: '🚀 预发布部署完成'
+    },
+    prod: {
+      /* ... */
+    }
+  }
+}
 ```
 
-[CHANGE](./CHANGELOG.md)
+然后，在 `.env` 文件里定义每个服务器的密码或其他秘密：
 
-## npm publish 前检查包
+```env
+SERVER_DEV_PASSWORD=your_dev_password
+SERVER_STAGING_PASSWORD=your_staging_password
+SERVER_PROD_PASSWORD=your_prod_password
+```
+
+部署到指定服务器：
 
 ```bash
-
-npm pack
-
+wukong-deploy deploy staging
 ```
 
 ---
 
-## ⚙️ 环境变量配置
+## 🌱 环境变量
 
-你可以通过设置以下环境变量，来定制 `wukong-deploy` 的行为：
+你可以在 `.env` 中定义，也可以在 `.bashrc` / `.zshrc` 中导出：
 
-| 环境变量名        | 描述                                                 | 示例值       |
-| ----------------- | ---------------------------------------------------- | ------------ |
-| `WUKONG_DEV_MODE`        | 开启开发模式，输出额外的调试信息                     | `true` / `1` |
-| `WUKONG_NO_EMOJI` | 禁用 emoji 表情符号，适用于不支持 emoji 的终端环境   | `true` / `1` |
-| `WUKONG_LANG`     | 设置 CLI 输出语言（当前支持 `zh` 中文 和 `en` 英文） | `zh` / `en`  |
-| `WUKONG_DEBUG`    | 启用调试日志，显示内部 CLI 行为用于排查问题          | `true` / `1` |
+| 变量名            | 说明                     | 示例 |
+| ----------------- | ------------------------ | ---- |
+| `WUKONG_DEV_MODE` | 启用详细/开发模式        | `1`  |
+| `WUKONG_LANG`     | CLI 语言（`zh` 或 `en`） | `zh` |
+| `WUKONG_NO_EMOJI` | 禁用 emoji 输出          | `1`  |
+| `WUKONG_DEBUG`    | 启用内部调试日志         | `1`  |
 
-### 🧪 使用示例
+💡 `WUKONG_NO_EMOJI`：某些 Windows 终端（如旧版 CMD）对 emoji 支持不好，建议设为 `1` 禁用。
 
-临时设置：
-
-```bash
-WUKONG_NO_EMOJI=1 WUKONG_LANG=zh WUKONG_DEBUG=1 wukong-deploy deploy
-```
-
-永久设置（推荐写入 .env 或 .bashrc 文件）：
-
-```bash
-export WUKONG_LANG=zh
-export WUKONG_NO_EMOJI=1
-export WUKONG_DEV_MODE=1
-```
-
-### 📝 `.env.example` 文件内容：
+### 示例 `.env`
 
 ```env
-# Enable development logs
 WUKONG_DEV_MODE=1
-
-# 禁止表情符号
-WUKONG_NO_EMOJI=1
-
-# CLI 语言 (zh or en)
 WUKONG_LANG=zh
-
-# 开启调试模式
+WUKONG_NO_EMOJI=1
 WUKONG_DEBUG=1
+
+# 服务器登录密码
+SERVER_DEV_PASSWORD=your_password
+SERVER_STAGING_PASSWORD=your_password
 ```
 
-🎯 使用场景推荐
+---
 
-| 使用场景          | 建议配置                              |
-| ----------------- | ------------------------------------- |
-| 终端不支持 emoji  | `WUKONG_NO_EMOJI=1`                   |
-| 部署排查问题      | `WUKONG_DEBUG=1` 或 `WUKONG_DEV_MODE=1`      |
-| 脚本 / 自动化环境 | `WUKONG_LANG=zh`，`WUKONG_NO_EMOJI=1` |
-| 本地 CLI 开发     | `WUKONG_DEV_MODE=1`, `WUKONG_DEBUG=1`        |
+## 📷 演示
 
-<!-- 部署工具、自动部署、前端部署、Node.js上线、wukong、wukong-deploy、发布工具、远程部署、SSH部署、项目发布、构建上线、DevOps 工具、发布脚本 -->
+```bash
+wukong-deploy deploy
+```
+
+![演示](./images/demo.svg)
+
+---
+
+## 🖥 支持系统
+
+- macOS
+- Linux
+- Windows（需安装 Git Bash）
+
+---
+
+## 📦 升级
+
+```bash
+npm update -g wukong-deploy
+# 或者
+yarn global upgrade wukong-deploy
+```
+
+---
+
+## 🌏 多语言支持
+
+根据你的终端系统语言自动切换中英文，无需额外配置。
+
+| 语言环境变量       | 语言 |
+| ------------------ | ---- |
+| `LANG=zh_CN.UTF-8` | 中文 |
+| `LANG=en_US.UTF-8` | 英文 |
+
+你也可以通过命令参数强制指定语言：
+
+```bash
+wukong-deploy --lang=zh   # 强制中文
+wukong-deploy --lang=en   # Force English
+```
+
+或者在 `.env` 中配置：
+
+```bash
+wukong-deploy --lang=zh   # 强制中文
+wukong-deploy --lang=en   # Force English
+```
+
+---
+
+## 📜 更新日志
+
+详见 [CHANGELOG.md](./CHANGELOG.md)
+
+---
+
+## 🐛 常见问题
+
+- **Windows 终端乱码**：建议使用支持 UTF-8 的终端，如 Windows Terminal
+- **无 emoji 显示**：设置 `WUKONG_NO_EMOJI=1`
+- **服务器登录失败**：
+  - 请确认.env中的密码和config/config.mjs的username是否正确
+
+---
+
+## 📄 许可证
+
+[MIT](./LICENSE)
+
+---
+
+## 🔍 关键词
+
+<!-- 部署工具，自动部署，前端发布，Node.js 上线工具，wukong-deploy，发布到服务器, 多服务器管理 -->

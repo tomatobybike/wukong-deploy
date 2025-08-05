@@ -1,210 +1,284 @@
-<p align="center">
-    <img src="https://raw.githubusercontent.com/tomatobybike/wukong-deploy/main/images/logo.svg" width="200" alt="wukong-dev Logo" />
-</p>
-<br/>
-<p align="center">
-  <a href="https://www.npmjs.com/package/wukong-deploy"><img src="https://img.shields.io/npm/v/wukong-deploy.svg" alt="npm package"></a>
-  <a href="https://www.npmjs.com/package/wukong-deploy"><img src="https://img.shields.io/npm/dm/wukong-deploy.svg" alt="npm downloadsy"></a>
-  <a href="https://github.com/tomatobybike/wukong-deploy/blob/master/LICENSE"><img src="https://img.shields.io/github/license/tomatobybike/wukong-deploy.svg" alt="GitHub license"></a>
-  <a href="https://github.com/tomatobybike/wukong-deploy"><img src="https://img.shields.io/github/stars/tomatobybike/wukong-deploy.svg?style=social" alt="GitHub stars"></a>
-  <a href="ttps://github.com/tomatobybike/wukong-deploy/issues"><img src="https://img.shields.io/github/issues/tomatobybike/wukong-deploy.svg" alt="GitHub issues"></a>
-</p>
-<br/>
+## 📦 `wukong-deploy`
 
-# wukong-deploy
+<p align="center">
+  <img src="https://raw.githubusercontent.com/tomatobybike/wukong-deploy/main/images/logo.svg" width="200" alt="wukong-dev Logo" />
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/wukong-deploy"><img src="https://img.shields.io/npm/v/wukong-deploy.svg" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/wukong-deploy"><img src="https://img.shields.io/npm/dm/wukong-deploy.svg" alt="downloads"></a>
+  <a href="https://github.com/tomatobybike/wukong-deploy/blob/master/LICENSE"><img src="https://img.shields.io/github/license/tomatobybike/wukong-deploy.svg" alt="license"></a>
+  <a href="https://github.com/tomatobybike/wukong-deploy"><img src="https://img.shields.io/github/stars/tomatobybike/wukong-deploy.svg?style=social" alt="GitHub stars"></a>
+  <a href="https://github.com/tomatobybike/wukong-deploy/issues"><img src="https://img.shields.io/github/issues/tomatobybike/wukong-deploy.svg" alt="issues"></a>
+</p>
+
+> ⚡️ A lightweight Node.js CLI for remote server deployment — run any command queue with a single line.
 
 English | [简体中文](./README.zh-CN.md)
 
-> ⚡️ A lightweight CLI tool for remote server deployment based on Node.js.
+---
 
-## 📷 Example preview
+## 📚 Table of Contents
 
-![Demo](./images/demo.svg)
+- [📦 `wukong-deploy`](#-wukong-deploy)
+- [📚 Table of Contents](#-table-of-contents)
+- [✨ Features](#-features)
+- [🧱 Requirements](#-requirements)
+- [📦 Installation](#-installation)
+- [🚀 Usage](#-usage)
+  - [CLI Commands](#cli-commands)
+- [⚙️ Configuration](#️-configuration)
+  - [`config/config.mjs`](#configconfigmjs)
+- [➕ Adding Multiple Servers](#-adding-multiple-servers)
+- [🌱 Environment Variables](#-environment-variables)
+  - [Example `.env`](#example-env)
+- [📷 Demo](#-demo)
+- [🖥 Supported Platforms](#-supported-platforms)
+- [📦 Upgrade](#-upgrade)
+- [🌏 Multi-language Support](#-multi-language-support)
+- [📜 Changelog](#-changelog)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📄 License](#-license)
+- [🔍 Keywords](#-keywords)
 
-## 🧠 Features
+---
+
+## ✨ Features
 
 - 🚀 One-command deployment to remote servers
 - 🔐 Secure SSH + SCP support
 - 📁 Custom file/folder inclusion
-- 📦 Easily configurable with `config.mjs`
+- 📦 Easily configurable with `config.mjs` and `.env`
+- 🌍 Multilingual CLI: English / 简体中文
+- 🧪 Robust stderr error matching
+
+---
+
+## 🧱 Requirements
+
+- Node.js >= 18.0.0
+- Linux / macOS (recommended)
+- Windows
+
+---
 
 ## 📦 Installation
 
 ```bash
 npm install -g wukong-deploy
+# or
+yarn global add wukong-deploy
 ```
 
-## 🚀 Quick Start
+---
+
+## 🚀 Usage
+
+### CLI Commands
 
 ```bash
-wukong-deploy init     # Generate config file
-wukong-deploy deploy   # Deploy to remote server
+wukong-deploy init       # Generate .env and config/config.mjs
+wukong-deploy deploy     # Interactive deployment
+wukong-deploy deploy dev # Deploy using specific server key
 ```
 
-## Usage
-
-### Initialize Configuration
+Set environment variables on the fly:
 
 ```bash
-wukong-deploy init
+WUKONG_LANG=en WUKONG_DEBUG=1 wukong-deploy deploy
 ```
 
-This will generate a sample `.env` and `config/config.mjs` file in your current working directory.
+---
 
-### Deploy
+## ⚙️ Configuration
 
-```bash
-wukong-deploy deploy
-```
-
-You will be prompted to select a target server interactively.
-
-Or specify the server key directly:
-
-```bash
-wukong-deploy deploy [serverKey]
-```
-
-- `[serverKey]` is the key defined in your configuration file (e.g., `test`, `prod`).
-
-Example:
-
-```bash
-wukong-deploy deploy test
-```
-
-## Configuration Example
-
-`config/config.mjs`:
+### `config/config.mjs`
 
 ```js
 export default {
   showCommandLog: true,
   servers: {
-    test: {
-      name: 'Test Server',
+    dev: {
+      name: 'Dev Server',
       host: '192.168.0.123',
       username: 'root',
-      passwordEnv: 'SERVER_53_PASSWORD',
+      passwordEnv: 'SERVER_DEV_PASSWORD',
       commands: [
         {
-          // Some commands may return code=0, but the standard error contains a critical error
           cmd: 'git pull',
           cwd: '/your/project',
-          description: 'Pull the latest code',
-          // If the command outputs standard error (std err), it is considered to have failed execution
+          description: 'Update code',
           exitOnStdErr: false,
-          // If the standard error matches this rule, it is also considered a execution failure
           errorMatch: /Permission denied/
         },
         {
           cmd: 'npm run build',
           cwd: '/your/project',
-          description: 'Build Project',
+          description: 'Build project',
           exitOnStdErr: false,
-          // If the standard error matches this rule, it is also considered a execution failure
           errorMatch: /Permission denied/
         }
       ],
       finishMsg: '🎉 Deployment completed'
-    },
-    prod: {
-      name: 'Production Server',
-      host: 'your.prod.ip',
-      username: 'ubuntu',
-      privateKey: '~/.ssh/id_rsa',
-      commands: [
-        {
-          cmd: 'git pull',
-          cwd: '/your/project',
-          description: 'Pull the latest code',
-          exitOnStdErr: false,
-          //  If the standard error matches this rule, it is also considered a execution failure
-          errorMatch: /Permission denied/
-        },
-        {
-          cmd: 'pm2 restart app',
-          cwd: '/your/project',
-          description: 'restart server',
-          exitOnStdErr: false,
-          //  If the standard error matches this rule, it is also considered a execution failure
-          errorMatch: /Permission denied/
-        }
-      ],
-      finishMsg: '✅ Build completed'
     }
   }
 }
 ```
 
-## Environment Variable Example (`.env`)
+---
 
-```env
-# 🌍 This is English environment configuration
+## ➕ Adding Multiple Servers
 
-# Password for server 53
-SERVER_53_PASSWORD="PASSWORD"
+To deploy to more environments, simply add more entries in the `servers` field:
 
-# Password for server 54
-SERVER_54_PASSWORD="PASSWORD"
-
-# Language setting for CLI/API
-WUKONG_LANG=en
+```js
+export default {
+  servers: {
+    dev: {
+      /* ... */
+    },
+    staging: {
+      name: 'Staging Server',
+      host: '123.45.67.89',
+      username: 'deploy',
+      passwordEnv: 'SERVER_STAGING_PASSWORD',
+      commands: [
+        {
+          cmd: 'npm run build',
+          cwd: '/srv/app',
+          description: 'Build app',
+          exitOnStdErr: false,
+          errorMatch: /Permission denied/
+        }
+      ],
+      finishMsg: '🚀 Staging deployment done'
+    },
+    prod: {
+      /* ... */
+    }
+  }
+}
 ```
 
-[CHANGELOG](./CHANGELOG.md)
+Then, define each server's password (or other secrets) in your `.env` file:
+
+```env
+SERVER_DEV_PASSWORD=your_dev_password
+SERVER_STAGING_PASSWORD=your_staging_password
+SERVER_PROD_PASSWORD=your_prod_password
+```
+
+To deploy to a specific server:
+
+```bash
+wukong-deploy deploy staging
+```
 
 ---
 
-## ⚙️ Environment Variables
+## 🌱 Environment Variables
 
-You can customize the behavior of `wukong-deploy` by setting the following environment variables:
+You can define these variables in `.env`, or export them in `.bashrc` / `.zshrc`:
 
-| Variable Name     | Description                                                | Example      |
-| ----------------- | ---------------------------------------------------------- | ------------ |
-| `WUKONG_DEV_MODE`        | Enables development mode with additional debug output      | `true` / `1` |
-| `WUKONG_NO_EMOJI` | Disables emoji output (useful in unsupported terminals)    | `true` / `1` |
-| `WUKONG_LANG`            | Sets the CLI language (`zh` for Chinese, `en` for English) | `zh` / `en`  |
-| `WUKONG_DEBUG`    | Enables internal debug logs for troubleshooting            | `true` / `1` |
+| Variable          | Description                 | Example |
+| ----------------- | --------------------------- | ------- |
+| `WUKONG_DEV_MODE` | Enable verbose/dev mode     | `1`     |
+| `WUKONG_LANG`     | CLI language (`zh` or `en`) | `zh`    |
+| `WUKONG_NO_EMOJI` | Disable emoji output        | `1`     |
+| `WUKONG_DEBUG`    | Enable internal debug logs  | `1`     |
 
-### 🧪 Example Usage
+💡 `WUKONG_NO_EMOJI`: 某些 Windows 终端（如旧版 CMD）对 emoji 显示不友好，建议设置为 `1` 禁用。
 
-Set variables temporarily:
-
-```bash
-WUKONG_NO_EMOJI=1 WUKONG_LANG=en WUKONG_DEBUG=1 wukong-deploy deploy
-```
-
-Or permanently in .env, .bashrc, or .zshrc:
-
-```bash
-export WUKONG_LANG=zh
-export WUKONG_NO_EMOJI=true
-export WUKONG_DEV_MODE=true
-```
-
----
-
-### 📝 `.env.example` 文件内容：
+### Example `.env`
 
 ```env
-# Enable development logs
 WUKONG_DEV_MODE=1
-
-# Disable emoji output
-WUKONG_NO_EMOJI=1
-
-# CLI language (zh or en)
 WUKONG_LANG=zh
-
-# Enable debug mode
+WUKONG_NO_EMOJI=1
 WUKONG_DEBUG=1
+
+# Server login credentials
+SERVER_DEV_PASSWORD=your_password
+SERVER_STAGING_PASSWORD=your_password
 ```
 
 ---
 
-## License
+## 📷 Demo
 
-MIT
+```bash
+wukong-deploy deploy
+```
 
-<!-- 中文关键词：部署工具, 自动部署, 前端发布, Node.js上线工具, wukong-deploy, 发布到服务器 -->
+![Demo](./images/demo.svg)
+
+---
+
+## 🖥 Supported Platforms
+
+- macOS
+- Linux
+- Windows（需安装 Git Bash）
+
+---
+
+## 📦 Upgrade
+
+```bash
+npm update -g wukong-deploy
+# or
+yarn global upgrade wukong-deploy
+```
+
+---
+
+## 🌏 Multi-language Support
+
+Automatically switches between Chinese and English based on your terminal's system language, no extra configuration needed.
+
+| Language Environment Variable | Language |
+| ----------------------------- | -------- |
+| `LANG=zh_CN.UTF-8`            | Chinese  |
+| `LANG=en_US.UTF-8`            | English  |
+
+You can also force the language via command-line argument:
+
+```bash
+wukong-deploy --lang=zh   # 强制中文
+wukong-deploy --lang=en   # Force English
+```
+
+Or configure it in your `.env` file similarly:
+
+```bash
+wukong-deploy --lang=zh   # 强制中文
+wukong-deploy --lang=en   # Force English
+```
+
+---
+
+## 📜 Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for release history.
+
+---
+
+## 🐛 Troubleshooting
+
+- **Garbled characters in Windows terminal**: It is recommended to use a UTF-8 capable terminal, such as Windows Terminal.
+- **Emoji not displaying**: Set `WUKONG_NO_EMOJI=1`
+- **Server login failure**:
+
+  - Please verify that the password in `.env` and the username in `config/config.mjs` are correct.
+
+---
+
+## 📄 License
+
+[MIT](./LICENSE)
+
+---
+
+## 🔍 Keywords
+
+<!-- cli, deploy, deployment, ssh ,multi-server ,automation ,javascript, nodejs ,command-line ,script ,frontend ,remote server, server management ,server deployment -->
