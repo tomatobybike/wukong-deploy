@@ -218,7 +218,7 @@ wukong-deploy deploy
 
 - macOS
 - Linux
-- Windows（需安装 Git Bash）
+- Windows（推荐使用 Windows Terminal 或 Git Bash，避免 CMD 编码和 emoji 显示问题）
 
 ---
 
@@ -268,7 +268,40 @@ wukong-deploy --lang=en   # Force English
 - **Windows 终端乱码**：建议使用支持 UTF-8 的终端，如 Windows Terminal
 - **无 emoji 显示**：设置 `WUKONG_NO_EMOJI=1`
 - **服务器登录失败**：
-  - 请确认.env中的密码和config/config.mjs的username是否正确
+  - 请确认`.env`中的密码和`config/config.mjs`的username是否正确
+- **❌ PowerShell 报错：无法加载文件 `wukong-deploy.ps1`（执行策略限制）**：
+
+  - 原因：PowerShell 默认禁止执行 .ps1 脚本。通过 npm install -g 安装时会自动创建 .ps1 启动脚本，而 yarn global add 仅生成 .cmd 文件，因此不会触发该限制。
+  - 解决方法一（仅影响当前用户）：
+
+    ```powershell
+
+    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+    ```
+
+  - 解决方法二（绕过）：
+    删除全局目录中的 `wukong-deploy.ps1` 文件，PowerShell 将自动改用 `.cmd` 执行。
+    全局目录一般在：
+
+    ```bash
+
+    C:\Users\<用户名>\AppData\Roaming\npm\
+    ```
+
+  - 解决方法三：或使用 Node.js 直接运行 CLI：
+
+    ```bash
+
+    node "$(npm root -g)/wukong-deploy/bin/cli.js"
+    ```
+
+  - 解决方法四（推荐）：改用 yarn 全局安装（不会生成 .ps1 文件）：
+
+    ```bash
+
+    npm uninstall wukong-deploy -g
+    yarn global add wukong-deploy
+    ```
 
 ---
 

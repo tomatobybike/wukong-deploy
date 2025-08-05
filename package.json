@@ -38,7 +38,7 @@
   "scripts": {
     "dev": "node ./src/index.mjs",
     "dev-mac": "WUKONG_NO_EMOJI=0 WUKONG_DEV_MODE=1 WUKONG_LANG=zh WUKONG_HIDE_HOST=1 WUKONG_DEBUG=1 node ./src/index.mjs",
-    "dev-win": "set WUKONG_DEV_MODE=1&& node ./src/index.mjs",
+    "dev-win": "set WUKONG_DEV_MODE=1 set WUKONG_NO_EMOJI=0&& node ./src/index.mjs",
     "init": "node ./bin/wukong-deploy.cjs init",
     "lint": "eslint --ext .js,.mjs src/",
     "lint:fix": "eslint --ext .js,.mjs src --fix",

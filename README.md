@@ -218,7 +218,7 @@ wukong-deploy deploy
 
 - macOS
 - Linux
-- Windows（需安装 Git Bash）
+- Windows (Windows Terminal or Git Bash recommended to avoid encoding and emoji problems in CMD)
 
 ---
 
@@ -266,10 +266,52 @@ See [CHANGELOG.md](./CHANGELOG.md) for release history.
 ## 🐛 Troubleshooting
 
 - **Garbled characters in Windows terminal**: It is recommended to use a UTF-8 capable terminal, such as Windows Terminal.
+
 - **Emoji not displaying**: Set `WUKONG_NO_EMOJI=1`
+
 - **Server login failure**:
 
   - Please verify that the password in `.env` and the username in `config/config.mjs` are correct.
+
+- **PowerShell Error: Cannot load file `wukong-deploy.ps1` (execution policy restriction)**:
+
+  - **Cause**:
+    By default, PowerShell blocks the execution of `.ps1` script files. When installing global packages via `npm install -g`, a `.ps1` launcher is created, which may be blocked on your system.
+
+  - **Solution 1 (recommended)**:
+    Set a more permissive execution policy for the current user:
+
+    ```powershell
+    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+    ```
+
+    ✅ Run PowerShell as Administrator when executing this command.
+
+  - **Solution 2**:
+    Use `yarn` for global installation (no `.ps1` script generated):
+
+    ```bash
+    npm uninstall -g wukong-deploy
+    yarn global add wukong-deploy
+    ```
+
+  - **Solution 3**:
+    Manually delete the `.ps1` launcher script. PowerShell will then use the `.cmd` file instead.
+
+    Default global path:
+
+    ```
+    C:\Users\<YourUsername>\AppData\Roaming\npm\wukong-deploy.ps1
+    ```
+
+    ⚠️ This file may be regenerated if you reinstall the package via npm.
+
+  - **Solution 4**:
+    Run the CLI directly via Node.js (bypasses shell script entirely):
+
+    ```bash
+    node "$(npm root -g)/wukong-deploy/bin/cli.js"
+    ```
 
 ---
 

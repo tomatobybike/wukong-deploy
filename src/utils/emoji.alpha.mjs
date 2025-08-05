@@ -10,7 +10,6 @@
     操作系统类型（如老版本 Windows）
 
     尝试写入 Emoji 到 stdout，检测是否能渲染（核心增强）
-
     📌 支持判断逻辑说明：
     判断点	是否禁用 Emoji
     WUKONG_NO_EMOJI=1	✅ 是
@@ -20,14 +19,12 @@
  * @author:
  * @created: 2025-08-02
  */
-import dotenv from 'dotenv'
 import process from 'node:process'
 
-dotenv.config()
 // ========== 配置项 ==========
 
-// 用户通过环境变量控制 Emoji
-const userForceSetting = process.env.WUKONG_NO_EMOJI
+// 优先用户配置显式禁用
+const userDisabled = process.env.WUKONG_NO_EMOJI === '1'
 
 // ========== 终端环境判断 ==========
 
@@ -60,12 +57,11 @@ const canRenderEmoji = () => {
 // ========== 缓存判断结果 ==========
 
 export const emojiEnabled =
-  // eslint-disable-next-line no-nested-ternary
-  userForceSetting === '0' // ✅ 强制启用
-    ? true
-    : userForceSetting === '1' // ❌ 强制禁用
-      ? false
-      : !isDumb() && !isGitBash() && !isOldWindowsTerminal() && canRenderEmoji()
+  !userDisabled &&
+  !isDumb() &&
+  !isGitBash() &&
+  !isOldWindowsTerminal() &&
+  canRenderEmoji()
 
 /**
  * 包装 Emoji（根据环境决定是否返回替代字符）
@@ -77,12 +73,11 @@ export function e(emoji, fallback = '') {
   return emojiEnabled ? emoji : fallback
 }
 
-
 /*
 import { e, emojiEnabled } from './utils/emoji.mjs'
 
 console.log(`${e('🚀', '>')} 发布完成`)
 if (!emojiEnabled) {
-  console.log('⚠️ 当前终端不支持 Emoji，已自动禁用（如需强制启用请设置 WUKONG_NO_EMOJI=0）')
+  console.log('⚠️ 当前终端不支持 Emoji，已自动禁用')
 }
 */

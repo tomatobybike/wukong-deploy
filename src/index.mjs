@@ -18,6 +18,7 @@ import { backupFiles } from './utils/backupFiles.mjs'
 import { getServerList } from './utils/config-loader.mjs'
 import { devLog } from './utils/devLog.mjs'
 import { doctor } from './utils/doctor.mjs'
+import { emojiEnabled } from './utils/emoji.mjs'
 import { showExample, showHelp } from './utils/help/help.mjs'
 import { i18nGetRaw, i18nInfo, i18nLogNative } from './utils/i18n.mjs'
 import { printAuthorInfo } from './utils/info.mjs'
@@ -29,7 +30,7 @@ dotenv.config()
 
 // @ts-ignore
 // eslint-disable-next-line no-undef
-const VERSION = __VERSION__ || 'unknown'
+const VERSION = typeof __VERSION__ !== 'undefined' ? __VERSION__ : 'dev'
 const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
 
 // const getMyVersion = () => {
@@ -276,6 +277,9 @@ const handlers = {
   info() {
     const lang = getLang()
     printAuthorInfo({ lang, version: VERSION })
+    if (!emojiEnabled) {
+      i18nLogNative('emojiWarning')
+    }
     process.exit(0)
   },
 

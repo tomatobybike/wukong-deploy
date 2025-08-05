@@ -71,7 +71,8 @@ const messages = {
       clearCanceled: `${e('🚪', '[取消]')} 清理备份操作已取消。`,
       clearSuccess: `${e('✅', '[完成]')} 备份目录已清空。`,
       clearFailed: (msg) => `${e('❌', '[错误]')} 清理备份目录失败：${msg}`
-    }
+    },
+    emojiWarning: `⚠️ ✅ 🚀 ❌ 🎉🖥当前终端不支持 Emoji，已自动禁用（如需强制启用请设置环境变量 WUKONG_NO_EMOJI=0）`
   },
   en: {
     cancelDeploy: `${e('🚪', '[Exit]')} Deploy cancelled.`,
@@ -149,7 +150,8 @@ const messages = {
       clearSuccess: `${e('✅', '[Done]')} Backup directory cleared.`,
       clearFailed: (msg) =>
         `${e('❌', '[Error]')} Failed to clear backup directory: ${msg}`
-    }
+    },
+    emojiWarning: `⚠️ ✅ 🚀 ❌ 🎉🖥 Emoji is disabled because the current terminal does not support it. To force enable, set: WUKONG_NO_EMOJI=0`
   }
 }
 
