@@ -99,7 +99,7 @@ function ensureInitialized() {
 // command handlers
 const handlers = {
   async list() {
-    sendTelemetry('list', { version: VERSION }).catch(() => {})
+    await sendTelemetry('list', { version: VERSION }).catch(() => {})
     ensureInitialized()
 
     try {
@@ -128,7 +128,7 @@ const handlers = {
   },
 
   async init() {
-    sendTelemetry('init', { version: VERSION }).catch(() => {})
+    await sendTelemetry('init', { version: VERSION }).catch(() => {})
     const spinner = ora(i18nGetRaw('init.starting')).start()
     try {
       await init(spinner)
@@ -142,7 +142,7 @@ const handlers = {
   },
 
   async deploy(target) {
-    sendTelemetry('deploy', { version: VERSION }).catch(() => {})
+    await sendTelemetry('deploy', { version: VERSION }).catch(() => {})
     ensureInitialized()
 
     try {
@@ -296,7 +296,7 @@ const handlers = {
 }
 
 async function main() {
-  sendTelemetry('start', { version: VERSION }).catch(() => {})
+  await sendTelemetry('start', { version: VERSION }).catch(() => {})
   const { command, target, flags } = parseArgs(process.argv.slice(2))
 
   devLog(`操作系统: ${process.platform}`)
@@ -345,7 +345,7 @@ async function main() {
         break
     }
   } catch (err) {
-    sendTelemetry('error', {
+    await sendTelemetry('error', {
       version: VERSION,
       message: err.message,
       stack: err.stack
