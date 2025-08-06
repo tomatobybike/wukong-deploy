@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.18](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.17...v1.2.18) (2025-08-06)
+
+
+### Features
+
+* 🎸 track await ([b8bd9cf](https://github.com/tomatobybike/wukong-deploy/commit/b8bd9cf1bef1a7ac673c6dfa5625d9d00f48d699))
+
+
+### Bug Fixes
+
+* 🐛 emojiwarning msg ([f33ce2e](https://github.com/tomatobybike/wukong-deploy/commit/f33ce2ede364cc0fa83e087c2a321407a2e2690c))
+
 ### [1.2.17](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.16...v1.2.17) (2025-08-05)
 
 
