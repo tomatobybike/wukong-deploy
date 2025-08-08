@@ -11,6 +11,7 @@ import path from 'node:path'
 import process from 'node:process'
 import ora from 'ora'
 
+import { CLI_NAME } from './constants/index.mjs'
 import deploy from './deploy.mjs'
 import init from './init.mjs'
 import { sendTelemetry } from './lib/telemetry.wukong.mjs'
@@ -32,6 +33,10 @@ dotenv.config()
 // eslint-disable-next-line no-undef
 const VERSION = typeof __VERSION__ !== 'undefined' ? __VERSION__ : 'dev'
 const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
+const OPTION_EVENT = {
+  cli: CLI_NAME,
+  version: VERSION
+}
 
 // const getMyVersion = () => {
 //   // @ts-ignore
@@ -99,7 +104,7 @@ function ensureInitialized() {
 // command handlers
 const handlers = {
   async list() {
-    await sendTelemetry('list', { version: VERSION }).catch(() => {})
+    await sendTelemetry('list', {...OPTION_EVENT}).catch(() => {})
     ensureInitialized()
 
     try {
@@ -128,7 +133,7 @@ const handlers = {
   },
 
   async init() {
-    await sendTelemetry('init', { version: VERSION }).catch(() => {})
+    await sendTelemetry('init', {...OPTION_EVENT}).catch(() => {})
     const spinner = ora(i18nGetRaw('init.starting')).start()
     try {
       await init(spinner)
@@ -142,7 +147,7 @@ const handlers = {
   },
 
   async deploy(target) {
-    await sendTelemetry('deploy', { version: VERSION }).catch(() => {})
+    await sendTelemetry('deploy',{...OPTION_EVENT}).catch(() => {})
     ensureInitialized()
 
     try {
@@ -205,9 +210,9 @@ const handlers = {
         i18nLogNative('cancelDeploy')
         process.exit(0)
       }
-      await sendTelemetry('deployConfirm', { version: VERSION }).catch(() => {})
+      await sendTelemetry('deployConfirm',{...OPTION_EVENT}).catch(() => {})
       await deploy(selected)
-      await sendTelemetry('deploySuccess', { version: VERSION }).catch(() => {})
+      await sendTelemetry('deploySuccess',{...OPTION_EVENT}).catch(() => {})
     } catch (e) {
       await sendTelemetry('deployError', {
         version: VERSION,
@@ -225,7 +230,7 @@ const handlers = {
   },
 
   async doctor(flags) {
-    await sendTelemetry('doctor', { version: VERSION }).catch(() => {})
+    await sendTelemetry('doctor',{...OPTION_EVENT}).catch(() => {})
     doctor()
     if (flags.env) {
       console.log()
@@ -234,20 +239,20 @@ const handlers = {
   },
 
   async env() {
-    await sendTelemetry('env', { version: VERSION }).catch(() => {})
+    await sendTelemetry('env',{...OPTION_EVENT}).catch(() => {})
     showEnv()
     process.exit(0)
   },
 
   async example() {
-    await sendTelemetry('example', { version: VERSION }).catch(() => {})
+    await sendTelemetry('example',{...OPTION_EVENT}).catch(() => {})
 
     const lang = getLang()
     await showExample({ lang })
     process.exit(0)
   },
   async clear() {
-    await sendTelemetry('clear', { version: VERSION }).catch(() => {})
+    await sendTelemetry('clear',{...OPTION_EVENT}).catch(() => {})
 
     const backupDir = path.join(process.cwd(), 'backup')
 
@@ -279,7 +284,7 @@ const handlers = {
     process.exit(0)
   },
   async backup() {
-    await sendTelemetry('backup', { version: VERSION }).catch(() => {})
+    await sendTelemetry('backup',{...OPTION_EVENT}).catch(() => {})
 
     const rootDir = process.cwd()
     const configPath = path.join(rootDir, 'config', 'config.mjs')
@@ -289,7 +294,7 @@ const handlers = {
     process.exit(success ? 0 : 1)
   },
   async info() {
-    await sendTelemetry('info', { version: VERSION }).catch(() => {})
+    await sendTelemetry('info',{...OPTION_EVENT}).catch(() => {})
     const lang = getLang()
     printAuthorInfo({ lang, version: VERSION })
     if (!emojiEnabled) {
@@ -299,13 +304,13 @@ const handlers = {
   },
 
   async version() {
-    await sendTelemetry('version', { version: VERSION }).catch(() => {})
+    await sendTelemetry('version',{...OPTION_EVENT}).catch(() => {})
     showVersionInfo(VERSION)
     process.exit(0)
   },
 
   async help() {
-    await sendTelemetry('help', { version: VERSION }).catch(() => {})
+    await sendTelemetry('help',{...OPTION_EVENT}).catch(() => {})
 
     const lang = getLang()
     showHelp({ lang, version: VERSION })
@@ -314,7 +319,7 @@ const handlers = {
 }
 
 async function main() {
-  await sendTelemetry('start', { version: VERSION }).catch(() => {})
+  await sendTelemetry('start',{...OPTION_EVENT}).catch(() => {})
   const { command, target, flags } = parseArgs(process.argv.slice(2))
 
   devLog(`操作系统: ${process.platform}`)
@@ -364,7 +369,7 @@ async function main() {
     }
   } catch (err) {
     await sendTelemetry('error', {
-      version: VERSION,
+      ...OPTION_EVENT,
       message: err.message,
       stack: err.stack
     }).catch(() => {})
