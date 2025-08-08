@@ -205,9 +205,11 @@ const handlers = {
         i18nLogNative('cancelDeploy')
         process.exit(0)
       }
-
+      await sendTelemetry('deployConfirm', { version: VERSION }).catch(() => {})
       await deploy(selected)
+      await sendTelemetry('deploySuccess', { version: VERSION }).catch(() => {})
     } catch (e) {
+      await sendTelemetry('deployError', { version: VERSION }).catch(() => {})
       if (e.name === 'ExitPromptError') {
         i18nLogNative('userCancel')
         process.exit(0)
