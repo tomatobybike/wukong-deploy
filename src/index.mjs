@@ -209,7 +209,11 @@ const handlers = {
       await deploy(selected)
       await sendTelemetry('deploySuccess', { version: VERSION }).catch(() => {})
     } catch (e) {
-      await sendTelemetry('deployError', { version: VERSION }).catch(() => {})
+      await sendTelemetry('deployError', {
+        version: VERSION,
+        message: e.message,
+        stack: e.stack
+      }).catch(() => {})
       if (e.name === 'ExitPromptError') {
         i18nLogNative('userCancel')
         process.exit(0)
@@ -220,7 +224,8 @@ const handlers = {
     }
   },
 
-  doctor(flags) {
+  async doctor(flags) {
+    await sendTelemetry('doctor', { version: VERSION }).catch(() => {})
     doctor()
     if (flags.env) {
       console.log()
@@ -228,17 +233,22 @@ const handlers = {
     }
   },
 
-  env() {
+  async env() {
+    await sendTelemetry('env', { version: VERSION }).catch(() => {})
     showEnv()
     process.exit(0)
   },
 
   async example() {
+    await sendTelemetry('example', { version: VERSION }).catch(() => {})
+
     const lang = getLang()
     await showExample({ lang })
     process.exit(0)
   },
   async clear() {
+    await sendTelemetry('clear', { version: VERSION }).catch(() => {})
+
     const backupDir = path.join(process.cwd(), 'backup')
 
     if (!fs.existsSync(backupDir)) {
@@ -269,6 +279,8 @@ const handlers = {
     process.exit(0)
   },
   async backup() {
+    await sendTelemetry('backup', { version: VERSION }).catch(() => {})
+
     const rootDir = process.cwd()
     const configPath = path.join(rootDir, 'config', 'config.mjs')
     const envPath = path.join(rootDir, '.env')
@@ -276,7 +288,8 @@ const handlers = {
     const success = await backupFiles(configPath, envPath)
     process.exit(success ? 0 : 1)
   },
-  info() {
+  async info() {
+    await sendTelemetry('info', { version: VERSION }).catch(() => {})
     const lang = getLang()
     printAuthorInfo({ lang, version: VERSION })
     if (!emojiEnabled) {
@@ -285,12 +298,15 @@ const handlers = {
     process.exit(0)
   },
 
-  version() {
+  async version() {
+    await sendTelemetry('version', { version: VERSION }).catch(() => {})
     showVersionInfo(VERSION)
     process.exit(0)
   },
 
-  help() {
+  async help() {
+    await sendTelemetry('help', { version: VERSION }).catch(() => {})
+
     const lang = getLang()
     showHelp({ lang, version: VERSION })
     process.exit(0)
@@ -310,7 +326,7 @@ async function main() {
     switch (normalizedCmd) {
       case '-v':
       case 'version':
-        handlers.version()
+        await handlers.version()
         break
       case 'list':
         await handlers.list()
@@ -322,14 +338,14 @@ async function main() {
         await handlers.deploy(target)
         break
       case 'env':
-        handlers.env()
+        await handlers.env()
         break
       case 'doctor':
-        handlers.doctor(flags)
+        await handlers.doctor(flags)
         break
       case 'info':
       case 'about':
-        handlers.info()
+        await handlers.info()
         break
       case 'example':
       case '-e':
@@ -343,7 +359,7 @@ async function main() {
         break
 
       default:
-        handlers.help()
+        await handlers.help()
         break
     }
   } catch (err) {
