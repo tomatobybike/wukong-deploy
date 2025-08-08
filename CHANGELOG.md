@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.22](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.21...v1.2.22) (2025-08-08)
+
 ### [1.2.21](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.20...v1.2.21) (2025-08-08)
 
 
