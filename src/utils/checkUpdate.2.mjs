@@ -25,6 +25,7 @@ export async function checkUpdateWithPatch({
   if (fs.existsSync(CACHE_FILE)) {
     try {
       cache = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8')) || {}
+    // eslint-disable-next-line no-empty
     } catch {}
   }
 

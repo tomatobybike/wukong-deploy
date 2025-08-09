@@ -42,6 +42,7 @@ function writeCache(data) {
 function withTimeout(promise, ms) {
   return Promise.race([
     promise,
+    // eslint-disable-next-line no-promise-executor-return
     new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
   ])
 }
