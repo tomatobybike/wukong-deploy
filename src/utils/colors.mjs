@@ -37,7 +37,10 @@ export const colors = {
   dim: chalk.white.dim,
   bold: chalk.bold,
   boldBlue: chalk.bold.blue,
-  gray: chalk.bold.blue
+  gray: chalk.bold.gray,
+  green: chalk.green,
+  cyanish: chalk.hex('#57a097'),
+  white: chalk.white,
 }
 
 export const c = {

@@ -16,6 +16,7 @@ import deploy from './deploy.mjs'
 import init from './init.mjs'
 import { sendTelemetry } from './lib/telemetry.wukong.mjs'
 import { backupFiles } from './utils/backupFiles.mjs'
+import { checkUpdateWithPatch } from './utils/checkUpdate.mjs'
 import { getServerList } from './utils/config-loader.mjs'
 import { devLog } from './utils/devLog.mjs'
 import { doctor } from './utils/doctor.mjs'
@@ -29,24 +30,20 @@ import { showVersionInfo } from './utils/showVersionInfo.mjs'
 
 dotenv.config()
 
+// 不再需要读文件了，直接用 define 注入的常量
+
 // @ts-ignore
 // eslint-disable-next-line no-undef
 const VERSION = typeof __VERSION__ !== 'undefined' ? __VERSION__ : 'dev'
+// @ts-ignore
+// eslint-disable-next-line no-undef
+const PKG_NAME = typeof __PKG_NAME__ !== 'undefined' ? __PKG_NAME__ : 'unknown'
+
 const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
 const OPTION_EVENT = {
   cli: CLI_NAME,
   version: VERSION
 }
-
-// const getMyVersion = () => {
-//   // @ts-ignore
-//   // eslint-disable-next-line no-undef
-//   return typeof __VERSION__ !== 'undefined' ? __VERSION__ : 'unknown'
-// }
-
-// let VERSION = ''
-
-// const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
 
 function parseValue(value) {
   if (value === 'true') return true
@@ -104,7 +101,7 @@ function ensureInitialized() {
 // command handlers
 const handlers = {
   async list() {
-    await sendTelemetry('list', {...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('list', { ...OPTION_EVENT }).catch(() => {})
     ensureInitialized()
 
     try {
@@ -133,7 +130,7 @@ const handlers = {
   },
 
   async init() {
-    await sendTelemetry('init', {...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('init', { ...OPTION_EVENT }).catch(() => {})
     const spinner = ora(i18nGetRaw('init.starting')).start()
     try {
       await init(spinner)
@@ -147,7 +144,7 @@ const handlers = {
   },
 
   async deploy(target) {
-    await sendTelemetry('deploy',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('deploy', { ...OPTION_EVENT }).catch(() => {})
     ensureInitialized()
 
     try {
@@ -210,9 +207,9 @@ const handlers = {
         i18nLogNative('cancelDeploy')
         process.exit(0)
       }
-      await sendTelemetry('deployConfirm',{...OPTION_EVENT}).catch(() => {})
+      await sendTelemetry('deployConfirm', { ...OPTION_EVENT }).catch(() => {})
       await deploy(selected)
-      await sendTelemetry('deploySuccess',{...OPTION_EVENT}).catch(() => {})
+      await sendTelemetry('deploySuccess', { ...OPTION_EVENT }).catch(() => {})
     } catch (e) {
       await sendTelemetry('deployError', {
         version: VERSION,
@@ -230,7 +227,7 @@ const handlers = {
   },
 
   async doctor(flags) {
-    await sendTelemetry('doctor',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('doctor', { ...OPTION_EVENT }).catch(() => {})
     doctor()
     if (flags.env) {
       console.log()
@@ -239,20 +236,20 @@ const handlers = {
   },
 
   async env() {
-    await sendTelemetry('env',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('env', { ...OPTION_EVENT }).catch(() => {})
     showEnv()
     process.exit(0)
   },
 
   async example() {
-    await sendTelemetry('example',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('example', { ...OPTION_EVENT }).catch(() => {})
 
     const lang = getLang()
     await showExample({ lang })
     process.exit(0)
   },
   async clear() {
-    await sendTelemetry('clear',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('clear', { ...OPTION_EVENT }).catch(() => {})
 
     const backupDir = path.join(process.cwd(), 'backup')
 
@@ -284,7 +281,7 @@ const handlers = {
     process.exit(0)
   },
   async backup() {
-    await sendTelemetry('backup',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('backup', { ...OPTION_EVENT }).catch(() => {})
 
     const rootDir = process.cwd()
     const configPath = path.join(rootDir, 'config', 'config.mjs')
@@ -294,7 +291,7 @@ const handlers = {
     process.exit(success ? 0 : 1)
   },
   async info() {
-    await sendTelemetry('info',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('info', { ...OPTION_EVENT }).catch(() => {})
     const lang = getLang()
     printAuthorInfo({ lang, version: VERSION })
     if (!emojiEnabled) {
@@ -304,22 +301,22 @@ const handlers = {
   },
 
   async version() {
-    await sendTelemetry('version',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('version', { ...OPTION_EVENT }).catch(() => {})
     showVersionInfo(VERSION)
     process.exit(0)
   },
 
   async help() {
-    await sendTelemetry('help',{...OPTION_EVENT}).catch(() => {})
+    await sendTelemetry('help', { ...OPTION_EVENT }).catch(() => {})
 
     const lang = getLang()
     showHelp({ lang, version: VERSION })
-    process.exit(0)
+    // process.exit(0)
   }
 }
 
 async function main() {
-  await sendTelemetry('start',{...OPTION_EVENT}).catch(() => {})
+  await sendTelemetry('start', { ...OPTION_EVENT }).catch(() => {})
   const { command, target, flags } = parseArgs(process.argv.slice(2))
 
   devLog(`操作系统: ${process.platform}`)
@@ -367,6 +364,16 @@ async function main() {
         await handlers.help()
         break
     }
+
+    // === CLI 主逻辑完成后提示更新 ===
+    // 后台跑更新检查（不阻塞）
+    await checkUpdateWithPatch({
+      pkg: {
+        name: PKG_NAME,
+        version: VERSION
+      },
+      force: false
+    })
   } catch (err) {
     await sendTelemetry('error', {
       ...OPTION_EVENT,

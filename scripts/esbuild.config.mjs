@@ -19,12 +19,20 @@ await build({
   format: 'cjs',
   outfile: path.join(outdir, 'wukong-deploy.cjs'),
   banner: {
-    js: '#!/usr/bin/env node'
+    js: `#!/usr/bin/env node
+
+`
   },
   define: {
-    __VERSION__: JSON.stringify(pkg.version)
+    // 这里用相对路径写死，确保运行时不会报错
+    // 入口脚本路径的绝对路径，转成 file:// 协议格式
+    'import.meta.url': JSON.stringify(
+      `file://${path.join(outdir, 'wukong-deploy.cjs').replace(/\\/g, '/')}`
+    ),
+    __VERSION__: JSON.stringify(pkg.version),
+    __PKG_NAME__: JSON.stringify(pkg.name)
   },
-  external: ['./config/config.mjs','*.node'],
+  external: ['./config/config.mjs', '*.node'],
   minify: true
 })
 
