@@ -2,13 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.23](https://github.com/tomatobybike/wukong-deploy/compare/v1.0.2...v1.2.23) (2025-08-09)
+
+
 ### Features
 
-- 🎸 auto check new version ([5d29776](https://github.com/tomatobybike/wukong-deploy/commit/5d297766ab7a7674f9d184d6ba5ead1d786ffa5a))
-
-### Bug Fixes
-
-- 🐛 some eslint ([5ca0cc3](https://github.com/tomatobybike/wukong-deploy/commit/5ca0cc3e41529de11577225fb4177a0a7cd86f4c))
+* 🎸 version ([9782752](https://github.com/tomatobybike/wukong-deploy/commit/9782752b9d6647e8bd5952727120818d68acd8ee))
 
 ### [1.2.22](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.21...v1.2.22) (2025-08-08)
 
