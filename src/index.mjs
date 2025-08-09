@@ -45,6 +45,17 @@ const OPTION_EVENT = {
   version: VERSION
 }
 
+const autoCheckUpdate = async () => {
+  // === CLI 主逻辑完成后提示更新 ===
+  await checkUpdateWithPatch({
+    pkg: {
+      name: PKG_NAME,
+      version: VERSION
+    },
+    force: true
+  })
+}
+
 function parseValue(value) {
   if (value === 'true') return true
   if (value === 'false') return false
@@ -303,6 +314,7 @@ const handlers = {
   async version() {
     await sendTelemetry('version', { ...OPTION_EVENT }).catch(() => {})
     showVersionInfo(VERSION)
+    await autoCheckUpdate()
     process.exit(0)
   },
 
@@ -311,7 +323,9 @@ const handlers = {
 
     const lang = getLang()
     showHelp({ lang, version: VERSION })
-    // process.exit(0)
+
+    await autoCheckUpdate()
+    process.exit(0)
   }
 }
 
@@ -364,16 +378,6 @@ async function main() {
         await handlers.help()
         break
     }
-
-    // === CLI 主逻辑完成后提示更新 ===
-    // 后台跑更新检查（不阻塞）
-    await checkUpdateWithPatch({
-      pkg: {
-        name: PKG_NAME,
-        version: VERSION
-      },
-      force: false
-    })
   } catch (err) {
     await sendTelemetry('error', {
       ...OPTION_EVENT,
