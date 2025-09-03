@@ -94,6 +94,7 @@
     "is-online": "^11.0.0",
     "lint-staged": "15.5.2",
     "node-ssh": "13.2.1",
+    "open": "^10.2.0",
     "ora": "8.2.0",
     "prettier": "3.5.1",
     "prettier-plugin-packagejson": "2.5.19",

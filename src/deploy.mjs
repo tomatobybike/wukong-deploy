@@ -4,9 +4,11 @@
  * @author: King Monkey
  * @created: 2025-08-01 15:00
  */
+import { spawn } from 'child_process'
 import dotenv from 'dotenv'
 import fs from 'fs-extra'
 import { NodeSSH } from 'node-ssh'
+import open from 'open'
 import path from 'path'
 
 import { devLog } from './utils/devLog.mjs'
@@ -126,19 +128,44 @@ export default async function deploy(targetKey) {
   }
 
   for (const cmdObj of server.commands) {
-    const { cmd, cwd, description } = cmdObj
+    const { cmd, cwd, description, isLocal } = cmdObj
     i18nInfo('execCommand', { cmd, desc: description })
-    // eslint-disable-next-line no-await-in-loop
-    const result = await ssh.execCommand(cmd, { cwd })
-    if (config.default.showCommandLog) {
-      if (result.stdout)
-        logger.info(`${e('🟢')} STDOUT:\n${result.stdout}`, logCache)
-      if (result.stderr)
-        logger.info(`${e('🔴')}  STDERR:\n${result.stderr}`, logCache)
-    }
-    if (validateCommandResult(result, cmdObj)) {
-      ssh.dispose()
-      return exitWithTime(start, 1)
+    if (isLocal) {
+      // 处理本地命令
+      if (/^https?:\/\//.test(cmd)) {
+        // URL，直接用浏览器打开
+        console.log(`🌐 打开浏览器: ${cmd}`)
+        // eslint-disable-next-line no-await-in-loop
+        await open(cmd)
+      } else {
+        // 普通本地命令（如 yarn -v, curl ...）
+        console.log(`⚡ 执行本地命令: ${cmd}`)
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise((resolve, reject) => {
+          const child = spawn(cmd, {
+            cwd: cwd || process.cwd(),
+            stdio: 'inherit',
+            shell: true
+          })
+          child.on('close', (code) => {
+            if (code === 0) resolve()
+            else reject(new Error(`本地命令失败: ${cmd}`))
+          })
+        })
+      }
+    } else {
+      // eslint-disable-next-line no-await-in-loop
+      const result = await ssh.execCommand(cmd, { cwd })
+      if (config.default.showCommandLog) {
+        if (result.stdout)
+          logger.info(`${e('🟢')} STDOUT:\n${result.stdout}`, logCache)
+        if (result.stderr)
+          logger.info(`${e('🔴')}  STDERR:\n${result.stderr}`, logCache)
+      }
+      if (validateCommandResult(result, cmdObj)) {
+        ssh.dispose()
+        return exitWithTime(start, 1)
+      }
     }
   }
 
