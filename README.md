@@ -125,6 +125,56 @@ export default {
 }
 ```
 
+version >=1.2.5
+
+you can run local commands:
+
+```js
+export default {
+  showCommandLog: true,
+  servers: {
+    dev: {
+      name: 'Dev Server',
+      host: '192.168.0.123',
+      username: 'root',
+      passwordEnv: 'SERVER_DEV_PASSWORD',
+      commands: [
+        {
+          cmd: 'git pull',
+          cwd: '/your/project',
+          description: 'Update code',
+          exitOnStdErr: false,
+          errorMatch: /Permission denied/
+        },
+        {
+          cmd: 'npm run build',
+          cwd: '/your/project',
+          description: 'Build project',
+          exitOnStdErr: false,
+          errorMatch: /Permission denied/
+        },
+        {
+          cmd: 'curl http://www.google.com/',
+          description: 'curl url',
+          isLocal: true
+        },
+        {
+          cmd: 'yarn -v',
+          description: 'show yarn version',
+          isLocal: true
+        },
+        {
+          cmd: 'ttp://www.google.com/',
+          description: 'open url',
+          isLocal: true
+        }
+      ],
+      finishMsg: '🎉 Deployment completed'
+    }
+  }
+}
+```
+
 ---
 
 ## ➕ Adding Multiple Servers
