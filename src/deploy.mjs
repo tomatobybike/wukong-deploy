@@ -8,7 +8,6 @@ import { spawn } from 'child_process'
 import dotenv from 'dotenv'
 import fs from 'fs-extra'
 import { NodeSSH } from 'node-ssh'
-import open from 'open'
 import path from 'path'
 
 import { devLog } from './utils/devLog.mjs'
@@ -22,6 +21,7 @@ import {
   i18nSuccess
 } from './utils/i18n.mjs'
 import logger from './utils/logger.mjs'
+import { openUrl } from './utils/openUrl.mjs'
 import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 import { validateCommandResult } from './utils/validateCommandResult.mjs'
 
@@ -139,7 +139,7 @@ export default async function deploy(targetKey) {
           // 用 new URL 确保 Windows 不会误判
           const url = new URL(cmd).href
           // eslint-disable-next-line no-await-in-loop
-          await open(url)
+          await openUrl(url)
         } catch (err) {
           console.error(`❌ 打开浏览器失败: ${cmd}`, err.message)
         }
