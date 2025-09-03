@@ -135,8 +135,14 @@ export default async function deploy(targetKey) {
       if (/^https?:\/\//.test(cmd)) {
         // URL，直接用浏览器打开
         console.log(`🌐 打开浏览器: ${cmd}`)
-        // eslint-disable-next-line no-await-in-loop
-        await open(cmd)
+        try {
+          // 用 new URL 确保 Windows 不会误判
+          const url = new URL(cmd).href
+          // eslint-disable-next-line no-await-in-loop
+          await open(url)
+        } catch (err) {
+          console.error(`❌ 打开浏览器失败: ${cmd}`, err.message)
+        }
       } else {
         // 普通本地命令（如 yarn -v, curl ...）
         console.log(`⚡ 执行本地命令: ${cmd}`)

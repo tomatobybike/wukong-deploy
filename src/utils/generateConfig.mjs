@@ -39,6 +39,16 @@ export const generateConfigContent = (lang = 'zh') => {
           exitOnStdErr: false,
           // 如果 stderr 匹配这个正则，也视为执行失败
           errorMatch: /Permission denied/
+        },
+        {
+          cmd: 'yarn -v',
+          description: '查看 yarn 版本',
+          isLocal: true
+        },
+        {
+          cmd: 'http://www.google.com',
+          description: '打开网页',
+          isLocal: true
         }
       ],
       finishMsg: '${isZh ? '🎉 测试服务器部署完成' : '🎉 Test server deployment complete'}'
@@ -62,6 +72,16 @@ export const generateConfigContent = (lang = 'zh') => {
           description: '${isZh ? '构建项目' : 'Build project'}',
           exitOnStdErr: false,
           errorMatch: /Permission denied/
+        },
+        {
+          cmd: 'yarn -v',
+          description: '查看 yarn 版本',
+          isLocal: true
+        },
+        {
+          cmd: 'http://www.google.com',
+          description: 'open url',
+          isLocal: true
         }
       ],
       finishMsg: '${isZh ? '✅ 构建完成' : '✅ Build complete'}'
