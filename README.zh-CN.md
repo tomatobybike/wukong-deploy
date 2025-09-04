@@ -125,7 +125,7 @@ export default {
 }
 ```
 
-version >=1.2.5
+version >=1.2.8
 
 you can run local commands:
 
