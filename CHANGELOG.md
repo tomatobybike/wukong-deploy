@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.32](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.31...v1.2.32) (2025-09-16)
+
+
+### Bug Fixes
+
+* 🐛 surport windows git bash ([938610f](https://github.com/tomatobybike/wukong-deploy/commit/938610f9f0c86e5c71f45460af5a7badf3b38c40))
+
 ### [1.2.31](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.30...v1.2.31) (2025-09-16)
 
 ### [1.2.30](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.29...v1.2.30) (2025-09-16)
