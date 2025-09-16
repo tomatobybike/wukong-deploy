@@ -12,8 +12,8 @@ import process from 'node:process'
 import ora from 'ora'
 
 import { CLI_NAME } from './constants/index.mjs'
-import deploy from './deploy.mjs'
 import init from './init.mjs'
+import launch from './launch.mjs'
 import { sendTelemetry } from './lib/telemetry.wukong.mjs'
 import { backupFiles } from './utils/backupFiles.mjs'
 import { checkUpdateWithPatch } from './utils/checkUpdate.mjs'
@@ -25,6 +25,7 @@ import { showExample, showHelp } from './utils/help/help.mjs'
 import { i18nGetRaw, i18nInfo, i18nLogNative } from './utils/i18n.mjs'
 import { printAuthorInfo } from './utils/info.mjs'
 import { getLang } from './utils/langDetect.mjs'
+import { promptConfirm, promptSelect } from './utils/prompt.mjs'
 import { showEnv } from './utils/showEnv.mjs'
 import { showVersionInfo } from './utils/showVersionInfo.mjs'
 
@@ -167,22 +168,19 @@ const handlers = {
 
       let selected = target
       if (!selected) {
-        const answer = await inquirer.prompt([
-          {
-            type: 'list',
-            name: 'target',
-            message: i18nGetRaw('deploy.selectTarget'),
-            choices: [
-              ...servers.map((s) => ({
-                name: isHideHost ? s.name : `${s.name} ${s.host}`,
-                value: s.key
-              })),
-              new inquirer.Separator(),
-              { name: i18nGetRaw('deploy.cancelOption'), value: '__exit' }
-            ]
-          }
-        ])
+        const answer = await promptSelect(
+          i18nGetRaw('deploy.selectTarget'),
+          [
+            ...servers.map((s) => ({
+              name: isHideHost ? s.name : `${s.name} ${s.host}`,
+              value: s.key
+            })),
+            { name: i18nGetRaw('deploy.cancelOption'), value: '__exit' }
+          ],
+          'target'
+        )
         selected = answer.target
+
         if (selected === '__exit') {
           i18nLogNative('deploy.cancelDeploy')
           process.exit(0)
@@ -205,21 +203,23 @@ const handlers = {
         console.log(`${i + 1}. ${cmd.description}: ${cmd.cmd}`)
       )
 
-      const confirm = await inquirer.prompt([
-        {
-          type: 'confirm',
-          name: 'proceed',
-          message: i18nGetRaw('deploy.commandConfirm'),
-          default: false
-        }
-      ])
+      const confirm = await promptConfirm(
+        i18nGetRaw('deploy.commandConfirm'),
+        false,
+        'proceed'
+      )
 
       if (!confirm.proceed) {
         i18nLogNative('cancelDeploy')
         process.exit(0)
       }
+
+      // if (!confirm.proceed) {
+      //   i18nLogNative('cancelDeploy')
+      //   process.exit(0)
+      // }
       await sendTelemetry('deployConfirm', { ...OPTION_EVENT }).catch(() => {})
-      await deploy(selected)
+      await launch(selected)
       await sendTelemetry('deploySuccess', { ...OPTION_EVENT }).catch(() => {})
     } catch (e) {
       await sendTelemetry('deployError', {
@@ -269,14 +269,14 @@ const handlers = {
       process.exit(0)
     }
 
-    const { confirm } = await inquirer.prompt({
+    const confirm = await inquirer.prompt({
       type: 'confirm',
       name: 'confirm',
       message: i18nGetRaw('backup.confirmClearBackup'),
       default: false
     })
 
-    if (!confirm) {
+    if (!confirm.proceed) {
       i18nLogNative('backup.clearCanceled')
       process.exit(0)
     }

@@ -52,7 +52,7 @@ const handleCheckEnv = () => {
   return configFile
 }
 
-export default async function deploy(targetKey) {
+export default async function launch(targetKey) {
   const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
   const configFile = handleCheckEnv()
   const logCache = { write: true }
