@@ -66,30 +66,18 @@ export async function promptSelect(message, choices, name = 'value') {
 }
 
 /**
- * 自动降级的确认提示
+ * 确认提示（始终交互）
  * @param {string} message 提示信息
  * @param {boolean} defaultValue 默认值
  * @param {string} name 字段名
  */
-export async function promptConfirm(
-  message,
-  defaultValue = false,
-  name = 'confirm'
-) {
-  const isInteractive = process.stdout.isTTY && process.stdin.isTTY
-
-  if (isInteractive) {
-    return inquirer.prompt([
-      {
-        type: 'confirm',
-        name,
-        message,
-        default: defaultValue
-      }
-    ])
-  }
-  console.error(
-    `${message}\n⚠️ 非交互环境，无法确认。请使用 --yes 或 --force 参数来跳过确认。`
-  )
-  return { [name]: false }
+export async function promptConfirm(message, defaultValue = false, name = 'confirm') {
+  return inquirer.prompt([
+    {
+      type: 'confirm',
+      name,
+      message,
+      default: defaultValue
+    }
+  ])
 }
