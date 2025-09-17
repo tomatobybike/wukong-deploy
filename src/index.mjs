@@ -17,6 +17,7 @@ import launch from './launch.mjs'
 import { sendTelemetry } from './lib/telemetry.wukong.mjs'
 import { backupFiles } from './utils/backupFiles.mjs'
 import { checkUpdateWithPatch } from './utils/checkUpdate.mjs'
+import { c } from './utils/colors.mjs'
 import { getServerList } from './utils/config-loader.mjs'
 import { devLog } from './utils/devLog.mjs'
 import { doctor } from './utils/doctor.mjs'
@@ -125,6 +126,8 @@ const handlers = {
 
       i18nLogNative('serverList')
       for (const s of servers) {
+        const n = servers.indexOf(s)
+        console.log(`${n + 1}. ${c.green(s.key)}`)
         i18nLogNative('serverFound', {
           name: s.name,
           host: isHideHost ? '***.**.**.**' : s.host
@@ -132,6 +135,10 @@ const handlers = {
         s.commands?.forEach((cmd, i) => {
           console.log(`   ${i + 1}. ${cmd.description}: ${cmd.cmd}`)
         })
+        console.log(
+          `${c.green('✔ Quick Cmd:')} ${c.red(`wukong-deploy deploy ${s.key}`)}`
+        )
+        console.log('-'.repeat(40))
       }
       console.log()
       process.exit(0)

@@ -49,6 +49,8 @@ export const c = {
   value: chalk.white,
   dim: chalk.hex('#BBBBBB'),
   success: chalk.green,
+  green: chalk.green,
   error: chalk.red,
+  red: chalk.red,
   link: chalk.blue.underline
 }
