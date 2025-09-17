@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.33](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.32...v1.2.33) (2025-09-17)
+
+
+### Features
+
+* 🎸 Optimize the list cmd ([80979da](https://github.com/tomatobybike/wukong-deploy/commit/80979dad6eb7e3b8236bf0f55542187d1ffbfef9))
+
 ### [1.2.32](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.31...v1.2.32) (2025-09-16)
 
 
