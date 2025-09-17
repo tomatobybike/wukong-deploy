@@ -301,8 +301,8 @@ wukong-deploy --lang=en   # Force English
 Or configure it in your `.env` file similarly:
 
 ```bash
-wukong-deploy --lang=zh   # 强制中文
-wukong-deploy --lang=en   # Force English
+WUKONG_LANG=zh   # 强制中文
+WUKONG_LANG=en   # Force English
 ```
 
 ---
