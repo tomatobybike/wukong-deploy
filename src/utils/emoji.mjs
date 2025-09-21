@@ -17,7 +17,7 @@
 import dotenv from 'dotenv'
 import process from 'node:process'
 
-dotenv.config()
+dotenv.config({ quiet: true })
 
 // ========== 用户设置 ==========
 

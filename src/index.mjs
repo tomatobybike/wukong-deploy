@@ -30,7 +30,7 @@ import { promptConfirm, promptSelect } from './utils/prompt.mjs'
 import { showEnv } from './utils/showEnv.mjs'
 import { showVersionInfo } from './utils/showVersionInfo.mjs'
 
-dotenv.config()
+dotenv.config({ quiet: true })
 
 // 不再需要读文件了，直接用 define 注入的常量
 

@@ -8,7 +8,7 @@ import dotenv from 'dotenv'
 
 import { logger } from './logger.mjs'
 
-dotenv.config()
+dotenv.config({ quiet: true})
 const isDev = process.env.WUKONG_DEV_MODE === '1'
 
 /**
