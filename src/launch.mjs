@@ -48,7 +48,7 @@ const handleCheckEnv = () => {
     process.exit(1)
   }
 
-  dotenv.config({ path: envFile })
+  dotenv.config({ path: envFile , quiet: true})
   return configFile
 }
 
