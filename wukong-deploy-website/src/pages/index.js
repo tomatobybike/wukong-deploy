@@ -101,7 +101,7 @@ export default function Home() {
           rel="noopener noreferrer"
           title="GitHub">
           <img
-            src="/img/github.svg"
+						src={withBaseUrl('img/github.svg')}
             alt="GitHub"
             style={{ width: 24, height: 24 }}
           />
@@ -110,7 +110,7 @@ export default function Home() {
 
       <header className={styles.heroBanner}>
         <img
-          src="/img/logo.svg"
+          src={withBaseUrl('img/logo.svg')}
           alt="wukong-deploy Logo"
           className={styles.logo}
         />
@@ -153,7 +153,7 @@ export default function Home() {
 
         <section className={styles.demo}>
           <h2>{text.demoTitle}</h2>
-          <img src="/img/demo.svg" alt="Demo" className={styles.demoGif} />
+          <img  src={withBaseUrl('img/demo.svg')} alt="Demo" className={styles.demoGif} />
         </section>
       </main>
     </div>
