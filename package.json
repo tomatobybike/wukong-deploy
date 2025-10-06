@@ -22,6 +22,7 @@
     "前端上线",
     "远程发布"
   ],
+  "homepage": "https://tomatobybike.github.io/wukong-deploy/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tomatobybike/wukong-deploy"
