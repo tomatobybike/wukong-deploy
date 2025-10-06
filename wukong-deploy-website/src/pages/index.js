@@ -23,22 +23,28 @@ export default function Home() {
   }, [locale]);
 
   // 切换语言（通过 URL 跳转）
+  // 切换语言（通过 URL 跳转）
   const toggleLocale = () => {
     const newLocale = locale === 'zh' ? 'en' : 'zh';
+    const { pathname } = window.location;
 
-    // 当前路径
-    const path = window.location.pathname;
+    // 识别 baseUrl（比如 /wukong-deploy/）
+    const baseUrl = window.location.pathname.includes('/wukong-deploy/') ? '/wukong-deploy' : '';
 
     let newPath;
-    if (path === '/' || path === '/zh/' || path === '/en/') {
-      // 首页切换
-      newPath = `/${newLocale}/`;
+
+    // 首页路径判断
+    if (
+      pathname === `${baseUrl}/` ||
+      pathname === `${baseUrl}/zh/` ||
+      pathname === `${baseUrl}/en/`
+    ) {
+      newPath = `${baseUrl}/${newLocale}/`;
     } else {
-      // 非首页切换语言，保留路径
-      newPath = path.replace(/^\/(zh|en)/, `/${newLocale}`);
+      // 其他页面保留路径，只替换语言部分
+      newPath = pathname.replace(new RegExp(`^${baseUrl}/(zh|en)`), `${baseUrl}/${newLocale}`);
     }
 
-    // 直接刷新页面，Docusaurus 会加载对应语言
     window.location.href = newPath;
   };
 
