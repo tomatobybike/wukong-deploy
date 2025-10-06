@@ -164,7 +164,7 @@ export default {
           isLocal: true
         },
         {
-          cmd: 'ttp://www.google.com/',
+          cmd: 'open http://www.google.com/',
           description: '打开网页',
           isLocal: true
         }
