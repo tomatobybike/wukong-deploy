@@ -1,5 +1,9 @@
 # Node modules
 node_modules/
+**/*/node_modules/
+**/*/.docusaurus/
+
+wukong-deploy-website/build/
 
 # Logs
 logs/
