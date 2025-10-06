@@ -1,6 +1,6 @@
 {
   "name": "@tomatobybike/wukong-deploy",
-  "version": "1.2.38",
+  "version": "1.2.39",
   "description": "A simple CLI to manage multi-server deployment",
   "keywords": [
     "cli",
