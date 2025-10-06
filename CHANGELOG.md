@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.41](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.40...v1.2.41) (2025-10-06)
+
+
+### Features
+
+* 🎸 homepage ([9d17d09](https://github.com/tomatobybike/wukong-deploy/commit/9d17d096214ebf03ca41e1769eb16ed19faf6f97))
+
+### [1.2.40](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.39...v1.2.40) (2025-10-06)
+
+
+### Features
+
+* 🎸 优化doc ([baee4db](https://github.com/tomatobybike/wukong-deploy/commit/baee4db2e4581f6f0855b354a3dc9943f167e8aa))
+* 🎸 deploy.sh ([ee24355](https://github.com/tomatobybike/wukong-deploy/commit/ee243554f0afde1b3ecaaaf788a712a0e67073fd))
+* 🎸 gh-pages ([66f5db2](https://github.com/tomatobybike/wukong-deploy/commit/66f5db2036ab7cdc2437a13d6a95f258e86e02ce))
+* 🎸 git ignore ([b5a4ee5](https://github.com/tomatobybike/wukong-deploy/commit/b5a4ee5ce6678a2191c31bf68bdaafa15677c5e5))
+* 🎸 i18n ([6b5361e](https://github.com/tomatobybike/wukong-deploy/commit/6b5361e4771c781ba86f3c6e99ac1a04f2a9adf2))
+* 🎸 image url ([a431a21](https://github.com/tomatobybike/wukong-deploy/commit/a431a21492e56a5abc65e417fff000663e1f1fad))
+* 🎸 website ([4e674f6](https://github.com/tomatobybike/wukong-deploy/commit/4e674f63725dad25b161a981715b651fd3419ad8))
+
 ### [1.2.39](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.38...v1.2.39) (2025-10-06)
 
 ### [1.2.38](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.37...v1.2.38) (2025-10-06)
