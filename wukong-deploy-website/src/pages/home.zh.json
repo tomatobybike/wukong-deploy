@@ -1,0 +1,16 @@
+{
+  "title": "wukong-deploy",
+  "tagline": "轻量、高效、跨平台部署工具",
+  "features": [
+    { "title": "简单易用", "desc": "几条命令即可完成部署，无需复杂配置。" },
+    { "title": "跨平台", "desc": "支持 Linux、Mac、Windows，多平台无缝部署。" },
+    { "title": "开源免费", "desc": "完全开源，社区贡献，让部署更轻松可靠。" }
+  ],
+  "installTitle": "安装使用",
+  "installCommand": "npm install -g wukong-deploy\nwukong-deploy init\nwukong-deploy deploy",
+  "demoTitle": "示例演示",
+  "buttons": {
+    "getStarted": "快速开始 🚀",
+    "github": "GitHub ⭐"
+  }
+}
