@@ -12,7 +12,7 @@ const config = {
   title: 'wukong-deploy',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
-
+  trailingSlash: false, // 保持 URL 一致，避免 GitHub Pages 添加额外斜杠
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
     v4: true // Improve compatibility with the upcoming Docusaurus v4
