@@ -85,13 +85,15 @@ export default function Home() {
         <button
           className={styles.iconButton}
           onClick={toggleLocale}
-          title="切换语言">
+          title="切换语言"
+        >
           🌐
         </button>
         <button
           className={styles.iconButton}
           onClick={toggleDarkMode}
-          title="切换暗黑模式">
+          title="切换暗黑模式"
+        >
           🌓
         </button>
         <a
@@ -99,9 +101,10 @@ export default function Home() {
           href="https://github.com/tomatobybike/wukong-deploy"
           target="_blank"
           rel="noopener noreferrer"
-          title="GitHub">
+          title="GitHub"
+        >
           <img
-						src={withBaseUrl('img/github.svg')}
+            src={withBaseUrl('img/github.svg')}
             alt="GitHub"
             style={{ width: 24, height: 24 }}
           />
@@ -122,7 +125,8 @@ export default function Home() {
           </Link>
           <Link
             className="button button--secondary button--lg"
-            href="https://github.com/tomatobybike/wukong-deploy">
+            href="https://github.com/tomatobybike/wukong-deploy"
+          >
             {text.buttons.github}
           </Link>
         </div>
@@ -137,7 +141,8 @@ export default function Home() {
                 styles.feature,
                 styles.fadeIn,
                 idx === 1 ? styles.delay1 : idx === 2 ? styles.delay2 : ''
-              )}>
+              )}
+            >
               <h3>{f.title}</h3>
               <p>{f.desc}</p>
             </div>
@@ -153,7 +158,11 @@ export default function Home() {
 
         <section className={styles.demo}>
           <h2>{text.demoTitle}</h2>
-          <img  src={withBaseUrl('img/demo.svg')} alt="Demo" className={styles.demoGif} />
+          <img
+            src={withBaseUrl('img/demo.svg')}
+            alt="Demo"
+            className={styles.demoGif}
+          />
         </section>
       </main>
     </div>
