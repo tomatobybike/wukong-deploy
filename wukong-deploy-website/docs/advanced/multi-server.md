@@ -2,74 +2,124 @@
 sidebar_position: 1
 ---
 
-# 多服务器管理
+# Multi-Server Deployment
 
-本文将介绍如何使用 wukong-deploy 管理多个服务器的部署配置。
+**wukong-deploy** supports deploying to multiple servers simultaneously, allowing you to easily manage multi-environment deployments.
 
-## 基本概念
+## Basic Configuration
 
-在 wukong-deploy 中，您可以在配置文件中定义多个服务器配置，每个服务器可以有自己的：
-- 连接信息（主机地址、用户名等）
-- 命令队列
-- 错误处理策略
-
-## 配置示例
+Configure multiple servers in `wukong.config.js`:
 
 ```javascript
 export default {
   servers: {
     dev: {
-      name: "开发服务器",
-      host: "dev.example.com",
-      username: "deploy",
-      passwordEnv: "DEV_SERVER_PASSWORD",
-      commands: [/* ... */]
+      name: 'Development Server',
+      host: 'dev.example.com',
+      username: 'root',
+      commands: [
+        /* ... */
+      ],
     },
     staging: {
-      name: "预发布服务器",
-      host: "staging.example.com",
-      username: "deploy",
-      passwordEnv: "STAGING_SERVER_PASSWORD",
-      commands: [/* ... */]
+      name: 'Staging Server',
+      host: 'staging.example.com',
+      username: 'deploy',
+      commands: [
+        /* ... */
+      ],
     },
     prod: {
-      name: "生产服务器",
-      host: "prod.example.com",
-      username: "deploy",
-      passwordEnv: "PROD_SERVER_PASSWORD",
-      commands: [/* ... */]
-    }
-  }
-}
+      name: 'Production Server',
+      host: 'prod.example.com',
+      username: 'deploy',
+      commands: [
+        /* ... */
+      ],
+    },
+  },
+};
 ```
 
-## 使用方法
+## Deployment Commands
 
-1. 部署到指定服务器：
-```bash
-wukong-deploy deploy dev    # 部署到开发服务器
-wukong-deploy deploy prod   # 部署到生产服务器
-```
-
-2. 交互式选择：
-```bash
-wukong-deploy deploy   # 将提示选择要部署的服务器
-```
-
-## 环境变量配置
-
-为每个服务器配置对应的密码环境变量：
+Specify a target server for deployment:
 
 ```bash
-# .env
-DEV_SERVER_PASSWORD=your_dev_password
-STAGING_SERVER_PASSWORD=your_staging_password
-PROD_SERVER_PASSWORD=your_prod_password
+wukong-deploy deploy dev    # Deploy to the development server
+wukong-deploy deploy prod   # Deploy to the production server
 ```
 
-## 最佳实践
+Deploy to multiple servers at once:
 
-1. 为不同环境使用不同的命令队列
-2. 根据环境配置不同的错误处理策略
-3. 使用环境变量管理敏感信息
-4. 为每个服务器配置清晰的描述名称
+```bash
+wukong-deploy deploy dev staging   # Deploy to both development and staging servers
+wukong-deploy deploy all           # Deploy to all configured servers
+```
+
+## Server Group Configuration
+
+You can organize servers into groups for easier management:
+
+```javascript
+export default {
+  groups: {
+    webservers: ['web1', 'web2', 'web3'],
+    dbservers: ['db1', 'db2'],
+  },
+  servers: {
+    web1: {
+      /* ... */
+    },
+    web2: {
+      /* ... */
+    },
+    web3: {
+      /* ... */
+    },
+    db1: {
+      /* ... */
+    },
+    db2: {
+      /* ... */
+    },
+  },
+};
+```
+
+Deploy using a server group:
+
+```bash
+wukong-deploy deploy webservers  # Deploy to all web servers
+```
+
+## Deployment Order Control
+
+You can control the execution order when deploying to multiple servers:
+
+```javascript
+export default {
+  deployOrder: ['db1', 'web1', 'web2', 'web3'],
+  servers: {
+    web1: {
+      /* ... */
+    },
+    web2: {
+      /* ... */
+    },
+    web3: {
+      /* ... */
+    },
+    db1: {
+      /* ... */
+    },
+  },
+};
+```
+
+## Best Practices
+
+1. Use environment variables to manage configurations for different servers
+2. Define different command sequences for each environment
+3. Use server groups to simplify management
+4. Plan the deployment order strategically for smooth rollouts

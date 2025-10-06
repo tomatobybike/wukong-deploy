@@ -107,17 +107,17 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: '文档',
+            label: 'Docs',
           },
           {
             to: '/docs/getting-started/introduction',
-            label: '快速开始',
+            label: 'Quick Start',
             position: 'left'
           },
           {
             to: 'docs/advanced/multi-server',
             position: 'left',
-            label: '高级功能'
+            label: 'Advanced'
           },
           {
             type: 'localeDropdown',

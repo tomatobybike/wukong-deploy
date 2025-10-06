@@ -8,8 +8,16 @@
     "description": "The alt text of navbar logo"
   },
   "item.label.Docs": {
-    "message": "Docs",
+    "message": "文档",
     "description": "Navbar item with label Docs"
+  },
+  "item.label.Quick Start": {
+    "message": "快速开始",
+    "description": "Navbar item with label Quick Start"
+  },
+  "item.label.Advanced": {
+    "message": "高级功能",
+    "description": "Navbar item with label Advanced"
   },
   "item.label.GitHub": {
     "message": "GitHub",

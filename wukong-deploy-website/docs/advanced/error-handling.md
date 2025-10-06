@@ -2,54 +2,55 @@
 sidebar_position: 2
 ---
 
-# 错误处理
+# Error Handling
 
-wukong-deploy 提供了灵活的错误处理机制，帮助您更好地管理部署过程中可能出现的问题。
+**wukong-deploy** provides a flexible error handling mechanism to help you manage issues that may occur during the deployment process.
 
-## 错误处理配置
+## Error Handling Configuration
 
-每个命令都可以配置自己的错误处理策略：
+Each command can define its own error handling strategy:
 
 ```javascript
 {
   cmd: "npm run build",
-  description: "构建项目",
-  exitOnStdErr: false,    // 是否在遇到错误时退出
-  errorMatch: [           // 错误匹配模式
+  description: "Build project",
+  exitOnStdErr: false,    // Whether to exit when an error occurs
+  errorMatch: [           // Error matching patterns
     /Error:/i,
     /Failed to compile/i
   ]
 }
 ```
 
-## 配置选项
+## Configuration Options
 
 ### exitOnStdErr
 
-- `true`: 任何写入 stderr 的内容都会被视为错误
-- `false`: 允许写入 stderr 的内容，配合 errorMatch 使用
+- `true`: Any content written to `stderr` will be treated as an error
+- `false`: Allows content to be written to `stderr`, used together with `errorMatch`
 
 ### errorMatch
 
-支持字符串或正则表达式数组：
+Supports either a single string/regex or an array of regex patterns:
 
 ```javascript
-errorMatch: /Error:/          // 单个正则表达式
-errorMatch: [                 // 正则表达式数组
+errorMatch: /Error:/; // Single regular expression
+errorMatch: [
+  // Array of regular expressions
   /Error:/i,
   /Failed/i,
-  /Exception/i
-]
+  /Exception/i,
+];
 ```
 
-## 错误处理示例
+## Error Handling Examples
 
-### 1. NPM 构建错误处理
+### 1. NPM Build Error Handling
 
 ```javascript
 {
   cmd: "npm run build",
-  description: "构建项目",
+  description: "Build project",
   exitOnStdErr: false,
   errorMatch: [
     /Failed to compile/,
@@ -59,12 +60,12 @@ errorMatch: [                 // 正则表达式数组
 }
 ```
 
-### 2. Git 操作错误处理
+### 2. Git Operation Error Handling
 
 ```javascript
 {
   cmd: "git pull",
-  description: "更新代码",
+  description: "Update source code",
   exitOnStdErr: false,
   errorMatch: [
     /Authentication failed/,
@@ -74,12 +75,12 @@ errorMatch: [                 // 正则表达式数组
 }
 ```
 
-### 3. 数据库操作错误处理
+### 3. Database Operation Error Handling
 
 ```javascript
 {
   cmd: "npm run migrate",
-  description: "数据库迁移",
+  description: "Database migration",
   exitOnStdErr: false,
   errorMatch: [
     /Connection refused/,
@@ -89,9 +90,9 @@ errorMatch: [                 // 正则表达式数组
 }
 ```
 
-## 最佳实践
+## Best Practices
 
-1. 为每个命令设置具体的错误匹配模式
-2. 对非关键命令设置 `exitOnStdErr: false`
-3. 使用正则表达式匹配常见错误模式
-4. 添加清晰的错误描述信息
+1. Define specific error matching patterns for each command
+2. Set `exitOnStdErr: false` for non-critical commands
+3. Use regular expressions to match common error messages
+4. Add clear and descriptive error messages for better debugging

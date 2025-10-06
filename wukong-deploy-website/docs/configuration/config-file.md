@@ -2,72 +2,72 @@
 sidebar_position: 1
 ---
 
-# 配置文件
+# Configuration File
 
-## 配置文件结构
+## File Structure
 
-wukong-deploy 使用 `config/config.mjs` 作为主要配置文件。这是一个 ES Module 文件，需要默认导出一个配置对象。
+wukong-deploy uses `config/config.mjs` as its main configuration file. This is an ES Module file that should export a configuration object.
 
-基本结构如下：
+Basic structure:
 
 ```javascript
 export default {
-  showCommandLog: true,  // 是否显示命令执行日志
+  showCommandLog: true,  // Show command execution logs
   servers: {
-    dev: {  // 服务器配置键名
-      name: "开发服务器",  // 服务器描述名称
-      host: "192.168.1.100",  // 服务器地址
-      username: "root",  // SSH 用户名
-      passwordEnv: "SERVER_PASSWORD",  // 密码环境变量名
-      commands: [  // 要执行的命令列表
+    dev: {  // Server configuration key
+      name: "Development Server",  // Server description
+      host: "192.168.1.100",  // Server address
+      username: "root",  // SSH username
+      passwordEnv: "SERVER_PASSWORD",  // Password environment variable
+      commands: [  // List of commands to execute
         {
-          cmd: "git pull",  // 要执行的命令
-          cwd: "/path/to/project",  // 工作目录
-          description: "更新代码",  // 命令描述
-          exitOnStdErr: false,  // 遇到错误是否退出
-          errorMatch: /Permission denied/  // 错误匹配模式
+          cmd: "git pull",  // Command to execute
+          cwd: "/path/to/project",  // Working directory
+          description: "Update code",  // Command description
+          exitOnStdErr: false,  // Exit on error
+          errorMatch: /Permission denied/  // Error matching pattern
         }
       ],
-      finishMsg: "🎉 部署完成"  // 完成时的提示信息
+      finishMsg: "🎉 Deployment complete"  // Completion message
     }
   }
 }
 ```
 
-## 服务器配置
+## Server Configuration
 
-每个服务器配置包含以下字段：
+Each server configuration contains the following fields:
 
-| 字段名 | 类型 | 说明 | 必填 |
-|--------|------|------|------|
-| name | string | 服务器描述名称 | 是 |
-| host | string | 服务器地址 | 是 |
-| username | string | SSH 用户名 | 是 |
-| passwordEnv | string | 密码环境变量名 | 是 |
-| commands | array | 命令列表 | 是 |
-| finishMsg | string | 完成提示信息 | 否 |
+| Field Name | Type | Description | Required |
+|------------|------|-------------|----------|
+| name | string | Server description | Yes |
+| host | string | Server address | Yes |
+| username | string | SSH username | Yes |
+| passwordEnv | string | Password environment variable | Yes |
+| commands | array | Command list | Yes |
+| finishMsg | string | Completion message | No |
 
-## 命令配置
+## Command Configuration
 
-每个命令对象支持以下配置：
+Each command object supports the following configuration:
 
-| 字段名 | 类型 | 说明 | 默认值 |
-|--------|------|------|--------|
-| cmd | string | 要执行的命令 | - |
-| cwd | string | 工作目录 | - |
-| description | string | 命令描述 | - |
-| exitOnStdErr | boolean | 遇到错误是否退出 | true |
-| errorMatch | RegExp | 错误匹配正则 | - |
-| isLocal | boolean | 是否本地执行 | false |
+| Field Name | Type | Description | Default |
+|------------|------|-------------|---------|
+| cmd | string | Command to execute | - |
+| cwd | string | Working directory | - |
+| description | string | Command description | - |
+| exitOnStdErr | boolean | Exit on error | true |
+| errorMatch | RegExp | Error matching pattern | - |
+| isLocal | boolean | Execute locally | false |
 
-## 完整示例
+## Complete Example
 
 ```javascript
 export default {
   showCommandLog: true,
   servers: {
     dev: {
-      name: "开发服务器",
+      name: "Development Server",
       host: "192.168.1.100",
       username: "root",
       passwordEnv: "SERVER_DEV_PASSWORD",
@@ -75,29 +75,29 @@ export default {
         {
           cmd: "git pull",
           cwd: "/var/www/app",
-          description: "更新代码",
+          description: "Update code",
           exitOnStdErr: false
         },
         {
           cmd: "npm install",
           cwd: "/var/www/app",
-          description: "安装依赖"
+          description: "Install dependencies"
         },
         {
           cmd: "npm run build",
           cwd: "/var/www/app",
-          description: "构建项目"
+          description: "Build project"
         },
         {
           cmd: "pm2 restart app",
           cwd: "/var/www/app",
-          description: "重启服务"
+          description: "Restart service"
         }
       ],
-      finishMsg: "🎉 开发环境部署完成！"
+      finishMsg: "🎉 Development environment deployment complete!"
     },
     prod: {
-      name: "生产服务器",
+      name: "Production Server",
       host: "10.0.0.1",
       username: "deploy",
       passwordEnv: "SERVER_PROD_PASSWORD",
@@ -105,15 +105,15 @@ export default {
         {
           cmd: "git pull origin main",
           cwd: "/var/www/production",
-          description: "更新主分支代码"
+          description: "Update main branch code"
         },
         {
           cmd: "npm ci",
           cwd: "/var/www/production",
-          description: "安装依赖（生产环境）"
+          description: "Install dependencies (production)"
         }
       ],
-      finishMsg: "🚀 生产环境部署完成！"
+      finishMsg: "🚀 Production environment deployment complete!"
     }
   }
 }

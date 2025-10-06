@@ -17,36 +17,36 @@ wukong-deploy is a lightweight Node.js-based deployment tool that helps you quic
 - 🌍 Multi-language support (Chinese/English)
 - 🧪 Robust error handling mechanism
 
-## 安装
+## Installation
 
-使用 npm 安装：
+Using npm:
 
 ```bash
 npm install -g wukong-deploy
 ```
 
-或者使用 yarn：
+Or using yarn:
 
 ```bash
 yarn global add wukong-deploy
 ```
 
-## 基本使用
+## Basic Usage
 
-1. 初始化配置文件：
+1. Initialize configuration file:
 
 ```bash
 wukong-deploy init
 ```
 
-2. 编辑配置文件：
+2. Edit configuration file:
 
 ```javascript
 // config/config.mjs
 export default {
   servers: {
     dev: {
-      name: "开发服务器",
+      name: "Development Server",
       host: "192.168.1.100",
       username: "root",
       passwordEnv: "SERVER_PASSWORD",
@@ -54,12 +54,12 @@ export default {
         {
           cmd: "git pull",
           cwd: "/path/to/project",
-          description: "更新代码"
+          description: "Update code"
         },
         {
           cmd: "npm install",
           cwd: "/path/to/project",
-          description: "安装依赖"
+          description: "Install dependencies"
         }
       ]
     }
@@ -67,14 +67,14 @@ export default {
 }
 ```
 
-3. 开始部署：
+3. Start deployment:
 
 ```bash
 wukong-deploy deploy
 ```
 
-## 下一步
+## Next Steps
 
-- 查看 [配置指南](/docs/configuration) 了解更多配置选项
-- 了解 [最佳实践](/docs/best-practices) 优化你的部署流程
-- 阅读 [常见问题](/docs/faq) 解决使用中遇到的问题
+- Check the [Configuration Guide](/docs/configuration/config-file) for more options
+- Learn [Best Practices](/docs/best-practices/project-structure) to optimize your deployment
+- Explore [Advanced Features](/docs/advanced/multi-server) for more capabilities
