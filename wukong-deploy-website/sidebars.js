@@ -19,37 +19,26 @@ const sidebars = {
     {
       type: 'doc',
       id: 'getting-started/introduction',
-      label: '介绍',
     },
     {
       type: 'category',
-      label: '配置指南',
-      items: [
-        'configuration/config-file',
-        'configuration/env-variables',
-      ],
+      label: 'Configuration',
+      items: ['configuration/config-file', 'configuration/env-variables'],
     },
     {
       type: 'category',
-      label: '高级功能',
-      items: [
-        'advanced/multi-server',
-        'advanced/error-handling',
-      ],
+      label: 'Advanced Features',
+      items: ['advanced/multi-server', 'advanced/error-handling'],
     },
     {
       type: 'category',
-      label: '最佳实践',
-      items: [
-        'best-practices/project-structure',
-      ],
+      label: 'Best Practices',
+      items: ['best-practices/project-structure'],
     },
     {
       type: 'category',
-      label: '示例',
-      items: [
-        'examples/use-cases',
-      ],
+      label: 'Examples',
+      items: ['examples/use-cases'],
     },
   ],
 };
