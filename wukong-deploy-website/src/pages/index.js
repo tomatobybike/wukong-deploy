@@ -14,7 +14,7 @@ export default function Home() {
   const { withBaseUrl } = useBaseUrlUtils();
 
   const locale = i18n.currentLocale;
-  const text = locale === 'zh' ? zh : en;
+  const text = locale === 'zh-Hans' ? zh : en;
 
   const [particleColor, setParticleColor] = useState('#888888');
 
@@ -25,8 +25,9 @@ export default function Home() {
   // 切换语言（通过 URL 跳转）
   // 切换语言（通过 URL 跳转）
   const toggleLocale = () => {
-    const newLocale = locale === 'zh' ? 'en' : 'zh';
+    const newLocale = locale === 'zh-Hans' ? 'en' : 'zh-Hans';
     const { pathname } = window.location;
+    const { search } = window.location;
 
     // 识别 baseUrl（比如 /wukong-deploy/）
     const baseUrl = window.location.pathname.includes('/wukong-deploy/') ? '/wukong-deploy' : '';
@@ -34,18 +35,18 @@ export default function Home() {
     let newPath;
 
     // 首页路径判断
-    if (
-      pathname === `${baseUrl}/` ||
-      pathname === `${baseUrl}/zh/` ||
-      pathname === `${baseUrl}/en/`
-    ) {
-      newPath = `${baseUrl}/${newLocale}/`;
+    if (pathname === `${baseUrl}/` || pathname === `${baseUrl}/zh-Hans/` || pathname === `${baseUrl}/en/`) {
+      newPath = newLocale === 'en' ? baseUrl : `${baseUrl}/${newLocale}`;
     } else {
       // 其他页面保留路径，只替换语言部分
-      newPath = pathname.replace(new RegExp(`^${baseUrl}/(zh|en)`), `${baseUrl}/${newLocale}`);
+      if (newLocale === 'en') {
+        newPath = pathname.replace(`${baseUrl}/zh-Hans`, baseUrl);
+      } else {
+        newPath = pathname.replace(baseUrl, `${baseUrl}/${newLocale}`);
+      }
     }
 
-    window.location.href = newPath;
+    window.location.href = newPath + search;
   };
 
   // 切换暗黑模式
