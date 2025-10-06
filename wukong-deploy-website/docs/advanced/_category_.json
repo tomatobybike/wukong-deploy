@@ -1,0 +1,8 @@
+{
+  "label": "Advanced Features",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Deep dive into advanced features and usage tips of wukong-deploy"
+  }
+}

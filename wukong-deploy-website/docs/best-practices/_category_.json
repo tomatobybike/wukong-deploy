@@ -1,0 +1,8 @@
+{
+  "label": "Best Practices",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn best practices and recommended solutions for using wukong-deploy"
+  }
+}

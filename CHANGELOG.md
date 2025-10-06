@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.39](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.38...v1.2.39) (2025-10-06)
+
+### [1.2.38](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.37...v1.2.38) (2025-10-06)
+
+### [1.2.37](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.36...v1.2.37) (2025-10-06)
+
+### [1.2.36](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.35...v1.2.36) (2025-09-21)
+
+
+### Features
+
+* 🎸 dotenv quiet: true ([3f1d72f](https://github.com/tomatobybike/wukong-deploy/commit/3f1d72f4cf540ee1a026960043afe01937fc8563))
+
+### [1.2.35](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.34...v1.2.35) (2025-09-21)
+
+
+### Features
+
+* 🎸 update some dependencies ([0a6a49c](https://github.com/tomatobybike/wukong-deploy/commit/0a6a49c8d24305fb7406e3d9d9024da556a9ea0c))
+
 ### [1.2.34](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.33...v1.2.34) (2025-09-17)
 
 ### [1.2.33](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.32...v1.2.33) (2025-09-17)
