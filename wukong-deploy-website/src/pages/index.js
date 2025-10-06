@@ -110,7 +110,7 @@ export default function Home() {
         <h1 className="hero__title">{text.title}</h1>
         <p className="hero__subtitle">{text.tagline}</p>
         <div className={styles.buttons}>
-          <Link className="button button--primary button--lg" to="/docs/intro">
+          <Link className="button button--primary button--lg" to="/docs/getting-started/introduction">
             {text.buttons.getStarted}
           </Link>
           <Link

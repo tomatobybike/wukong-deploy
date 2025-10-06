@@ -2,20 +2,20 @@
 sidebar_position: 1
 ---
 
-# 快速开始
+# Introduction
 
-## 什么是 wukong-deploy？
+## What is wukong-deploy?
 
-wukong-deploy 是一个基于 Node.js 的轻量级部署工具，它可以帮助你快速地将代码部署到远程服务器。通过简单的配置，你可以一键执行一系列远程命令，轻松实现自动化部署流程。
+wukong-deploy is a lightweight Node.js-based deployment tool that helps you quickly deploy code to remote servers. With simple configuration, you can execute a series of remote commands with one click, easily achieving automated deployment processes.
 
-## 特性
+## Features
 
-- 🚀 一键部署到远程服务器
-- 🔐 支持安全的 SSH 和 SCP 传输
-- 📁 灵活的文件和文件夹管理
-- 📦 简单的配置文件管理
-- 🌍 支持多语言（中文/英文）
-- 🧪 强大的错误处理机制
+- 🚀 One-click deployment to remote servers
+- 🔐 Secure SSH and SCP transfer support
+- 📁 Flexible file and folder management
+- 📦 Simple configuration file management
+- 🌍 Multi-language support (Chinese/English)
+- 🧪 Robust error handling mechanism
 
 ## 安装
 

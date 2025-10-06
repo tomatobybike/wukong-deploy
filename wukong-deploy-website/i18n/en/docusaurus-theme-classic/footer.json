@@ -20,7 +20,7 @@
     "description": "The label of footer link with label=GitHub linking to https://github.com/tomatobybike/wukong-deploy"
   },
   "copyright": {
-    "message": "Copyright © 2025 My Project, Inc. Built with Docusaurus.",
+    "message": "Copyright © 2025 wukong-deploy, Inc. Built with Docusaurus.",
     "description": "The footer copyright"
   },
   "link.title.文档": {

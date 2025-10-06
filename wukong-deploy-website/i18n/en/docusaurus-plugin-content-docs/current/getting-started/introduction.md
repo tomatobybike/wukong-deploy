@@ -74,7 +74,3 @@ wukong-deploy deploy
 ```
 
 ## Next Steps
-
-- Check out the [Configuration Guide](/docs/configuration) for more configuration options
-- Learn about [Best Practices](/docs/best-practices) to optimize your deployment process
-- Read [FAQ](/docs/faq) for common issues and solutions

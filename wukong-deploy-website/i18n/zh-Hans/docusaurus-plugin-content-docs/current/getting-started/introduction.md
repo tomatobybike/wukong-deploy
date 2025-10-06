@@ -53,6 +53,4 @@ wukong deploy
 
 ## 下一步
 
-- [配置指南](/docs/category/配置指南) - 了解更多配置选项
-- [最佳实践](/docs/category/最佳实践) - 学习如何更好地使用 wukong-deploy
-- [高级功能](/docs/category/高级功能) - 探索更多高级特性
+

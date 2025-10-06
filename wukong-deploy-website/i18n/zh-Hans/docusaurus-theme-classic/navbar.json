@@ -1,10 +1,10 @@
 {
   "title": {
-    "message": "My Site",
+    "message": "wukong-deploy",
     "description": "The title in the navbar"
   },
   "logo.alt": {
-    "message": "My Site Logo",
+    "message": "wukong-deploy Logo",
     "description": "The alt text of navbar logo"
   },
   "item.label.Docs": {

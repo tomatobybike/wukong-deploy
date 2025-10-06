@@ -1,0 +1,8 @@
+{
+  "label": "高级功能",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "深入了解 wukong-deploy 的高级特性和使用技巧"
+  }
+}

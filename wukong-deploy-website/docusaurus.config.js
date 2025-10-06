@@ -1,6 +1,6 @@
 // @ts-check
 // `@type` JSDoc annotations allow editor autocompletion and type checking
-// (when paired with `@ts-check`).
+
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 import { themes as prismThemes } from 'prism-react-renderer'
@@ -41,10 +41,12 @@ const config = {
       en: {
         label: 'English',
         htmlLang: 'en-US',
+        path: 'en'
       },
       'zh-Hans': {
         label: '中文',
         htmlLang: 'zh-CN',
+        path: 'zh-Hans'
       }
     },
   },
@@ -147,11 +149,11 @@ const config = {
               },
               {
                 label: '配置指南',
-                to: '/docs/category/配置指南',
+                to: '/docs/configuration/config-file',
               },
               {
                 label: '最佳实践',
-                to: '/docs/category/最佳实践',
+                to: '/docs/best-practices/project-structure',
               }
             ],
           },
@@ -165,10 +167,6 @@ const config = {
               {
                 label: 'NPM Package',
                 href: 'https://www.npmjs.com/package/wukong-deploy',
-              },
-              {
-                label: '更新日志',
-                to: '/docs/changelog',
               }
             ],
           },
