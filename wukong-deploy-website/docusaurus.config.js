@@ -10,7 +10,7 @@ import { themes as prismThemes } from 'prism-react-renderer'
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'wukong-deploy',
-  tagline: 'Dinosaurs are cool',
+  tagline: '⚡️ 一键执行远程服务器命令队列的轻量级部署工具',
   favicon: 'img/favicon.ico',
   trailingSlash: false, // 保持 URL 一致，避免 GitHub Pages 添加额外斜杠
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -35,11 +35,17 @@ const config = {
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'zh-Hans',
-    locales: ['zh-Hans', 'en'],
+    defaultLocale: 'en',
+    locales: ['en', 'zh-Hans'],
     localeConfigs: {
-      "zh-Hans": { label: '中文' },
-      en: { label: 'English' }
+      en: {
+        label: 'English',
+        htmlLang: 'en-US',
+      },
+      'zh-Hans': {
+        label: '中文',
+        htmlLang: 'zh-CN',
+      }
     },
   },
 
@@ -50,10 +56,12 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
+          editUrl: 'https://github.com/tomatobybike/wukong-deploy/tree/main/wukong-deploy-website/',
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: true,
+          sidebarCollapsed: false,
+          breadcrumbs: true,
+          routeBasePath: 'docs',
         },
         blog: {
           showReadingTime: true,
@@ -83,25 +91,47 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       colorMode: {
-        respectPrefersColorScheme: true
+        respectPrefersColorScheme: true,
+        defaultMode: 'dark',
       },
       navbar: {
-        title: 'My Site',
+        title: 'wukong-deploy',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'wukong-deploy Logo',
           src: 'img/logo.svg'
         },
         items: [
-          { to: '/docs/intro', label: 'Docs', position: 'left' },
           {
-            href: 'https://github.com/tomatobybike/wukong-deploy',
-            label: 'GitHub',
-            position: 'right'
+            type: 'docSidebar',
+            sidebarId: 'tutorialSidebar',
+            position: 'left',
+            label: '文档',
           },
-          // ✅ 添加语言切换下拉菜单
+          {
+            to: '/docs/getting-started/introduction',
+            label: '快速开始',
+            position: 'left'
+          },
+          {
+            to: 'docs/advanced/multi-server',
+            position: 'left',
+            label: '高级功能'
+          },
           {
             type: 'localeDropdown',
-            position: 'right'
+            position: 'right',
+          },
+          {
+            href: 'https://github.com/tomatobybike/wukong-deploy',
+            position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
+          },
+          {
+            href: 'https://www.npmjs.com/package/wukong-deploy',
+            position: 'right',
+            className: 'header-npm-link',
+            'aria-label': 'NPM package',
           }
         ]
       },
@@ -109,29 +139,54 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: '文档',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro'
-              }
-            ]
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog'
+                label: '快速开始',
+                to: '/docs/getting-started/introduction',
               },
               {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus'
+                label: '配置指南',
+                to: '/docs/category/配置指南',
+              },
+              {
+                label: '最佳实践',
+                to: '/docs/category/最佳实践',
               }
-            ]
-          }
+            ],
+          },
+          {
+            title: '社区',
+            items: [
+              {
+                label: 'GitHub Issues',
+                href: 'https://github.com/tomatobybike/wukong-deploy/issues',
+              },
+              {
+                label: 'NPM Package',
+                href: 'https://www.npmjs.com/package/wukong-deploy',
+              },
+              {
+                label: '更新日志',
+                to: '/docs/changelog',
+              }
+            ],
+          },
+          {
+            title: '更多',
+            items: [
+              {
+                label: 'GitHub',
+                href: 'https://github.com/tomatobybike/wukong-deploy',
+              },
+              {
+                label: '问题反馈',
+                href: 'https://github.com/tomatobybike/wukong-deploy/issues/new',
+              }
+            ],
+          },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
+        copyright: `Copyright © ${new Date().getFullYear()} wukong-deploy Project. Built with Docusaurus.`
       },
       prism: {
         theme: prismThemes.github,

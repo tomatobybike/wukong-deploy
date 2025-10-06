@@ -1,0 +1,8 @@
+{
+  "label": "使用示例",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "通过具体示例学习如何使用 wukong-deploy"
+  }
+}
