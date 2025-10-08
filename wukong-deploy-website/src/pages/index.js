@@ -16,6 +16,8 @@ export default function Home() {
   const locale = i18n.currentLocale;
   const text = locale === 'zh-Hans' ? zh : en;
 
+  const movie = locale === 'zh-Hans' ? withBaseUrl('img/demo.svg') : withBaseUrl('img/demo-en.svg');
+
   const [particleColor, setParticleColor] = useState('#888888');
 
   useEffect(() => {
@@ -35,7 +37,11 @@ export default function Home() {
     let newPath;
 
     // 首页路径判断
-    if (pathname === `${baseUrl}/` || pathname === `${baseUrl}/zh-Hans/` || pathname === `${baseUrl}/en/`) {
+    if (
+      pathname === `${baseUrl}/` ||
+      pathname === `${baseUrl}/zh-Hans/` ||
+      pathname === `${baseUrl}/en/`
+    ) {
       newPath = newLocale === 'en' ? baseUrl : `${baseUrl}/${newLocale}`;
     } else {
       // 其他页面保留路径，只替换语言部分
@@ -120,7 +126,10 @@ export default function Home() {
         <h1 className="hero__title">{text.title}</h1>
         <p className="hero__subtitle">{text.tagline}</p>
         <div className={styles.buttons}>
-          <Link className="button button--primary button--lg" to="/docs/getting-started/introduction">
+          <Link
+            className="button button--primary button--lg"
+            to="/docs/getting-started/introduction"
+          >
             {text.buttons.getStarted}
           </Link>
           <Link
@@ -158,7 +167,7 @@ export default function Home() {
 
         <section className={styles.demo}>
           <h2>{text.demoTitle}</h2>
-          <img src={withBaseUrl('img/demo.svg')} alt="Demo" className={styles.demoGif} />
+          <img src={movie} alt="Demo" className={styles.demoGif} />
         </section>
       </main>
     </div>

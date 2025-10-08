@@ -17,7 +17,7 @@ export default {
       name: 'Development Server',
       host: '127.215.84.53',
       username: 'root',
-      passwordEnv: 'SERVER_53_PASSWORD', // .env, SERVER_53_PASSWORD="你的密码"
+      passwordEnv: 'SERVER_53_PASSWORD', // .env, SERVER_53_PASSWORD="yourpassowrd"
       commands: [
         /* ... */
       ],
@@ -26,16 +26,16 @@ export default {
       name: 'Staging Server',
       host: '127.215.84.54',
       username: 'deploy',
-      passwordEnv: 'SERVER_54_PASSWORD', // .env, SERVER_54_PASSWORD="你的密码"
+      passwordEnv: 'SERVER_54_PASSWORD', // .env, SERVER_54_PASSWORD="yourpassowrd"
       commands: [
         /* ... */
       ],
     },
     prod: {
       name: 'Production Server',
-      host: '127.215.84.54',
+      host: '127.215.84.55',
       username: 'deploy',
-      passwordEnv: 'SERVER_53_PASSWORD', // .env, SERVER_55_PASSWORD="你的密码"
+      passwordEnv: 'SERVER_55_PASSWORD', // .env, SERVER_55_PASSWORD="yourpassowrd"
       commands: [
         /* ... */
       ],
@@ -44,20 +44,27 @@ export default {
 };
 ```
 
+```bash
+# .env
+
+SERVER_53_PASSWORD="your-secure-password"
+
+SERVER_54_PASSWORD="your-secure-password"
+
+SERVER_55_PASSWORD="your-secure-password"
+```
+
 ## Deployment Commands
+
+```bash
+wukong-deploy deploy        # choice server deploy 
+```
 
 Specify a target server for deployment:
 
 ```bash
 wukong-deploy deploy dev    # Deploy to the development server
 wukong-deploy deploy prod   # Deploy to the production server
-```
-
-Deploy to multiple servers at once:
-
-```bash
-wukong-deploy deploy dev staging   # Deploy to both development and staging servers
-wukong-deploy deploy all           # Deploy to all configured servers
 ```
 
 ## Best Practices

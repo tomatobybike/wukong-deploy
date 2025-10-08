@@ -17,7 +17,7 @@ export default {
       name: '开发服务器',
       host: '127.215.84.53',
       username: 'root',
-      passwordEnv: 'SERVER_53_PASSWORD', // .env, SERVER_53_PASSWORD="yourpassowrd"
+      passwordEnv: 'SERVER_53_PASSWORD', // .env, SERVER_53_PASSWORD="你的密码"
       commands: [
         /* ... */
       ],
@@ -26,7 +26,7 @@ export default {
       name: '测试服务器',
       host: '127.215.84.54',
       username: 'deploy',
-      passwordEnv: 'SERVER_54_PASSWORD', // .env, SERVER_54_PASSWORD="yourpassowrd"
+      passwordEnv: 'SERVER_54_PASSWORD', // .env, SERVER_54_PASSWORD="你的密码"
       commands: [
         /* ... */
       ],
@@ -35,7 +35,7 @@ export default {
       name: '生产服务器',
       host: '127.215.84.55',
       username: 'deploy',
-      passwordEnv: 'SERVER_55_PASSWORD', // .env, SERVER_55_PASSWORD="yourpassowrd"
+      passwordEnv: 'SERVER_55_PASSWORD', // .env, SERVER_55_PASSWORD="你的密码"
       commands: [
         /* ... */
       ],
@@ -44,7 +44,21 @@ export default {
 };
 ```
 
+```bash
+# .env
+
+SERVER_53_PASSWORD="你的服务器密码"
+
+SERVER_54_PASSWORD="你的服务器密码"
+
+SERVER_55_PASSWORD="你的服务器密码"
+```
+
 ## 部署命令
+
+```bash
+wukong-deploy deploy        # choice server deploy 
+```
 
 指定服务器进行部署：
 
