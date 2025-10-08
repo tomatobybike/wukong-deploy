@@ -28,7 +28,7 @@ export default {
 **wukong-deploy** supports `.env` files:
 
 ```bash
-# .env.development
+# .env
 
 PROD_SERVER_PASSWORD=your-secure-password
 ```
