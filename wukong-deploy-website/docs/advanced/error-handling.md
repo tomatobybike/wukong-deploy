@@ -13,6 +13,7 @@ Each command can define its own error handling strategy:
 ```javascript
 {
   cmd: "npm run build",
+  cwd: '/root/www/test',
   description: "Build project",
   exitOnStdErr: false,    // Whether to exit when an error occurs
   errorMatch: [           // Error matching patterns
@@ -50,6 +51,7 @@ errorMatch: [
 ```javascript
 {
   cmd: "npm run build",
+  cwd: '/root/www/test',
   description: "Build project",
   exitOnStdErr: false,
   errorMatch: [
@@ -65,6 +67,7 @@ errorMatch: [
 ```javascript
 {
   cmd: "git pull",
+  cwd: '/root/www/test',
   description: "Update source code",
   exitOnStdErr: false,
   errorMatch: [
@@ -80,6 +83,7 @@ errorMatch: [
 ```javascript
 {
   cmd: "npm run migrate",
+  cwd: '/root/www/test',
   description: "Database migration",
   exitOnStdErr: false,
   errorMatch: [
