@@ -104,6 +104,15 @@ export default function Home() {
         >
           <img src={withBaseUrl('img/github.svg')} alt="GitHub" style={{ width: 24, height: 24 }} />
         </a>
+        <a
+          className={styles.iconButton}
+          href="https://www.npmjs.com/package/wukong-deploy"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="npm"
+        >
+          <img src={withBaseUrl('img/npm.svg')} alt="npm" style={{ width: 24, height: 24 }} />
+        </a>
       </div>
 
       <header className={styles.heroBanner}>

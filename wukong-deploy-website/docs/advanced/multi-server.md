@@ -15,24 +15,27 @@ export default {
   servers: {
     dev: {
       name: 'Development Server',
-      host: 'dev.example.com',
+      host: '127.215.84.53',
       username: 'root',
+      passwordEnv: 'SERVER_53_PASSWORD', // .env, SERVER_53_PASSWORD="你的密码"
       commands: [
         /* ... */
       ],
     },
     staging: {
       name: 'Staging Server',
-      host: 'staging.example.com',
+      host: '127.215.84.54',
       username: 'deploy',
+      passwordEnv: 'SERVER_54_PASSWORD', // .env, SERVER_54_PASSWORD="你的密码"
       commands: [
         /* ... */
       ],
     },
     prod: {
       name: 'Production Server',
-      host: 'prod.example.com',
+      host: '127.215.84.54',
       username: 'deploy',
+      passwordEnv: 'SERVER_53_PASSWORD', // .env, SERVER_55_PASSWORD="你的密码"
       commands: [
         /* ... */
       ],
@@ -55,66 +58,6 @@ Deploy to multiple servers at once:
 ```bash
 wukong-deploy deploy dev staging   # Deploy to both development and staging servers
 wukong-deploy deploy all           # Deploy to all configured servers
-```
-
-## Server Group Configuration
-
-You can organize servers into groups for easier management:
-
-```javascript
-export default {
-  groups: {
-    webservers: ['web1', 'web2', 'web3'],
-    dbservers: ['db1', 'db2'],
-  },
-  servers: {
-    web1: {
-      /* ... */
-    },
-    web2: {
-      /* ... */
-    },
-    web3: {
-      /* ... */
-    },
-    db1: {
-      /* ... */
-    },
-    db2: {
-      /* ... */
-    },
-  },
-};
-```
-
-Deploy using a server group:
-
-```bash
-wukong-deploy deploy webservers  # Deploy to all web servers
-```
-
-## Deployment Order Control
-
-You can control the execution order when deploying to multiple servers:
-
-```javascript
-export default {
-  deployOrder: ['db1', 'web1', 'web2', 'web3'],
-  servers: {
-    web1: {
-      /* ... */
-    },
-    web2: {
-      /* ... */
-    },
-    web3: {
-      /* ... */
-    },
-    db1: {
-      /* ... */
-    },
-  },
-};
 ```
 
 ## Best Practices

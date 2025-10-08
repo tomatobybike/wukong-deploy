@@ -13,27 +13,28 @@ export default {
   servers: {
     prod: {
       name: 'Frontend Production Server',
-      host: 'frontend.example.com',
-      username: 'deploy',
+      host: '192.168.0.123',
+      username: 'root',
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
       commands: [
         {
-          cmd: 'cd /var/www/frontend',
-          description: 'Enter project directory',
-        },
-        {
           cmd: 'git pull origin main',
+          cwd: '/path/to/project',
           description: 'Update code',
         },
         {
           cmd: 'npm install',
+          cwd: '/path/to/project',
           description: 'Install dependencies',
         },
         {
           cmd: 'npm run build',
+          cwd: '/path/to/project',
           description: 'Build project',
         },
         {
           cmd: 'nginx -s reload',
+          cwd: '/path/to/project',
           description: 'Reload Nginx',
         },
       ],
@@ -49,14 +50,30 @@ export default {
   servers: {
     prod: {
       name: 'Node.js Production Server',
-      host: 'api.example.com',
-      username: 'deploy',
+      host: '192.168.0.123',
+      username: 'root',
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
       commands: [
-        'cd /var/www/api',
-        'git pull origin main',
-        'npm ci',
-        'npm run build',
-        'pm2 restart app',
+        {
+          cmd: 'git pull origin main',
+          cwd: '/var/www/api',
+          description: 'git pull',
+        },
+        {
+          cmd: 'npm ci',
+          cwd: '/var/www/api',
+          description: 'npm cli',
+        },
+        {
+          cmd: 'npm run build',
+          cwd: '/var/www/api',
+          description: 'build',
+        },
+        {
+          cmd: 'pm2 restart app',
+          cwd: '/var/www/api',
+          description: 'restart',
+        },
       ],
     },
   },
@@ -70,9 +87,16 @@ export default {
   servers: {
     db: {
       name: 'Database Server',
-      host: 'db.example.com',
-      username: 'dbadmin',
-      commands: ['cd /var/www/app', 'npm run migrate'],
+      host: '192.168.0.123',
+      username: 'root',
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      commands: [
+        {
+          cmd: 'npm run migrate',
+          cwd: '/var/www/app',
+          description: 'migrate',
+        },
+      ],
     },
   },
 };
@@ -85,9 +109,21 @@ export default {
   servers: {
     docker: {
       name: 'Docker Server',
-      host: 'docker.example.com',
-      username: 'deploy',
-      commands: ['cd /opt/app', 'docker-compose pull', 'docker-compose up -d'],
+      host: '192.168.0.123',
+      username: 'root',
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      commands: [
+        {
+          cmd: 'docker-compose pull',
+          cwd: '/opt/app',
+          description: 'pull',
+        },
+        {
+          cmd: 'docker-compose up -d',
+          cwd: '/opt/app',
+          description: 'up',
+        },
+      ],
     },
   },
 };
@@ -100,15 +136,28 @@ export default {
   servers: {
     static: {
       name: 'Static Website Server',
-      host: 'static.example.com',
-      username: 'webadmin',
+      host: '192.168.0.123',
+      username: 'root',
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
       commands: [
-        'cd /var/www/html',
-        'git pull origin main',
-        'npm install',
-        'npm run build',
+        {
+          cmd: 'git pull origin main',
+          cwd: '/var/www/html',
+          description: 'git pull',
+        },
+        {
+          cmd: 'npm install',
+          cwd: '/var/www/html',
+          description: 'install',
+        },
+        {
+          cmd: 'npm run build',
+          cwd: '/var/www/html',
+          description: 'build',
+        },
         {
           cmd: 'rsync -av --delete dist/ /var/www/html/',
+          cwd: '/var/www/html',
           description: 'Sync build files to website directory',
         },
       ],

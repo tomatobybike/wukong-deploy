@@ -46,25 +46,25 @@ wukong-deploy init
 export default {
   servers: {
     dev: {
-      name: "Development Server",
-      host: "192.168.1.100",
-      username: "root",
-      passwordEnv: "SERVER_PASSWORD",
+      name: 'Development Server',
+      host: '192.168.1.100',
+      username: 'root',
+      passwordEnv: 'SERVER_PASSWORD', // .env, SERVER_53_PASSWORD="yourpassowrd"
       commands: [
         {
-          cmd: "git pull",
-          cwd: "/path/to/project",
-          description: "Update code"
+          cmd: 'git pull',
+          cwd: '/path/to/project',
+          description: 'Update code',
         },
         {
-          cmd: "npm install",
-          cwd: "/path/to/project",
-          description: "Install dependencies"
-        }
-      ]
-    }
-  }
-}
+          cmd: 'npm install',
+          cwd: '/path/to/project',
+          description: 'Install dependencies',
+        },
+      ],
+    },
+  },
+};
 ```
 
 3. Start deployment:

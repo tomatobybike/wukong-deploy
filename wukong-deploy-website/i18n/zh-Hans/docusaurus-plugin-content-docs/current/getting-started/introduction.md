@@ -27,22 +27,36 @@ wukong-deploy 是一个轻量级的部署工具，它可以帮助您轻松地将
 npm install -g wukong-deploy
 ```
 
-创建配置文件 `wukong.config.js`：
+创建配置文件 ：
+
+```bash
+wukong-deploy init
+```
 
 ```javascript
+// config/config.mjs
 export default {
-  servers: [{
-    host: 'your-server.com',
-    username: 'root',
-    commands: [
-      'cd /path/to/your/project',
-      'git pull',
-      'npm install',
-      'npm run build',
-      'pm2 restart app'
-    ]
-  }]
-}
+  servers: {
+    dev: {
+      name: 'Development Server',
+      host: '192.168.1.100',
+      username: 'root',
+      passwordEnv: 'SERVER_PASSWORD', // .env, SERVER_53_PASSWORD="你的密码"
+      commands: [
+        {
+          cmd: 'git pull',
+          cwd: '/path/to/project',
+          description: 'Update code',
+        },
+        {
+          cmd: 'npm install',
+          cwd: '/path/to/project',
+          description: 'Install dependencies',
+        },
+      ],
+    },
+  },
+};
 ```
 
 执行部署：
@@ -52,5 +66,3 @@ wukong deploy
 ```
 
 ## 下一步
-
-
