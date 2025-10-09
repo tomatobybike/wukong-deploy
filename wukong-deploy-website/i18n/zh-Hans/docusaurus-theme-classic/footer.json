@@ -1,26 +1,46 @@
 {
   "link.title.Docs": {
-    "message": "Docs",
+    "message": "文档",
     "description": "The title of the footer links column with title=Docs in the footer"
   },
+  "link.title.Community": {
+    "message": "社区",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
   "link.title.More": {
-    "message": "More",
+    "message": "更多",
     "description": "The title of the footer links column with title=More in the footer"
   },
-  "link.item.label.Tutorial": {
-    "message": "Tutorial",
-    "description": "The label of footer link with label=Tutorial linking to /docs/intro"
+  "link.item.label.Quick Start": {
+    "message": "快速开始",
+    "description": "The label of footer link with label=Quick Start"
   },
-  "link.item.label.Blog": {
-    "message": "Blog",
-    "description": "The label of footer link with label=Blog linking to /blog"
+  "link.item.label.Configuration": {
+    "message": "配置指南",
+    "description": "The label of footer link with label=Configuration"
+  },
+  "link.item.label.Best Practices": {
+    "message": "最佳实践",
+    "description": "The label of footer link with label=Best Practices"
+  },
+  "link.item.label.GitHub Issues": {
+    "message": "GitHub Issues",
+    "description": "The label of footer link with label=GitHub Issues"
+  },
+  "link.item.label.NPM Package": {
+    "message": "NPM 包",
+    "description": "The label of footer link with label=NPM Package"
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
-    "description": "The label of footer link with label=GitHub linking to https://github.com/facebook/docusaurus"
+    "description": "The label of footer link with label=GitHub"
+  },
+  "link.item.label.Feedback": {
+    "message": "问题反馈",
+    "description": "The label of footer link with label=Feedback"
   },
   "copyright": {
-    "message": "Copyright © 2025 wukong-deploy, Inc. Built with Docusaurus.",
+    "message": "版权所有 © 2025 wukong-deploy。由 Docusaurus 构建。",
     "description": "The footer copyright"
   }
 }

@@ -3,7 +3,7 @@
 
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
-import { themes as prismThemes } from 'prism-react-renderer'
+import { themes as prismThemes } from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -15,7 +15,7 @@ const config = {
   trailingSlash: false, // 保持 URL 一致，避免 GitHub Pages 添加额外斜杠
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true // Improve compatibility with the upcoming Docusaurus v4
+    v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
   // Set the production url of your site here
@@ -41,13 +41,13 @@ const config = {
       en: {
         label: 'English',
         htmlLang: 'en-US',
-        path: 'en'
+        path: 'en',
       },
       'zh-Hans': {
         label: '中文',
         htmlLang: 'zh-CN',
-        path: 'zh-Hans'
-      }
+        path: 'zh-Hans',
+      },
     },
   },
 
@@ -65,26 +65,12 @@ const config = {
           breadcrumbs: true,
           routeBasePath: 'docs',
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn'
-        },
+        blog: false,
         theme: {
-          customCss: './src/css/custom.css'
-        }
-      })
-    ]
+          customCss: './src/css/custom.css',
+        },
+      }),
+    ],
   ],
 
   themeConfig:
@@ -100,7 +86,7 @@ const config = {
         title: 'wukong-deploy',
         logo: {
           alt: 'wukong-deploy Logo',
-          src: 'img/logo.svg'
+          src: 'img/logo.svg',
         },
         items: [
           {
@@ -112,12 +98,12 @@ const config = {
           {
             to: '/docs/getting-started/introduction',
             label: 'Quick Start',
-            position: 'left'
+            position: 'left',
           },
           {
             to: 'docs/advanced/multi-server',
             position: 'left',
-            label: 'Advanced'
+            label: 'Advanced',
           },
           {
             type: 'localeDropdown',
@@ -134,63 +120,50 @@ const config = {
             position: 'right',
             className: 'header-npm-link',
             'aria-label': 'NPM package',
-          }
-        ]
+          },
+        ],
       },
+      // docusaurus.config.js 中的 footer（替换原来的中文 footer）
       footer: {
         style: 'dark',
         links: [
           {
-            title: '文档',
+            title: 'Docs',
             items: [
-              {
-                label: '快速开始',
-                to: '/docs/getting-started/introduction',
-              },
-              {
-                label: '配置指南',
-                to: '/docs/configuration/config-file',
-              },
-              {
-                label: '最佳实践',
-                to: '/docs/best-practices/project-structure',
-              }
+              { label: 'Quick Start', to: '/docs/getting-started/introduction' },
+              { label: 'Configuration', to: '/docs/configuration/config-file' },
+              { label: 'Best Practices', to: '/docs/best-practices/project-structure' },
             ],
           },
           {
-            title: '社区',
+            title: 'Community',
             items: [
               {
                 label: 'GitHub Issues',
                 href: 'https://github.com/tomatobybike/wukong-deploy/issues',
               },
-              {
-                label: 'NPM Package',
-                href: 'https://www.npmjs.com/package/wukong-deploy',
-              }
+              { label: 'NPM Package', href: 'https://www.npmjs.com/package/wukong-deploy' },
             ],
           },
           {
-            title: '更多',
+            title: 'More',
             items: [
+              { label: 'GitHub', href: 'https://github.com/tomatobybike/wukong-deploy' },
               {
-                label: 'GitHub',
-                href: 'https://github.com/tomatobybike/wukong-deploy',
-              },
-              {
-                label: '问题反馈',
+                label: 'Feedback',
                 href: 'https://github.com/tomatobybike/wukong-deploy/issues/new',
-              }
+              },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} wukong-deploy Project. Built with Docusaurus.`
+        copyright: `Copyright © ${new Date().getFullYear()} wukong-deploy Project. Built with Docusaurus.`,
       },
+
       prism: {
         theme: prismThemes.github,
-        darkTheme: prismThemes.dracula
-      }
-    })
-}
+        darkTheme: prismThemes.dracula,
+      },
+    }),
+};
 
-export default config
+export default config;
