@@ -29,7 +29,7 @@
   - [命令行命令](#命令行命令)
 - [⚙️ 配置](#️-配置)
   - [`config/config.mjs`](#configconfigmjs)
-    - [上传命令（SPA 前端部署）(version \>=1.3.0)](#上传命令spa-前端部署version-130)
+    - [上传命令（SPA 前端部署）(version \>=1.2.42)](#上传命令spa-前端部署version-1242)
 - [➕ 添加多台服务器](#-添加多台服务器)
 - [🌱 环境变量](#-环境变量)
   - [示例 `.env`](#示例-env)
@@ -78,7 +78,7 @@ yarn global add wukong-deploy
 ### 命令行命令
 
 ```bash
-wukong-deploy init       # 生成 .env 和 config/config.mjs
+wukong-deploy init       # 生成 .env.wukong 和 config/config.mjs
 wukong-deploy deploy     # 交互式部署
 wukong-deploy deploy dev # 部署指定服务器配置
 ```
@@ -176,7 +176,7 @@ export default {
 }
 ```
 
-#### 上传命令（SPA 前端部署）(version >=1.3.0)
+#### 上传命令（SPA 前端部署）(version >=1.2.42)
 
 对于 SPA（单页应用）项目，可以使用 `upload` 命令类型，将本地构建产物压缩后上传到服务器并自动解压：
 
@@ -271,7 +271,7 @@ export default {
 }
 ```
 
-然后，在 `.env` 文件里定义每个服务器的密码或其他秘密：
+然后，在 `.env.wukong` 文件里定义每个服务器的密码或其他秘密：
 
 ```env
 SERVER_DEV_PASSWORD=your_dev_password
@@ -289,7 +289,7 @@ wukong-deploy deploy staging
 
 ## 🌱 环境变量
 
-你可以在 `.env` 中定义，也可以在 `.bashrc` / `.zshrc` 中导出：
+你可以在 `.env.wukong` 中定义，也可以在 `.bashrc` / `.zshrc` 中导出：
 
 | 变量名            | 说明                     | 示例 |
 | ----------------- | ------------------------ | ---- |
@@ -300,7 +300,7 @@ wukong-deploy deploy staging
 
 💡 `WUKONG_NO_EMOJI`：某些 Windows 终端（如旧版 CMD）对 emoji 支持不好，建议设为 `1` 禁用。
 
-### 示例 `.env`
+### 示例 `.env.wukong`
 
 ```env
 WUKONG_DEV_MODE=1
@@ -312,6 +312,8 @@ WUKONG_DEBUG=1
 SERVER_DEV_PASSWORD=your_password
 SERVER_STAGING_PASSWORD=your_password
 ```
+
+> **兼容说明**：v1.2.42 之前使用 `.env`。当前版本仍会读取 `.env` 作为兼容，但 `wukong-deploy init` 生成的 `.env.wukong` 优先级更高。
 
 ---
 
@@ -359,7 +361,7 @@ wukong-deploy --lang=zh   # 强制中文
 wukong-deploy --lang=en   # Force English
 ```
 
-或者在 `.env` 中配置：
+或者在 `.env.wukong` 中配置：
 
 ```bash
 WUKONG_LANG=zh   # 强制中文
@@ -379,7 +381,7 @@ WUKONG_LANG=en   # Force English
 - **Windows 终端乱码**：建议使用支持 UTF-8 的终端，如 Windows Terminal
 - **无 emoji 显示**：设置 `WUKONG_NO_EMOJI=1`
 - **服务器登录失败**：
-  - 请确认`.env`中的密码和`config/config.mjs`的username是否正确
+  - 请确认`.env.wukong`中的密码和`config/config.mjs`的username是否正确
 - **❌ PowerShell 报错：无法加载文件 `wukong-deploy.ps1`（执行策略限制）**：
 
   - 原因：PowerShell 默认禁止执行 .ps1 脚本。通过 npm install -g 安装时会自动创建 .ps1 启动脚本，而 yarn global add 仅生成 .cmd 文件，因此不会触发该限制。
