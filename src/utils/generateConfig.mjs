@@ -49,6 +49,15 @@ export const generateConfigContent = (lang = 'zh') => {
           cmd: 'http://www.google.com',
           description: '打开网页',
           isLocal: true
+        },
+        {
+          upload: {
+            local: './dist',
+            remote: '/www/wwwroot/app/dist',
+            backup: true,
+            format: 'tar'   // ${isZh ? '备份格式: tar (tar.gz) 或 zip' : 'Backup format: tar (tar.gz) or zip'}
+          },
+          description: '${isZh ? '本地压缩并上传到服务器（适用于 SPA 前端部署）' : 'Compress & upload dist to server (for SPA deployment)'}'
         }
       ],
       finishMsg: '${isZh ? '🎉 测试服务器部署完成' : '🎉 Test server deployment complete'}'
@@ -82,6 +91,15 @@ export const generateConfigContent = (lang = 'zh') => {
           cmd: 'http://www.google.com',
           description: 'open url',
           isLocal: true
+        },
+        {
+          upload: {
+            local: './dist',
+            remote: '/www/wwwroot/app/dist',
+            backup: true,
+            format: 'tar'   // ${isZh ? '备份格式: tar (tar.gz) 或 zip' : 'Backup format: tar (tar.gz) or zip'}
+          },
+          description: '${isZh ? '本地压缩并上传到服务器（适用于 SPA 前端部署）' : 'Compress & upload dist to server (for SPA deployment)'}'
         }
       ],
       finishMsg: '${isZh ? '✅ 构建完成' : '✅ Build complete'}'

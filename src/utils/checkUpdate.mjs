@@ -85,6 +85,11 @@ export async function checkUpdateWithPatch({
     return null
   }
 
+  // 开发版本号（如 "dev"）不是合法的 semver，直接跳过更新检查
+  if (!semver.valid(pkg.version)) {
+    return null
+  }
+
   if (semver.lt(pkg.version, latest)) {
     // 构造 update 对象，兼容 update-notifier
     const updateInfo = {

@@ -31,6 +31,7 @@ import { showEnv } from './utils/showEnv.mjs'
 import { showVersionInfo } from './utils/showVersionInfo.mjs'
 
 dotenv.config({ quiet: true })
+dotenv.config({ path: '.env.wukong', override: true, quiet: true })
 
 // 不再需要读文件了，直接用 define 注入的常量
 
@@ -105,7 +106,11 @@ function ensureInitialized() {
   const rootDir = process.cwd()
   const configPath = path.join(rootDir, 'config', 'config.mjs')
   const envPath = path.join(rootDir, '.env')
-  if (!fs.existsSync(configPath) || !fs.existsSync(envPath)) {
+  const wukongEnvPath = path.join(rootDir, '.env.wukong')
+  if (
+    !fs.existsSync(configPath) ||
+    (!fs.existsSync(envPath) && !fs.existsSync(wukongEnvPath))
+  ) {
     i18nInfo('notInitialized')
     process.exit(1)
   }
@@ -133,7 +138,10 @@ const handlers = {
           host: isHideHost ? '***.**.**.**' : s.host
         })
         s.commands?.forEach((cmd, i) => {
-          console.log(`   ${i + 1}. ${cmd.description}: ${cmd.cmd}`)
+          const displayCmd = cmd.upload
+            ? `upload ${cmd.upload.local} → ${cmd.upload.remote}`
+            : cmd.cmd
+          console.log(`   ${i + 1}. ${cmd.description}: ${displayCmd}`)
         })
         console.log(
           `${c.green('✔ Quick Cmd:')} ${c.red(`wukong-deploy deploy ${s.key}`)}`
@@ -206,9 +214,12 @@ const handlers = {
         host: isHideHost ? '' : server.host
       })
 
-      server.commands?.forEach((cmd, i) =>
-        console.log(`${i + 1}. ${cmd.description}: ${cmd.cmd}`)
-      )
+      server.commands?.forEach((cmd, i) => {
+        const displayCmd = cmd.upload
+          ? `upload ${cmd.upload.local} → ${cmd.upload.remote}`
+          : cmd.cmd
+        console.log(`${i + 1}. ${cmd.description}: ${displayCmd}`)
+      })
 
       const confirm = await promptConfirm(
         i18nGetRaw('deploy.commandConfirm'),
@@ -303,7 +314,7 @@ const handlers = {
 
     const rootDir = process.cwd()
     const configPath = path.join(rootDir, 'config', 'config.mjs')
-    const envPath = path.join(rootDir, '.env')
+    const envPath = path.join(rootDir, '.env.wukong')
 
     const success = await backupFiles(configPath, envPath)
     process.exit(success ? 0 : 1)

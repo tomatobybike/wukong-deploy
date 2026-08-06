@@ -29,6 +29,7 @@ English | [简体中文](./README.zh-CN.md)
   - [CLI Commands](#cli-commands)
 - [⚙️ Configuration](#️-configuration)
   - [`config/config.mjs`](#configconfigmjs)
+    - [Upload Command (SPA Frontend Deployment) (version \>=1.3.0)](#upload-command-spa-frontend-deployment-version-130)
 - [➕ Adding Multiple Servers](#-adding-multiple-servers)
 - [🌱 Environment Variables](#-environment-variables)
   - [Example `.env`](#example-env)
@@ -167,6 +168,66 @@ export default {
           cmd: 'open http://www.google.com/',
           description: 'open url',
           isLocal: true
+        }
+      ],
+      finishMsg: '🎉 Deployment completed'
+    }
+  }
+}
+```
+
+#### Upload Command (SPA Frontend Deployment) (version >=1.3.0)
+
+For SPA (Single Page Application) projects, you can use the `upload` command type to compress the local build output, upload it to the server, and extract it automatically:
+
+```js
+{
+  upload: {
+    local: './dist',                // local directory to upload
+    remote: '/www/wwwroot/app/dist/', // remote target directory
+    backup: true,                    // backup existing remote dir before overwrite
+    format: 'tar'                    // backup format: 'tar' (default, tar.gz) or 'zip'
+  },
+  description: 'Compress and upload dist'
+}
+```
+
+The upload pipeline:
+1. **Backup** (if `backup: true`): backs up existing remote directory as `dist_backup_<timestamp>.tar.gz` (or `.zip`, depending on `format`)
+2. **Compress** local directory to `.zip` (cross-platform, uses Node.js `archiver`)
+3. **Upload** the zip file to server `/tmp`
+4. **Extract** with `unzip -o` to the target path (auto-installs `unzip` if missing)
+5. **Cleanup** temporary zip files on both local and remote
+
+Full SPA deployment example:
+
+```js
+export default {
+  servers: {
+    dev: {
+      name: 'Dev Server',
+      host: '123.45.67.89',
+      username: 'root',
+      passwordEnv: 'SERVER_DEV_PASSWORD',
+      commands: [
+        {
+          cmd: 'rm -rf dist/',
+          isLocal: true,
+          description: 'Clean local dist'
+        },
+        {
+          cmd: 'pnpm run build:dev',
+          isLocal: true,
+          description: 'Build project'
+        },
+        {
+          upload: {
+            local: './dist',
+            remote: '/www/wwwroot/ai/dist/',
+            backup: true,
+            format: 'tar'
+          },
+          description: 'Compress & upload dist'
         }
       ],
       finishMsg: '🎉 Deployment completed'
