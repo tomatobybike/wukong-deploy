@@ -30,7 +30,7 @@ export default async function init(spinner) {
 
   // 使用path.join确保跨平台兼容性
   const configPath = path.resolve(rootDir, path.join('config', 'config.mjs'))
-  const envPath = path.resolve(rootDir, '.env')
+  const envPath = path.resolve(rootDir, '.env.wukong')
 
   // 打印路径信息
   devLog(`配置文件路径: ${configPath}`)
@@ -44,7 +44,7 @@ export default async function init(spinner) {
   if ((configExists || envExists) && !forceOverwrite) {
     const existingFiles = []
     if (configExists) existingFiles.push('config/config.mjs')
-    if (envExists) existingFiles.push('.env')
+    if (envExists) existingFiles.push('.env.wukong')
     spinner.stop()
 
     i18nLogNative('filesExist', { files: existingFiles.join(', ') })

@@ -29,6 +29,7 @@
   - [命令行命令](#命令行命令)
 - [⚙️ 配置](#️-配置)
   - [`config/config.mjs`](#configconfigmjs)
+    - [上传命令（SPA 前端部署）(version \>=1.3.0)](#上传命令spa-前端部署version-130)
 - [➕ 添加多台服务器](#-添加多台服务器)
 - [🌱 环境变量](#-环境变量)
   - [示例 `.env`](#示例-env)
@@ -170,6 +171,66 @@ export default {
         }
       ],
       finishMsg: '🎉 Deployment completed'
+    }
+  }
+}
+```
+
+#### 上传命令（SPA 前端部署）(version >=1.3.0)
+
+对于 SPA（单页应用）项目，可以使用 `upload` 命令类型，将本地构建产物压缩后上传到服务器并自动解压：
+
+```js
+{
+  upload: {
+    local: './dist',                // 本地要上传的目录
+    remote: '/www/wwwroot/app/dist/', // 远程目标目录
+    backup: true,                     // 覆盖前备份服务器现有目录
+    format: 'tar'                     // 备份格式: 'tar' (默认, tar.gz) 或 'zip'
+  },
+  description: '压缩并上传 dist 目录'
+}
+```
+
+上传流程：
+1. **备份**（`backup: true` 时）：将服务器现有目录打包为 `dist_backup_<时间戳>.tar.gz`（或 `.zip`，取决于 `format` 配置）
+2. **压缩**：将本地目录压缩为 `.zip`（跨平台兼容，使用 Node.js `archiver` 库）
+3. **上传**：将 zip 文件上传到服务器 `/tmp` 目录
+4. **解压**：通过 `unzip -o` 解压到目标路径（服务器缺少 unzip 时会自动安装）
+5. **清理**：删除本地和远程的临时 zip 文件
+
+完整的 SPA 项目部署配置示例：
+
+```js
+export default {
+  servers: {
+    dev: {
+      name: '开发服务器',
+      host: '123.45.67.89',
+      username: 'root',
+      passwordEnv: 'SERVER_DEV_PASSWORD',
+      commands: [
+        {
+          cmd: 'rm -rf dist/',
+          isLocal: true,
+          description: '清理本地 dist 目录'
+        },
+        {
+          cmd: 'pnpm run build:dev',
+          isLocal: true,
+          description: '构建项目'
+        },
+        {
+          upload: {
+            local: './dist',
+            remote: '/www/wwwroot/ai/dist/',
+            backup: true,
+            format: 'tar'
+          },
+          description: '压缩并上传到服务器'
+        }
+      ],
+      finishMsg: '🎉 部署完成'
     }
   }
 }

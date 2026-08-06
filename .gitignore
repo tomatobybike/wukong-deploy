@@ -17,10 +17,12 @@ yarn-error.log*
 .env
 .env.local
 .env.*.local
+.env.wukong
 
 # Editor directories and files
 .vscode/
 .idea/
+.codebuddy
 *.suo
 *.ntvs*
 *.njsproj

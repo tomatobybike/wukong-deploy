@@ -24,6 +24,7 @@ import logger from './utils/logger.mjs'
 import { openUrl } from './utils/openUrl.mjs'
 import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 import { validateCommandResult } from './utils/validateCommandResult.mjs'
+import { uploadWithCompress } from './utils/uploadFile.mjs'
 
 const handleCheckEnv = () => {
   const rootDir = process.cwd()
@@ -128,7 +129,36 @@ export default async function launch(targetKey) {
   }
 
   for (const cmdObj of server.commands) {
-    const { cmd, cwd, description, isLocal } = cmdObj
+    const { cmd, cwd, description, isLocal, upload } = cmdObj
+
+    if (upload) {
+      // Upload command: [backup] → compress local → upload → extract on server
+      i18nInfo('upload.execUpload', {
+        cmd: `local:${upload.local} → remote:${upload.remote}`
+      })
+      if (upload.backup) {
+        i18nInfo('upload.backingUp', { remote: upload.remote })
+      }
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        const backupInfo = await uploadWithCompress(ssh, upload)
+        if (upload.backup) {
+          if (backupInfo && backupInfo.backupName) {
+            i18nSuccess('upload.backupDone', {
+              name: backupInfo.backupName
+            })
+          } else {
+            i18nInfo('upload.backupSkipped', { remote: upload.remote })
+          }
+        }
+      } catch (err) {
+        i18nError('deployError', { msg: err.message })
+        ssh.dispose()
+        return exitWithTime(start, 1)
+      }
+      continue
+    }
+
     i18nInfo('execCommand', { cmd, desc: description })
     if (isLocal) {
       // 处理本地命令

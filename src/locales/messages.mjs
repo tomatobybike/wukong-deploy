@@ -72,6 +72,25 @@ const messages = {
       clearSuccess: `${e('✅', '[完成]')} 备份目录已清空。`,
       clearFailed: (msg) => `${e('❌', '[错误]')} 清理备份目录失败：${msg}`
     },
+    upload: {
+      compressing: (local) => `${e('📦', '[压缩]')} 正在压缩 ${local}...`,
+      compressDone: (local, size) => `${e('📦', '[压缩]')} 压缩完成 ${local} → ${size} MB`,
+      backingUp: (remote) => `${e('💾', '[备份]')} 正在备份服务器 ${remote}...`,
+      backupDone: (name) => `${e('💾', '[备份]')} 服务器备份完成: ${name}`,
+      backupSkipped: (remote) => `${e('💾', '[备份]')} 服务器目录 ${remote} 不存在，跳过备份`,
+      backupFailed: (msg) => `${e('❌', '[错误]')} 远程备份失败: ${msg}`,
+      uploading: (zip) => `${e('📤', '[上传]')} 正在上传 ${zip} 到服务器...`,
+      uploadDone: `${e('📤', '[上传]')} 上传完成`,
+      extracting: (remote) => `${e('📂', '[解压]')} 正在解压到 ${remote}...`,
+      extractDone: (remote) => `${e('📂', '[解压]')} 解压完成: ${remote}`,
+      cleaning: `${e('🧹', '[清理]')} 正在清理临时文件...`,
+      cleanupDone: `${e('🧹', '[清理]')} 临时文件已清理`,
+      localNotFound: (local) => `${e('❌', '[错误]')} 本地路径不存在: ${local}`,
+      notDirectory: (local) => `${e('❌', '[错误]')} 本地路径不是目录: ${local}`,
+      compressFailed: (msg) => `${e('❌', '[错误]')} 本地压缩失败: ${msg}`,
+      extractFailed: (msg) => `${e('❌', '[错误]')} 远程解压失败: ${msg}`,
+      execUpload: (cmd) => `${e('📦', '[上传]')} 上传命令：${cmd}`,
+    },
     emojiWarning: `⚠️ ✅ 🚀 ❌ 🎉🖥当前终端未启用 Emoji，已自动禁用（如需强制启用请设置环境变量 WUKONG_NO_EMOJI=0）`
   },
   en: {
@@ -150,6 +169,25 @@ const messages = {
       clearSuccess: `${e('✅', '[Done]')} Backup directory cleared.`,
       clearFailed: (msg) =>
         `${e('❌', '[Error]')} Failed to clear backup directory: ${msg}`
+    },
+    upload: {
+      compressing: (local) => `${e('📦', '[Compress]')} Compressing ${local}...`,
+      compressDone: (local, size) => `${e('📦', '[Compress]')} Compressed ${local} → ${size} MB`,
+      backingUp: (remote) => `${e('💾', '[Backup]')} Backing up server ${remote}...`,
+      backupDone: (name) => `${e('💾', '[Backup]')} Backup complete: ${name}`,
+      backupSkipped: (remote) => `${e('💾', '[Backup]')} Server directory ${remote} not found, skipping backup`,
+      backupFailed: (msg) => `${e('❌', '[Error]')} Remote backup failed: ${msg}`,
+      uploading: (zip) => `${e('📤', '[Upload]')} Uploading ${zip} to server...`,
+      uploadDone: `${e('📤', '[Upload]')} Upload complete`,
+      extracting: (remote) => `${e('📂', '[Extract]')} Extracting to ${remote}...`,
+      extractDone: (remote) => `${e('📂', '[Extract]')} Extraction complete: ${remote}`,
+      cleaning: `${e('🧹', '[Clean]')} Cleaning up temp files...`,
+      cleanupDone: `${e('🧹', '[Clean]')} Temp files cleaned`,
+      localNotFound: (local) => `${e('❌', '[Error]')} Local path not found: ${local}`,
+      notDirectory: (local) => `${e('❌', '[Error]')} Local path is not a directory: ${local}`,
+      compressFailed: (msg) => `${e('❌', '[Error]')} Compression failed: ${msg}`,
+      extractFailed: (msg) => `${e('❌', '[Error]')} Remote extraction failed: ${msg}`,
+      execUpload: (cmd) => `${e('📦', '[Upload]')} Upload command: ${cmd}`,
     },
     emojiWarning: `⚠️ ✅ 🚀 ❌ 🎉🖥 Emoji is disabled because the current terminal does not support it. To force enable, set: WUKONG_NO_EMOJI=0`
   }

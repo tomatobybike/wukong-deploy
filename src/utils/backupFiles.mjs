@@ -38,8 +38,8 @@ export async function backupFiles(configPath, envPath) {
   }
 
   if (await fs.pathExists(envPath)) {
-    await fs.copy(envPath, path.join(backupDir, '.env'))
-    backedUp.push('.env')
+    await fs.copy(envPath, path.join(backupDir, '.env.wukong'))
+    backedUp.push('.env.wukong')
   }
 
   devLog(`📦 备份成功：${backedUp.join(', ')} → ${backupDir}`)
