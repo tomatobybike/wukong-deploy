@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.42](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.41...v1.2.42) (2026-08-06)
+
+
+### Features
+
+* 🎸 Docusaurus 国际化 ([3c7f8ff](https://github.com/tomatobybike/wukong-deploy/commit/3c7f8ff6e448e7f41257656cb8dbd702906e6ff1))
+* 🎸 english svg ([3d4fcab](https://github.com/tomatobybike/wukong-deploy/commit/3d4fcabe5d3314f227d47d832156d093ec72f054))
+* 🎸 local can upload spa dist ([4b48202](https://github.com/tomatobybike/wukong-deploy/commit/4b48202c0871e175fff9e6a212472ac8008c33d4))
+* 🎸 mobile h5 ([730be0c](https://github.com/tomatobybike/wukong-deploy/commit/730be0cb28a6db65c73ff7882ef6c04b5985d0b6))
+
+
+### Bug Fixes
+
+* 🐛 scripts ([b1ee059](https://github.com/tomatobybike/wukong-deploy/commit/b1ee0593ad4402fdb3ec51b7148324bb27bb4298))
+
 ### [1.2.41](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.40...v1.2.41) (2025-10-06)
 
 
