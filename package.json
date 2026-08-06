@@ -51,7 +51,7 @@
     "prepublishOnly": "yarn build",
     "prettierall": "npx prettier --write 'src/**/*.{js,jsx}'",
     "check:npm:login": "node scripts/check-npm-login.mjs",
-    "release": "arn check:npm:login && yarn release:patch && yarn push:tags && npm publish",
+    "release": "yarn check:npm:login && yarn release:patch && yarn push:tags && npm publish",
     "push:tags": "git push origin main --follow-tags",
     "release:major": "yarn lint && standard-version --release-as major",
     "release:minor": "yarn lint && standard-version --release-as minor",
