@@ -156,6 +156,7 @@ export default async function launch(targetKey) {
         ssh.dispose()
         return exitWithTime(start, 1)
       }
+      // eslint-disable-next-line no-continue
       continue
     }
 
