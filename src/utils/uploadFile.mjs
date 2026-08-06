@@ -29,7 +29,7 @@ export async function zipLocal(sourceDir, destZip) {
     })
 
     archive.pipe(output)
-    archive.directory(sourceDir, path.basename(sourceDir))
+    archive.directory(sourceDir, false)
     archive.finalize()
   })
 }
@@ -103,7 +103,7 @@ export async function backupRemoteDir(ssh, remotePath, backupFormat = 'tar') {
  * Compress → [Backup] → Upload → Extract → Cleanup pipeline
  * 1. Compress local directory to temp zip (cross-platform via archiver)
  * 2. Optionally backup existing remote directory (tar.gz or zip)
- * 3. Upload zip to server /tmp via ssh.putFile
+ * 3. Upload zip to server (remote parent dir) via ssh.putFile
  * 4. Run unzip -o on server to extract to target path
  * 5. Cleanup temp zip file on both local and remote
  *
@@ -127,9 +127,10 @@ export async function uploadWithCompress(ssh, { local, remote, backup, format: b
 
   // 2. Compress local directory
   const tmpDir = os.tmpdir()
-  const zipName = `deploy-${Date.now()}.zip`
+  const zipName = `.deploy-${Date.now()}.zip`
   const localZip = path.join(tmpDir, zipName)
-  const remoteZip = `/tmp/${zipName}`
+  const remoteParentDir = path.posix.dirname(remote)
+  const remoteZip = path.posix.join(remoteParentDir, zipName)
 
   let localZipFile
   try {
@@ -156,7 +157,7 @@ export async function uploadWithCompress(ssh, { local, remote, backup, format: b
   // 5. Ensure server has unzip (for upload extraction)
   await ensureUnzipOnServer(ssh)
 
-  // 6. Upload zip to server /tmp
+  // 6. Upload zip to server
   await ssh.putFile(localZipFile, remoteZip)
 
   // 7. Ensure remote target directory exists
@@ -173,7 +174,7 @@ export async function uploadWithCompress(ssh, { local, remote, backup, format: b
   await ssh.execCommand(`rm -f ${remoteZip}`)
   await fs.remove(localZipFile)
 
-  logger.debug(`Cleaned up temp zip files: ${localZipFile}, /tmp/${zipName}`)
+  logger.debug(`Cleaned up temp zip files: ${localZipFile}, ${remoteZip}`)
 
   return backupInfo || undefined
 }
