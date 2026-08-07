@@ -43,10 +43,9 @@ function parseInlineEnv(cmd) {
 
   // 逐个解析 KEY=value
   const pairRegex = /\w+=(?:"[^"]*"|'[^']*'|\S+)/g
-  let pm
-  // eslint-disable-next-line no-cond-assign
-  while ((pm = pairRegex.exec(envStr)) !== null) {
-    const pair = pm[0]
+  const pairs = envStr.match(pairRegex) || []
+
+  for (const pair of pairs) {
     const eqIdx = pair.indexOf('=')
     const key = pair.slice(0, eqIdx)
     let val = pair.slice(eqIdx + 1)
