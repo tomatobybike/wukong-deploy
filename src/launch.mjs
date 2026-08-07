@@ -26,6 +26,42 @@ import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 import { validateCommandResult } from './utils/validateCommandResult.mjs'
 import { uploadWithCompress } from './utils/uploadFile.mjs'
 
+/**
+ * 解析命令开头的 inline 环境变量（KEY=value 格式），返回 { env, cmd }
+ * 用于跨平台兼容——Unix 的 NODE_ENV=prod cmd 在 Windows cmd.exe 中不可用，
+ * 这里提取后通过 spawn 的 env 选项注入，不依赖 shell 语法。
+ */
+function parseInlineEnv(cmd) {
+  const env = {}
+  // 匹配开头的一个或多个 KEY=value 对（value 可带双引号或单引号）
+  const envRegex = /^((?:\w+=(?:"[^"]*"|'[^']*'|\S+)\s+)+)/
+  const match = cmd.match(envRegex)
+  if (!match) return { env, cmd }
+
+  const envStr = match[0]
+  const actualCmd = cmd.slice(envStr.length)
+
+  // 逐个解析 KEY=value
+  const pairRegex = /\w+=(?:"[^"]*"|'[^']*'|\S+)/g
+  let pm
+  // eslint-disable-next-line no-cond-assign
+  while ((pm = pairRegex.exec(envStr)) !== null) {
+    const pair = pm[0]
+    const eqIdx = pair.indexOf('=')
+    const key = pair.slice(0, eqIdx)
+    let val = pair.slice(eqIdx + 1)
+    // 去除首尾引号
+    if (
+      (val.startsWith('"') && val.endsWith('"')) ||
+      (val.startsWith("'") && val.endsWith("'"))
+    ) {
+      val = val.slice(1, -1)
+    }
+    env[key] = val
+  }
+  return { env, cmd: actualCmd }
+}
+
 const handleCheckEnv = () => {
   const rootDir = process.cwd()
   // 使用path.join确保跨平台兼容性
@@ -176,14 +212,20 @@ export default async function launch(targetKey) {
         }
       } else {
         // 普通本地命令（如 yarn -v, curl ...）
+        // 解析内联环境变量，避免 Unix 语法 (NODE_ENV=xxx cmd) 在 Windows 上失败
+        const { env: inlineEnv, cmd: actualCmd } = parseInlineEnv(cmd)
         console.log(`⚡ 执行本地命令: ${cmd}`)
         // eslint-disable-next-line no-await-in-loop
         await new Promise((resolve, reject) => {
-          const child = spawn(cmd, {
+          const spawnOpts = {
             cwd: cwd || process.cwd(),
             stdio: 'inherit',
             shell: true
-          })
+          }
+          if (Object.keys(inlineEnv).length > 0) {
+            spawnOpts.env = { ...process.env, ...inlineEnv }
+          }
+          const child = spawn(actualCmd, spawnOpts)
           child.on('close', (code) => {
             if (code === 0) resolve()
             else reject(new Error(`本地命令失败: ${cmd}`))
