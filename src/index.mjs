@@ -102,14 +102,17 @@ function parseArgs(argv) {
   }
 }
 
-function ensureInitialized() {
+function ensureInitialized(target) {
   const rootDir = process.cwd()
   const configPath = path.join(rootDir, 'config', 'config.mjs')
   const envPath = path.join(rootDir, '.env')
   const wukongEnvPath = path.join(rootDir, '.env.wukong')
+  const targetEnvPath = target
+    ? path.join(rootDir, `.env.${target}`)
+    : null
   if (
     !fs.existsSync(configPath) ||
-    (!fs.existsSync(envPath) && !fs.existsSync(wukongEnvPath))
+    (!fs.existsSync(envPath) && !fs.existsSync(wukongEnvPath) && !(targetEnvPath && fs.existsSync(targetEnvPath)))
   ) {
     i18nInfo('notInitialized')
     process.exit(1)
@@ -172,7 +175,7 @@ const handlers = {
 
   async deploy(target) {
     await sendTelemetry('deploy', { ...OPTION_EVENT }).catch(() => {})
-    ensureInitialized()
+    ensureInitialized(target)
 
     try {
       const servers = await getServerList()
@@ -237,6 +240,9 @@ const handlers = {
       //   process.exit(0)
       // }
       await sendTelemetry('deployConfirm', { ...OPTION_EVENT }).catch(() => {})
+      // 加载目标环境对应的 .env 文件，覆盖 .env 中的同名变量
+      // 解决 spawn 子进程（如 npm run build:dev）继承错误环境变量的问题
+      dotenv.config({ path: `.env.${selected}`, override: true, quiet: true })
       await launch(selected)
       await sendTelemetry('deploySuccess', { ...OPTION_EVENT }).catch(() => {})
     } catch (e) {

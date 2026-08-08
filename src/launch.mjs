@@ -26,16 +26,22 @@ import { pathToFileUrl } from './utils/pathToFileUrl.mjs'
 import { validateCommandResult } from './utils/validateCommandResult.mjs'
 import { uploadWithCompress } from './utils/uploadFile.mjs'
 
-const handleCheckEnv = () => {
+const handleCheckEnv = (targetKey) => {
   const rootDir = process.cwd()
   // 使用path.join确保跨平台兼容性
   const configFile = path.resolve(rootDir, path.join('config', 'config.mjs'))
   const envFile = path.resolve(rootDir, '.env')
+  const targetEnvFile = targetKey
+    ? path.resolve(rootDir, `.env.${targetKey}`)
+    : null
 
   // 调试信息
   devLog(`部署模块 - 工作目录: ${rootDir}`)
   devLog(`部署模块 - 配置文件路径: ${configFile}`)
   devLog(`部署模块 - 环境文件路径: ${envFile}`)
+  if (targetEnvFile) {
+    devLog(`部署模块 - 目标环境文件路径: ${targetEnvFile}`)
+  }
 
   // 检查文件是否存在
   if (!fs.existsSync(configFile)) {
@@ -43,19 +49,26 @@ const handleCheckEnv = () => {
     process.exit(1)
   }
 
-  if (!fs.existsSync(envFile)) {
+  // 放宽检查：.env 或 .env.{targetKey} 任一存在即可
+  const hasEnv = fs.existsSync(envFile)
+  const hasTargetEnv = targetEnvFile && fs.existsSync(targetEnvFile)
+  if (!hasEnv && !hasTargetEnv) {
     i18nLogNative('envFileNotExist', { file: envFile })
-
     process.exit(1)
   }
 
-  dotenv.config({ path: envFile , quiet: true})
+  if (hasEnv) {
+    dotenv.config({ path: envFile, quiet: true })
+  }
+  if (hasTargetEnv) {
+    dotenv.config({ path: targetEnvFile, override: true, quiet: true })
+  }
   return configFile
 }
 
 export default async function launch(targetKey) {
   const isHideHost = process.env.WUKONG_HIDE_HOST === '1'
-  const configFile = handleCheckEnv()
+  const configFile = handleCheckEnv(targetKey)
   const logCache = { write: true }
   const start = performance.now()
   logger.info('start deploy', { ...logCache, newline: true })
