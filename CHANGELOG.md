@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.45](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.44...v1.2.45) (2026-08-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* 🧨                           ↑ override 覆盖前面的同名变量
+
+### Bug Fixes
+
+* 🐛 .env  →  .env.wukong  →  .env.{target}（如 .env.dev） ([2cdb4fb](https://github.com/tomatobybike/wukong-deploy/commit/2cdb4fbaf97a580c4f541d93e630cf9d6d21457c))
+
 ### [1.2.44](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.43...v1.2.44) (2026-08-06)
 
 ### [1.2.43](https://github.com/tomatobybike/wukong-deploy/compare/v1.2.42...v1.2.43) (2026-08-06)
