@@ -54,11 +54,11 @@ Each command object supports the following configuration:
 | Field Name | Type | Description | Default |
 |------------|------|-------------|---------|
 | cmd | string | Command to execute | - |
-| cwd | string | Working directory | - |
+| cwd | string | Working directory. For SSH commands it is the server-side pwd; for local commands (`isLocal: true`) it defaults to the current local directory if omitted. | - |
 | description | string | Command description | - |
 | exitOnStdErr | boolean | Exit on error | true |
 | errorMatch | RegExp | Error matching pattern | - |
-| isLocal | boolean | Execute locally | false |
+| isLocal | boolean | Execute command on the local machine instead of the remote server | false |
 | upload | object | SPA upload configuration (see below) | - |
 
 ### Upload Command (SPA Frontend Deployment) (version >=1.2.42)

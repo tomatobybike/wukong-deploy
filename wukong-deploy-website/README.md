@@ -26,16 +26,33 @@ This command generates static content into the `build` directory and can be serv
 
 ## Deployment
 
-Using SSH:
+This site is published to GitHub Pages via the `gh-pages` branch. Deployment is currently done manually using the `deploy.sh` script in this directory.
 
-```bash
-USE_SSH=true yarn deploy
-```
+### Prerequisites
 
-Not using SSH:
+- A GitHub SSH key must be configured on your machine, because the deploy pushes `gh-pages` over SSH (`git@github.com:tomatobybike/wukong-deploy.git`).
+- If you only use HTTPS + token, either change `REPO_URL` in `deploy.sh` to `https://<token>@github.com/tomatobybike/wukong-deploy.git`, or set the `GIT_USER` environment variable when deploying.
 
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
+### Steps
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+1. Commit and push the source changes to `main` (the script runs `git pull origin main` before building):
+
+   ```bash
+   git add wukong-deploy-website/
+   git commit -m "chore(website): update docs"
+   git push origin main
+   ```
+
+2. From the **repository root**, run the deploy script with Git Bash (or WSL) — it builds the site and pushes it to the `gh-pages` branch (creating the branch automatically on first run):
+
+   ```bash
+   bash wukong-deploy-website/deploy.sh
+   ```
+
+3. On first deploy, enable GitHub Pages in the repo: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, then choose branch `gh-pages` / `/root` and save.
+
+The live site is published at: **https://tomatobybike.github.io/wukong-deploy/**
+
+### Optional: automated deployment via GitHub Actions
+
+Instead of running the script manually, you can add a `.github/workflows/deploy.yml` that builds with `GITHUB_TOKEN` (set `permissions: contents: write`) and runs `yarn deploy` on every push to `main`, so the site is published automatically. This workflow file is not included by default.

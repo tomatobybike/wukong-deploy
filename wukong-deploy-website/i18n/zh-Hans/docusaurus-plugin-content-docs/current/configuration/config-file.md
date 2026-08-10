@@ -54,11 +54,11 @@ export default {
 | 字段名 | 类型 | 说明 | 默认值 |
 |--------|------|------|--------|
 | cmd | string | 要执行的命令 | - |
-| cwd | string | 工作目录 | - |
+| cwd | string | 工作目录。SSH 远程命令为服务器上的 pwd；本地命令（`isLocal: true`）若省略则默认为本地当前目录。 | - |
 | description | string | 命令描述 | - |
 | exitOnStdErr | boolean | 遇到错误是否退出 | true |
 | errorMatch | RegExp | 错误匹配模式 | - |
-| isLocal | boolean | 是否在本地执行 | false |
+| isLocal | boolean | 在本地执行命令，而非远程服务器 | false |
 | upload | object | SPA 上传配置（见下文） | - |
 
 ### 上传命令（SPA 前端部署）（version >=1.2.42）
