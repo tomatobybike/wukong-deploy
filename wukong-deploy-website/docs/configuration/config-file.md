@@ -170,7 +170,7 @@ export default {
           description: 'Clean local dist'
         },
         {
-          cmd: 'pnpm run build:dev',
+          cmd: 'npm run build:dev',
           isLocal: true,
           description: 'Build project'
         },

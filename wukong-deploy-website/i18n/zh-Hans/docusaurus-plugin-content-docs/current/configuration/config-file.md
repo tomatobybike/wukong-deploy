@@ -111,7 +111,7 @@ export default {
           description: '清理本地 dist'
         },
         {
-          cmd: 'pnpm run build:dev',
+          cmd: 'npm run build:dev',
           isLocal: true,
           description: '构建项目'
         },
