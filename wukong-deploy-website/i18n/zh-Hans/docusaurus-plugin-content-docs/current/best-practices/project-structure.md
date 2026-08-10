@@ -8,9 +8,9 @@ sidebar_position: 1
 
 ```
 project-root/
-├── .env                   # 环境变量文件（服务器登陆密码等）
+├── .env.wukong            # 环境变量文件（服务器登陆密码等）
 ├── backup/                # 配置备份文件夹
-│   ├── .env               # 备份 .env
+│   ├── .env.wukong       # 备份 .env.wukong
 │   ├── config.mjs         # 备份 config.mjs
 ├── config/                # 部署配置文件夹
 │   ├── config.mjs         # 部署配置文件
@@ -22,4 +22,4 @@ project-root/
 ## 最佳实践
 
 1. **使用环境变量**
-   - 将敏感信息（服务器密码）存储在 `.env` 文件中
+   - 将敏感信息（服务器密码）存储在 `.env.wukong` 文件中

@@ -17,7 +17,7 @@ export default {
       name: 'Development Server',
       host: '127.215.84.53',
       username: 'root',
-      passwordEnv: 'SERVER_53_PASSWORD', // .env, SERVER_53_PASSWORD="yourpassowrd"
+      passwordEnv: 'SERVER_53_PASSWORD', // .env.wukong, SERVER_53_PASSWORD="yourpassowrd"
       commands: [
         /* ... */
       ],
@@ -26,7 +26,7 @@ export default {
       name: 'Staging Server',
       host: '127.215.84.54',
       username: 'deploy',
-      passwordEnv: 'SERVER_54_PASSWORD', // .env, SERVER_54_PASSWORD="yourpassowrd"
+      passwordEnv: 'SERVER_54_PASSWORD', // .env.wukong, SERVER_54_PASSWORD="yourpassowrd"
       commands: [
         /* ... */
       ],
@@ -35,7 +35,7 @@ export default {
       name: 'Production Server',
       host: '127.215.84.55',
       username: 'deploy',
-      passwordEnv: 'SERVER_55_PASSWORD', // .env, SERVER_55_PASSWORD="yourpassowrd"
+      passwordEnv: 'SERVER_55_PASSWORD', // .env.wukong, SERVER_55_PASSWORD="yourpassowrd"
       commands: [
         /* ... */
       ],
@@ -45,7 +45,7 @@ export default {
 ```
 
 ```bash
-# .env
+# .env.wukong
 
 SERVER_53_PASSWORD="your-secure-password"
 

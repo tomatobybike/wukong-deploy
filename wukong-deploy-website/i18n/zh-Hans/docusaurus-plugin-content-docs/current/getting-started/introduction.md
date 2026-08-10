@@ -41,7 +41,7 @@ export default {
       name: 'Development Server',
       host: '192.168.1.100',
       username: 'root',
-      passwordEnv: 'SERVER_PASSWORD', // .env, SERVER_53_PASSWORD="你的密码"
+      passwordEnv: 'SERVER_PASSWORD', // .env.wukong, SERVER_53_PASSWORD="你的密码"
       commands: [
         {
           cmd: 'git pull',

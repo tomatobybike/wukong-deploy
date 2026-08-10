@@ -8,9 +8,9 @@ A well-organized project structure is crucial for efficient deployment. Below is
 
 ```
 project-root/
-├── .env                   # Environment variables file（server password）
-├── backup/                # Backup .env && config.mjs directory
-│   ├── .env               # Backup .env
+├── .env.wukong            # Environment variables file（server password）
+├── backup/                # Backup .env.wukong && config.mjs directory
+│   ├── .env.wukong       # Backup .env.wukong
 │   ├── config.mjs         # Backup config.mjs
 ├── config/                # Deployment config directory
 │   ├── config.mjs         # config
@@ -22,4 +22,4 @@ project-root/
 ## Best Practices
 
 1. **Use Environment Variables**
-   - Store sensitive information in `.env` files
+   - Store sensitive information in `.env.wukong` files

@@ -15,7 +15,7 @@ export default {
       name: '前端生产服务器',
       host: 'frontend.example.com',
       username: 'deploy',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'git pull origin main',
@@ -52,7 +52,7 @@ export default {
       name: 'Node.js 生产服务器',
       host: 'api.example.com',
       username: 'deploy',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'git pull origin main',
@@ -89,7 +89,7 @@ export default {
       name: '数据库服务器',
       host: 'db.example.com',
       username: 'dbadmin',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'npm run migrate',
@@ -111,7 +111,7 @@ export default {
       name: 'Docker 服务器',
       host: 'docker.example.com',
       username: 'deploy',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'docker-compose pull',
@@ -138,7 +138,7 @@ export default {
       name: '静态网站服务器',
       host: 'static.example.com',
       username: 'webadmin',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'git pull origin main',

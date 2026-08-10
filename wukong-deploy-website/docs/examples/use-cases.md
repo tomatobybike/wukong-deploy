@@ -15,7 +15,7 @@ export default {
       name: 'Frontend Production Server',
       host: '192.168.0.123',
       username: 'root',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'git pull origin main',
@@ -52,7 +52,7 @@ export default {
       name: 'Node.js Production Server',
       host: '192.168.0.123',
       username: 'root',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'git pull origin main',
@@ -89,7 +89,7 @@ export default {
       name: 'Database Server',
       host: '192.168.0.123',
       username: 'root',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'npm run migrate',
@@ -111,7 +111,7 @@ export default {
       name: 'Docker Server',
       host: '192.168.0.123',
       username: 'root',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'docker-compose pull',
@@ -138,7 +138,7 @@ export default {
       name: 'Static Website Server',
       host: '192.168.0.123',
       username: 'root',
-      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable .env
+      passwordEnv: 'SERVER_DEV_PASSWORD', // Password environment variable (.env.wukong)
       commands: [
         {
           cmd: 'git pull origin main',
