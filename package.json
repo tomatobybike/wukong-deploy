@@ -58,7 +58,8 @@
     "release:patch": "yarn lint && standard-version --release-as patch",
     "sort": "sort-package-json",
     "test": "node ./bin/cli.mjs deploy test",
-    "size:test": "npm pack && mkdir -p .tmp && cd .tmp && npm init -y && npm install ../wukong-deploy-*.tgz && du -sh node_modules"
+    "size:test": "npm pack && mkdir -p .tmp && cd .tmp && npm init -y && npm install ../wukong-deploy-*.tgz && du -sh node_modules",
+    "preinstall": "npx only-allow yarn"
   },
   "husky": {
     "hooks": {
@@ -102,7 +103,8 @@
     "sort-package-json": "3.4.0",
     "standard-version": "9.5.0",
     "strip-ansi": "7.1.2",
-    "update-notifier": "7.3.1"
+    "update-notifier": "7.3.1",
+    "only-allow": "1.2.2"
   },
   "packageManager": "yarn@1.22.22",
   "engines": {
