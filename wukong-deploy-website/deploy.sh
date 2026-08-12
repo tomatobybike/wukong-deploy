@@ -16,7 +16,7 @@ git pull origin $DEV_BRANCH
 
 # 2. 构建网站
 echo "构建静态网站..."
-yarn build
+yarn run build
 
 # 3. 检查远程 gh-pages 分支是否存在
 if ! git ls-remote --exit-code --heads $REPO_URL $DEPLOY_BRANCH > /dev/null; then
@@ -30,6 +30,6 @@ fi
 
 # 4. 部署
 echo "部署到 $DEPLOY_BRANCH..."
-yarn deploy
+yarn run deploy
 
 echo "部署完成！访问: https://tomatobybike.github.io/wukong-deploy/"
